@@ -50,6 +50,12 @@ type
     Label9: TLabel;
     Button4: TButton;
     btnMembershipCards: TButton;
+    Panel9: TPanel;
+    Panel10: TPanel;
+    SpeedButton4: TSpeedButton;
+    Label10: TLabel;
+    Label11: TLabel;
+    Button5: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnMembershipCardsClick(Sender: TObject);

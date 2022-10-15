@@ -3,7 +3,7 @@ object Main: TMain
   Top = 0
   Caption = 'SCM_MoreReports'
   ClientHeight = 729
-  ClientWidth = 1064
+  ClientWidth = 1125
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,14 +20,15 @@ object Main: TMain
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1064
+    Width = 1125
     Height = 113
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 457
+    ExplicitTop = 1
+    ExplicitWidth = 1064
     DesignSize = (
-      1064
+      1125
       113)
     object DBtxtSwimClubCaption: TDBText
       Left = 118
@@ -74,7 +75,7 @@ object Main: TMain
       ImageName = 'outline_fitbit_black_48dp'
     end
     object spbRefresh: TSpeedButton
-      Left = 996
+      Left = 1057
       Top = 7
       Width = 48
       Height = 48
@@ -82,23 +83,22 @@ object Main: TMain
       ImageIndex = 0
       ImageName = 'outline_refresh_black_48dp'
       Images = VirtualImageList1
+      ExplicitLeft = 996
     end
   end
   object Panel2: TPanel
     Left = 0
     Top = 113
-    Width = 1064
+    Width = 553
     Height = 616
-    Align = alClient
+    Align = alLeft
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitLeft = -8
-    ExplicitTop = 105
     object Panel4: TPanel
       AlignWithMargins = True
       Left = 20
       Top = 83
-      Width = 1024
+      Width = 513
       Height = 74
       Margins.Left = 20
       Margins.Right = 20
@@ -107,8 +107,9 @@ object Main: TMain
       BevelOuter = bvNone
       BorderWidth = 1
       TabOrder = 1
+      ExplicitWidth = 1024
       DesignSize = (
-        1020
+        509
         70)
       object sbtnPodiumCertificates: TSpeedButton
         Left = 23
@@ -121,7 +122,7 @@ object Main: TMain
       end
       object Label2: TLabel
         Left = 96
-        Top = 11
+        Top = 4
         Width = 154
         Height = 21
         Caption = 'Podium Certificates.'
@@ -134,13 +135,19 @@ object Main: TMain
       end
       object Label1: TLabel
         Left = 96
-        Top = 38
-        Width = 356
-        Height = 21
+        Top = 31
+        Width = 264
+        Height = 34
         Caption = 'Create podium certificates.  Gold, Silver and Bronze.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
       end
       object btnDesignPodium: TButton
-        Left = 943
+        Left = 432
         Top = 11
         Width = 48
         Height = 48
@@ -149,13 +156,14 @@ object Main: TMain
         ImageName = 'outline_draw_black_48dp'
         Images = VirtualImageList1
         TabOrder = 0
+        ExplicitLeft = 943
       end
     end
     object Panel3: TPanel
       AlignWithMargins = True
       Left = 20
       Top = 3
-      Width = 1024
+      Width = 513
       Height = 74
       Margins.Left = 20
       Margins.Right = 20
@@ -164,12 +172,13 @@ object Main: TMain
       BevelOuter = bvNone
       BorderWidth = 1
       TabOrder = 0
+      ExplicitWidth = 1024
       DesignSize = (
-        1020
+        509
         70)
       object lblMembershipcardHeader: TLabel
         Left = 96
-        Top = 2
+        Top = 4
         Width = 146
         Height = 21
         Caption = 'Membership Cards.'
@@ -183,15 +192,21 @@ object Main: TMain
       object lblMembershipCardDetail: TLabel
         Left = 96
         Top = 29
-        Width = 584
-        Height = 21
+        Width = 264
+        Height = 34
         Caption = 
           'Print indiviual (business size) cards displaying your  member'#39's ' +
           'membership number.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         WordWrap = True
       end
       object btnDesignMembershipCard: TButton
-        Left = 943
+        Left = 432
         Top = 11
         Width = 48
         Height = 48
@@ -201,6 +216,7 @@ object Main: TMain
         Images = VirtualImageList1
         TabOrder = 0
         OnClick = btnDesignMembershipCardClick
+        ExplicitLeft = 943
       end
       object btnMembershipCards: TButton
         Left = 23
@@ -219,7 +235,7 @@ object Main: TMain
       AlignWithMargins = True
       Left = 20
       Top = 163
-      Width = 1024
+      Width = 513
       Height = 74
       Margins.Left = 20
       Margins.Right = 20
@@ -229,8 +245,9 @@ object Main: TMain
       BorderWidth = 1
       Enabled = False
       TabOrder = 2
+      ExplicitWidth = 1024
       DesignSize = (
-        1020
+        509
         70)
       object sbtnAttendanceRecords: TSpeedButton
         Left = 23
@@ -243,7 +260,7 @@ object Main: TMain
       end
       object Label3: TLabel
         Left = 96
-        Top = 11
+        Top = 4
         Width = 156
         Height = 21
         Caption = 'Attendance Records.'
@@ -255,7 +272,7 @@ object Main: TMain
         ParentFont = False
       end
       object Button2: TButton
-        Left = 943
+        Left = 432
         Top = 11
         Width = 48
         Height = 48
@@ -265,13 +282,14 @@ object Main: TMain
         Images = VirtualImageList1
         TabOrder = 0
         OnClick = btnDesignMembershipCardClick
+        ExplicitLeft = 943
       end
     end
     object Panel6: TPanel
       AlignWithMargins = True
       Left = 20
       Top = 403
-      Width = 1024
+      Width = 513
       Height = 74
       Margins.Left = 20
       Margins.Right = 20
@@ -281,9 +299,9 @@ object Main: TMain
       BorderWidth = 1
       Enabled = False
       TabOrder = 3
-      ExplicitTop = 243
+      ExplicitWidth = 1024
       DesignSize = (
-        1020
+        509
         70)
       object SpeedButton1: TSpeedButton
         Left = 23
@@ -296,7 +314,7 @@ object Main: TMain
       end
       object Label4: TLabel
         Left = 96
-        Top = 11
+        Top = 4
         Width = 113
         Height = 21
         Caption = 'Report Header.'
@@ -309,13 +327,19 @@ object Main: TMain
       end
       object Label5: TLabel
         Left = 96
-        Top = 38
-        Width = 160
-        Height = 21
+        Top = 31
+        Width = 137
+        Height = 17
         Caption = 'Report description text.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
       end
       object Button1: TButton
-        Left = 943
+        Left = 432
         Top = 11
         Width = 48
         Height = 48
@@ -325,13 +349,14 @@ object Main: TMain
         Images = VirtualImageList1
         TabOrder = 0
         OnClick = btnDesignMembershipCardClick
+        ExplicitLeft = 943
       end
     end
     object Panel7: TPanel
       AlignWithMargins = True
       Left = 20
       Top = 323
-      Width = 1024
+      Width = 513
       Height = 74
       Margins.Left = 20
       Margins.Right = 20
@@ -341,9 +366,9 @@ object Main: TMain
       BorderWidth = 1
       Enabled = False
       TabOrder = 4
-      ExplicitTop = 243
+      ExplicitWidth = 1024
       DesignSize = (
-        1020
+        509
         70)
       object SpeedButton2: TSpeedButton
         Left = 23
@@ -356,7 +381,7 @@ object Main: TMain
       end
       object Label6: TLabel
         Left = 96
-        Top = 11
+        Top = 4
         Width = 113
         Height = 21
         Caption = 'Report Header.'
@@ -369,13 +394,19 @@ object Main: TMain
       end
       object Label7: TLabel
         Left = 96
-        Top = 38
-        Width = 160
-        Height = 21
+        Top = 31
+        Width = 137
+        Height = 17
         Caption = 'Report description text.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
       end
       object Button3: TButton
-        Left = 943
+        Left = 432
         Top = 11
         Width = 48
         Height = 48
@@ -385,13 +416,14 @@ object Main: TMain
         Images = VirtualImageList1
         TabOrder = 0
         OnClick = btnDesignMembershipCardClick
+        ExplicitLeft = 943
       end
     end
     object Panel8: TPanel
       AlignWithMargins = True
       Left = 20
       Top = 243
-      Width = 1024
+      Width = 513
       Height = 74
       Margins.Left = 20
       Margins.Right = 20
@@ -401,8 +433,9 @@ object Main: TMain
       BorderWidth = 1
       Enabled = False
       TabOrder = 5
+      ExplicitWidth = 1024
       DesignSize = (
-        1020
+        509
         70)
       object SpeedButton3: TSpeedButton
         Left = 23
@@ -415,7 +448,7 @@ object Main: TMain
       end
       object Label8: TLabel
         Left = 96
-        Top = 11
+        Top = 4
         Width = 113
         Height = 21
         Caption = 'Report Header.'
@@ -428,13 +461,19 @@ object Main: TMain
       end
       object Label9: TLabel
         Left = 96
-        Top = 38
-        Width = 160
-        Height = 21
+        Top = 31
+        Width = 137
+        Height = 17
         Caption = 'Report description text.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
       end
       object Button4: TButton
-        Left = 943
+        Left = 432
         Top = 11
         Width = 48
         Height = 48
@@ -444,6 +483,87 @@ object Main: TMain
         Images = VirtualImageList1
         TabOrder = 0
         OnClick = btnDesignMembershipCardClick
+        ExplicitLeft = 943
+      end
+    end
+  end
+  object Panel9: TPanel
+    Left = 553
+    Top = 113
+    Width = 572
+    Height = 616
+    Align = alClient
+    BevelOuter = bvNone
+    TabOrder = 2
+    ExplicitLeft = 576
+    ExplicitWidth = 488
+    object Panel10: TPanel
+      AlignWithMargins = True
+      Left = 20
+      Top = 3
+      Width = 532
+      Height = 74
+      Margins.Left = 20
+      Margins.Right = 20
+      Align = alTop
+      BevelKind = bkFlat
+      BevelOuter = bvNone
+      BorderWidth = 1
+      Enabled = False
+      TabOrder = 0
+      ExplicitLeft = 28
+      ExplicitTop = 11
+      ExplicitWidth = 540
+      DesignSize = (
+        528
+        70)
+      object SpeedButton4: TSpeedButton
+        Left = 23
+        Top = 11
+        Width = 48
+        Height = 48
+        ImageIndex = 2
+        ImageName = 'outline_play_circle_black_48dp'
+        Images = VirtualImageList1
+      end
+      object Label10: TLabel
+        Left = 96
+        Top = 4
+        Width = 113
+        Height = 21
+        Caption = 'Report Header.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label11: TLabel
+        Left = 96
+        Top = 31
+        Width = 137
+        Height = 17
+        Caption = 'Report description text.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Button5: TButton
+        Left = 424
+        Top = 11
+        Width = 48
+        Height = 48
+        Anchors = [akTop, akRight]
+        ImageIndex = 3
+        ImageName = 'outline_draw_black_48dp'
+        Images = VirtualImageList1
+        TabOrder = 0
+        OnClick = btnDesignMembershipCardClick
+        ExplicitLeft = 432
       end
     end
   end
