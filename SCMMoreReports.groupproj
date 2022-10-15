@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{C170BB36-970B-4A7A-9459-FF357BD0F540}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="SCM_MoreReports.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\SCM_LeaderBoard\SCM_LeaderBoard.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="SCM_MoreReports">
+        <MSBuild Projects="SCM_MoreReports.dproj"/>
+    </Target>
+    <Target Name="SCM_MoreReports:Clean">
+        <MSBuild Projects="SCM_MoreReports.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SCM_MoreReports:Make">
+        <MSBuild Projects="SCM_MoreReports.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SCM_LeaderBoard">
+        <MSBuild Projects="..\SCM_LeaderBoard\SCM_LeaderBoard.dproj"/>
+    </Target>
+    <Target Name="SCM_LeaderBoard:Clean">
+        <MSBuild Projects="..\SCM_LeaderBoard\SCM_LeaderBoard.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SCM_LeaderBoard:Make">
+        <MSBuild Projects="..\SCM_LeaderBoard\SCM_LeaderBoard.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="SCM_MoreReports;SCM_LeaderBoard"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="SCM_MoreReports:Clean;SCM_LeaderBoard:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="SCM_MoreReports:Make;SCM_LeaderBoard:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
