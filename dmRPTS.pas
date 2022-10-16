@@ -13,7 +13,7 @@ type
   TRPTS = class(TDataModule)
     qrySharedHeader: TFDQuery;
     frxDBSharedHeader: TfrxDBDataset;
-    frxReport1: TfrxReport;
+    frxRptMembership: TfrxReport;
     frxDBMember: TfrxDBDataset;
     qryMember: TFDQuery;
     frxPDFExport1: TfrxPDFExport;
@@ -28,6 +28,7 @@ type
     fSwimClubID: integer;
   public
     { Public declarations }
+    procedure PrepareMembership(sdate, edate: TDATETIME; switch: boolean);
   end;
 
 var
@@ -36,7 +37,6 @@ var
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
-
 {$R *.dfm}
 
 procedure TRPTS.DataModuleCreate(Sender: TObject);
@@ -49,11 +49,35 @@ begin
   begin
     // qryRptSharedHeader.Connection := SCM.scmConnection;
     // qryRptSharedHeader.Open;
-    //if qryRptSharedHeader.Active then
-      //fIsActive := True;
+    // if qryRptSharedHeader.Active then
+    // fIsActive := True;
 
     // qryMembershipCard.Connection := SCM.scmConnection;
 
+  end;
+end;
+
+procedure TRPTS.PrepareMembership(sdate, edate: TDATETIME; switch: boolean);
+begin
+  if Assigned(SCM) then
+  begin
+    if not Assigned(qryMember.Connection) then
+      qryMember.Connection := SCM.scmConnection;
+    try
+      if qryMember.Active then
+        qryMember.close;
+      qryMember.ParamByName('SWITCH').AsBoolean := switch;
+      qryMember.ParamByName('STARTDT').AsDateTime := sdate;
+      qryMember.ParamByName('ENDDT').AsDateTime := edate;
+      qryMember.Prepare;
+      qryMember.Open;
+      if qryMember.Active then
+      begin
+        // DO something
+      end;
+    finally
+        // qryMember.Close;
+    end;
   end;
 end;
 

@@ -22,6 +22,7 @@ type
     qryGetStartOfSession: TFDQuery;
     dsGetStartOfSession: TDataSource;
     qryGetSessionCount: TFDQuery;
+    qryGenerateList: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
 
   private
@@ -32,12 +33,15 @@ type
     { Public declarations }
     function GetStartOfSwimmingSeason(SwimClubID: integer): TDateTime;
     function GetStartOfSession(SessionID: integer): TDateTime;
-    function GetSessionCount(SwimClubID: integer; SDate, EDate: TDateTime): Integer;
+    function GetSessionCount(SwimClubID: integer;
+      SDate, EDate: TDateTime): integer;
     procedure ActivateTable();
     procedure SimpleLoadSettingString(Section, Name: string; var Value: string);
     procedure SimpleMakeTemporyFDConnection(Server, User, Password: string;
       OsAuthent: boolean);
     procedure SimpleSaveSettingString(Section, Name, Value: string);
+    procedure GenerateMembershipNums(SwimClubID: integer);
+
     property IsActive: boolean read FIsActive write FIsActive;
   end;
 
@@ -68,18 +72,64 @@ begin
   ActivateTable;
 end;
 
-function TSCM.GetSessionCount(SwimClubID: integer; SDate,
-  EDate: TDateTime): Integer;
+procedure TSCM.GenerateMembershipNums(SwimClubID: integer);
+var
+  i: integer;
+  bm: TBookmark;
+begin
+  // generate a membership number for null fields.
+  if not Assigned(qryGenerateList.connection) then
+    qryGenerateList.connection := scmConnection;
+  try
+    if qryGenerateList.active then
+      qryGenerateList.Close;
+    qryGenerateList.ParamByName('SWIMCLUBID').AsInteger := SwimClubID;
+    qryGenerateList.Prepare;
+    qryGenerateList.Open;
+    if qryGenerateList.active then
+    begin
+      while (not qryGenerateList.eof) do
+      begin
+        if qryGenerateList.FieldByName('MembershipNum').IsNull then
+        begin
+          i := qryGenerateList.FieldByName('MemberID').AsInteger;
+          bm := qryGenerateList.GetBookmark;
+          i := 1000 + i;
+          // locate membership num
+          if qryGenerateList.Locate('MembershipNum', i, []) then
+          begin
+            // membership number in use...
+            // TODO: build unique number...
+          end
+          else
+          begin
+            qryGenerateList.GotoBookmark(bm);
+            qryGenerateList.edit;
+            qryGenerateList.FieldByName('MembershipNum').AsInteger := i;
+            qryGenerateList.post;
+          end;
+        end;
+        qryGenerateList.Next;
+      end;
+    end;
+  finally
+    qryGenerateList.Close;
+  end;
+
+end;
+
+function TSCM.GetSessionCount(SwimClubID: integer;
+  SDate, EDate: TDateTime): integer;
 begin
   result := 0;
-  if qryGetSessionCount.Active then
+  if qryGetSessionCount.active then
     qryGetSessionCount.Close;
   qryGetSessionCount.ParamByName('SWIMCLUBID').AsInteger := SwimClubID;
   qryGetSessionCount.ParamByName('SDATE').AsDateTime := SDate;
   qryGetSessionCount.ParamByName('EDATE').AsDateTime := EDate;
   qryGetSessionCount.Prepare;
   qryGetSessionCount.Open;
-  if qryGetSessionCount.Active then
+  if qryGetSessionCount.active then
   begin
     if not qryGetSessionCount.IsEmpty then
     begin
@@ -92,18 +142,18 @@ end;
 function TSCM.GetStartOfSession(SessionID: integer): TDateTime;
 begin
   result := Date;
-    if qryGetStartOfSession.Active then
-      qryGetStartOfSession.Close;
-    qryGetStartOfSession.ParamByName('SESSIONID').AsInteger := SessionID;
-    qryGetStartOfSession.Prepare;
-    qryGetStartOfSession.Open;
-    if qryGetStartOfSession.Active then
+  if qryGetStartOfSession.active then
+    qryGetStartOfSession.Close;
+  qryGetStartOfSession.ParamByName('SESSIONID').AsInteger := SessionID;
+  qryGetStartOfSession.Prepare;
+  qryGetStartOfSession.Open;
+  if qryGetStartOfSession.active then
+  begin
+    if not qryGetStartOfSession.IsEmpty then
     begin
-      if not qryGetStartOfSession.IsEmpty then
-      begin
-        result := qryGetStartOfSession.FieldByName('SessionStart').AsDateTime;
-      end;
+      result := qryGetStartOfSession.FieldByName('SessionStart').AsDateTime;
     end;
+  end;
 end;
 
 function TSCM.GetStartOfSwimmingSeason(SwimClubID: integer): TDateTime;
@@ -113,12 +163,12 @@ begin
   result := Date();
   if SwimClubID > 0 then
   begin
-    if qrySwimClub.Active then
+    if qrySwimClub.active then
       qrySwimClub.Close;
     qrySwimClub.ParamByName('SWIMCLUBID').AsInteger := SwimClubID;
     qrySwimClub.Prepare;
     qrySwimClub.Open;
-    if qrySwimClub.Active then
+    if qrySwimClub.active then
     begin
       if not qrySwimClub.IsEmpty then
       begin
@@ -132,7 +182,8 @@ begin
   end;
 end;
 
-procedure TSCM.SimpleLoadSettingString(Section, Name: string; var Value: string);
+procedure TSCM.SimpleLoadSettingString(Section, Name: string;
+  var Value: string);
 var
   ini: TIniFile;
 begin

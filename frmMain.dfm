@@ -25,8 +25,6 @@ object Main: TMain
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitTop = 1
-    ExplicitWidth = 1064
     DesignSize = (
       1125
       113)
@@ -107,7 +105,6 @@ object Main: TMain
       BevelOuter = bvNone
       BorderWidth = 1
       TabOrder = 1
-      ExplicitWidth = 1024
       DesignSize = (
         509
         70)
@@ -136,8 +133,8 @@ object Main: TMain
       object Label1: TLabel
         Left = 96
         Top = 31
-        Width = 264
-        Height = 34
+        Width = 303
+        Height = 17
         Caption = 'Create podium certificates.  Gold, Silver and Bronze.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -156,7 +153,6 @@ object Main: TMain
         ImageName = 'outline_draw_black_48dp'
         Images = VirtualImageList1
         TabOrder = 0
-        ExplicitLeft = 943
       end
     end
     object Panel3: TPanel
@@ -172,7 +168,6 @@ object Main: TMain
       BevelOuter = bvNone
       BorderWidth = 1
       TabOrder = 0
-      ExplicitWidth = 1024
       DesignSize = (
         509
         70)
@@ -216,7 +211,6 @@ object Main: TMain
         Images = VirtualImageList1
         TabOrder = 0
         OnClick = btnDesignMembershipCardClick
-        ExplicitLeft = 943
       end
       object btnMembershipCards: TButton
         Left = 23
@@ -245,7 +239,6 @@ object Main: TMain
       BorderWidth = 1
       Enabled = False
       TabOrder = 2
-      ExplicitWidth = 1024
       DesignSize = (
         509
         70)
@@ -282,7 +275,6 @@ object Main: TMain
         Images = VirtualImageList1
         TabOrder = 0
         OnClick = btnDesignMembershipCardClick
-        ExplicitLeft = 943
       end
     end
     object Panel6: TPanel
@@ -299,7 +291,6 @@ object Main: TMain
       BorderWidth = 1
       Enabled = False
       TabOrder = 3
-      ExplicitWidth = 1024
       DesignSize = (
         509
         70)
@@ -349,7 +340,6 @@ object Main: TMain
         Images = VirtualImageList1
         TabOrder = 0
         OnClick = btnDesignMembershipCardClick
-        ExplicitLeft = 943
       end
     end
     object Panel7: TPanel
@@ -366,7 +356,6 @@ object Main: TMain
       BorderWidth = 1
       Enabled = False
       TabOrder = 4
-      ExplicitWidth = 1024
       DesignSize = (
         509
         70)
@@ -416,7 +405,6 @@ object Main: TMain
         Images = VirtualImageList1
         TabOrder = 0
         OnClick = btnDesignMembershipCardClick
-        ExplicitLeft = 943
       end
     end
     object Panel8: TPanel
@@ -433,7 +421,6 @@ object Main: TMain
       BorderWidth = 1
       Enabled = False
       TabOrder = 5
-      ExplicitWidth = 1024
       DesignSize = (
         509
         70)
@@ -483,7 +470,6 @@ object Main: TMain
         Images = VirtualImageList1
         TabOrder = 0
         OnClick = btnDesignMembershipCardClick
-        ExplicitLeft = 943
       end
     end
   end
@@ -495,8 +481,6 @@ object Main: TMain
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitLeft = 576
-    ExplicitWidth = 488
     object Panel10: TPanel
       AlignWithMargins = True
       Left = 20
@@ -511,9 +495,6 @@ object Main: TMain
       BorderWidth = 1
       Enabled = False
       TabOrder = 0
-      ExplicitLeft = 28
-      ExplicitTop = 11
-      ExplicitWidth = 540
       DesignSize = (
         528
         70)
@@ -563,7 +544,6 @@ object Main: TMain
         Images = VirtualImageList1
         TabOrder = 0
         OnClick = btnDesignMembershipCardClick
-        ExplicitLeft = 432
       end
     end
   end

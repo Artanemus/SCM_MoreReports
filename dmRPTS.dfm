@@ -41,7 +41,7 @@ object RPTS: TRPTS
     Left = 216
     Top = 88
   end
-  object frxReport1: TfrxReport
+  object frxRptMembership: TfrxReport
     Version = '6.6.11'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
@@ -50,7 +50,7 @@ object RPTS: TRPTS
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44847.641700671300000000
-    ReportOptions.LastChange = 44849.549840127310000000
+    ReportOptions.LastChange = 44850.437722743050000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -81,6 +81,11 @@ object RPTS: TRPTS
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
+      Columns = 2
+      ColumnWidth = 95.000000000000000000
+      ColumnPositions.Strings = (
+        '0'
+        '95')
       Frame.Typ = []
       MirrorMode = []
       object PageHeader1: TfrxPageHeader
@@ -92,9 +97,9 @@ object RPTS: TRPTS
         object dsHeaderClubName: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 2.666666670000000000
+          Left = 3.179487180000000000
           Top = 0.629870000000000000
-          Width = 400.630180000000000000
+          Width = 321.655821030000000000
           Height = 18.897650000000000000
           DataSet = frxDBSharedHeader
           DataSetName = 'dsHeader'
@@ -113,7 +118,7 @@ object RPTS: TRPTS
         FillType = ftBrush
         Frame.Typ = []
         Height = 22.677180000000000000
-        Top = 351.496290000000000000
+        Top = 362.834880000000000000
         Width = 718.110700000000000000
         object Memo1: TfrxMemoView
           AllowVectorExport = True
@@ -133,22 +138,29 @@ object RPTS: TRPTS
         object Date: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 204.666666670000000000
-          Top = 1.606060000000000000
+          Left = 561.589743590000000000
+          Top = 1.093239490000000000
           Width = 79.370130000000000000
           Height = 18.897650000000000000
           DisplayFormat.FormatStr = 'dd mmm yyyy'
           DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
           Frame.Typ = []
+          HAlign = haRight
           Memo.UTF8W = (
             '[Date]')
+          ParentFont = False
         end
         object Time: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 288.000000000000000000
-          Top = 1.939393330000000000
-          Width = 79.370130000000000000
+          Left = 644.923076920000000000
+          Top = 1.426572820000000000
+          Width = 70.652181280000000000
           Height = 18.897650000000000000
           Frame.Typ = []
           Memo.UTF8W = (
@@ -158,10 +170,9 @@ object RPTS: TRPTS
       object MasterData1: TfrxMasterData
         FillType = ftBrush
         Frame.Typ = []
-        Height = 182.049142800000000000
+        Height = 192.755905510000000000
         Top = 109.606370000000000000
-        Width = 718.110700000000000000
-        Columns = 2
+        Width = 359.055350000000000000
         ColumnWidth = 321.259842519685000000
         ColumnGap = 18.897637795275600000
         DataSet = frxDBMember
@@ -169,16 +180,16 @@ object RPTS: TRPTS
         RowCount = 0
         object Shape1: TfrxShapeView
           AllowVectorExport = True
-          Left = 3.333333330000000000
-          Top = 2.813543330000000000
+          Left = 19.230769230000000000
+          Top = 10.179697410000000000
           Width = 313.333333330000000000
           Height = 169.333333330000000000
           Frame.Typ = []
         end
         object Picture1: TfrxPictureView
           AllowVectorExport = True
-          Left = 13.333333340000000000
-          Top = 8.619356670000000000
+          Left = 29.230769240000000000
+          Top = 15.985510750000000000
           Width = 293.821583340000000000
           Height = 158.230983330000000000
           Center = True
@@ -439,8 +450,8 @@ object RPTS: TRPTS
         object dsMemberMemberID: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 68.836879430000000000
-          Top = 154.700068150000000000
+          Left = 84.734315330000000000
+          Top = 162.066222230000000000
           Width = 242.788569720000000000
           Height = 13.791267020000000000
           DataSet = frxDBMember
@@ -464,8 +475,8 @@ object RPTS: TRPTS
         object dsMemberFirstName: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 8.978723400000000000
-          Top = 53.863188720000000000
+          Left = 24.876159300000000000
+          Top = 61.229342800000000000
           Width = 302.743655180000000000
           Height = 18.897650000000000000
           DataSet = frxDBMember
@@ -489,8 +500,8 @@ object RPTS: TRPTS
         object dsMemberMembershipNum: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 8.978723400000000000
-          Top = 76.969571700000000000
+          Left = 24.876159300000000000
+          Top = 84.335725780000000000
           Width = 303.483605180000000000
           Height = 21.706160640000000000
           DataField = 'MembershipNum'
@@ -509,8 +520,8 @@ object RPTS: TRPTS
         end
         object BarCode1: TfrxBarCodeView
           AllowVectorExport = True
-          Left = 17.000000000000000000
-          Top = 125.952689990000000000
+          Left = 32.897435900000000000
+          Top = 133.318844070000000000
           Width = 63.000000000000000000
           Height = 43.564316680000000000
           BarType = bcCode_2_5_matrix
@@ -531,8 +542,8 @@ object RPTS: TRPTS
         object dsHeaderClubName1: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 9.361702130000000000
-          Top = 101.356945310000000000
+          Left = 25.259138030000000000
+          Top = 108.723099390000000000
           Width = 302.332307650000000000
           Height = 18.897650000000000000
           DataField = 'ClubName'
@@ -551,8 +562,8 @@ object RPTS: TRPTS
         end
         object Picture2: TfrxPictureView
           AllowVectorExport = True
-          Left = 8.085106380000000000
-          Top = 5.287247020000000000
+          Left = 23.982542280000000000
+          Top = 12.653401100000000000
           Width = 102.998888290000000000
           Height = 130.812543620000000000
           Frame.Typ = []
@@ -1719,10 +1730,10 @@ object RPTS: TRPTS
         end
         object Picture3: TfrxPictureView
           AllowVectorExport = True
-          Left = 198.245614040000000000
-          Top = -2.237948950000000000
+          Left = 214.143049940000000000
+          Top = 5.128205130000000000
           Width = 117.997021930000000000
-          Height = 191.178351750000000000
+          Height = 148.722211400000000000
           Frame.Typ = []
           Picture.Data = {
             0A54504E474F626A65637489504E470D0A1A0A0000000D49484452000006C400
@@ -4871,8 +4882,8 @@ object RPTS: TRPTS
         object dsHeaderClubNickName: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 9.824561400000000000
-          Top = 114.253279120000000000
+          Left = 25.721997300000000000
+          Top = 121.619433200000000000
           Width = 302.384565970000000000
           Height = 18.897650000000000000
           DataField = 'ClubNickName'
@@ -4889,12 +4900,70 @@ object RPTS: TRPTS
             '[dsHeader."ClubNickName"]')
           ParentFont = False
         end
+        object Line2: TfrxLineView
+          AllowVectorExport = True
+          Left = 358.974358970000000000
+          Top = 185.009014620000000000
+          Height = 15.461324360000000000
+          Color = clSilver
+          Frame.Color = clSilver
+          Frame.Typ = []
+          Frame.Width = 0.500000000000000000
+          Diagonal = True
+        end
+        object Line4: TfrxLineView
+          AllowVectorExport = True
+          Left = 0.249084250000000000
+          Top = 184.314264920000000000
+          Height = 15.461324360000000000
+          Color = clSilver
+          Frame.Color = clSilver
+          Frame.Typ = []
+          Frame.Width = 0.500000000000000000
+          Diagonal = True
+        end
+        object Line1: TfrxLineView
+          Align = baBottom
+          AllowVectorExport = True
+          Left = 349.153846150000000000
+          Top = 192.755905510000000000
+          Width = 9.707221280000000000
+          Color = clSilver
+          Frame.Color = clSilver
+          Frame.Typ = []
+          Frame.Width = 0.500000000000000000
+          Diagonal = True
+        end
+        object Line3: TfrxLineView
+          Align = baBottom
+          AllowVectorExport = True
+          Left = 0.428571430000000000
+          Top = 192.755905510000000000
+          Width = 9.707221280000000000
+          Color = clSilver
+          Frame.Color = clSilver
+          Frame.Typ = []
+          Frame.Width = 0.500000000000000000
+          Diagonal = True
+        end
       end
     end
   end
   object frxDBMember: TfrxDBDataset
     UserName = 'dsMember'
     CloseDataSource = False
+    FieldAliases.Strings = (
+      'MemberID=MemberID'
+      'MembershipNum=MembershipNum'
+      'Registration=Registration'
+      'MembershipDue=MembershipDue'
+      'FirstName=FirstName'
+      'LastName=LastName'
+      'MembershipType=MembershipType'
+      'HouseName=HouseName'
+      'IsSwimmer=IsSwimmer'
+      'IsActive=IsActive'
+      'IsArchived=IsArchived')
     DataSet = qryMember
     BCDToCurrency = False
     Left = 152
@@ -4902,7 +4971,6 @@ object RPTS: TRPTS
   end
   object qryMember: TFDQuery
     ActiveStoredUsage = [auDesignTime]
-    Active = True
     IndexFieldNames = 'MemberID'
     Connection = SCM.scmConnection
     UpdateOptions.AssignedValues = [uvEDelete, uvEInsert, uvEUpdate]
@@ -4910,37 +4978,102 @@ object RPTS: TRPTS
     UpdateOptions.EnableInsert = False
     UpdateOptions.EnableUpdate = False
     SQL.Strings = (
-      'Use SwimClubMeet;'
+      'USE SwimClubMeet;'
       ''
-      'SELECT '
-      #9#9' [MemberID]'
-      #9#9',[MembershipNum]'
-      #9#9',[MembershipStr]'
-      #9#9',[MembershipDue]'
-      #9#9',[FirstName]'
-      #9#9',[LastName]'
-      #9#9',[DOB]'
-      #9#9',[IsActive]'
-      #9#9',[IsArchived]'
-      #9#9',[Email]'
-      #9#9',[EnableEmailOut]'
-      #9#9',[GenderID]'
-      #9#9',[SwimClubID]'
-      #9#9',[MembershipTypeID]'
-      #9#9',[CreatedOn]'
-      #9#9',[ArchivedOn]'
-      #9#9',[EnableEmailNomineeForm]'
-      #9#9',[EnableEmailSessionReport]'
-      #9#9',[HouseID]'
-      #9#9',[IsSwimmer]'
-      'FROM [SwimClubMeet].[dbo].[Member] '
+      'DECLARE @switch AS BIT;'
+      ''
+      'SET @switch = :SWITCH;'
+      ''
+      'IF (@switch = 0)'
+      '    SELECT [MemberID]'
+      '         , [MembershipNum]'
+      '         , [MembershipStr] AS Registration'
+      '         , [MembershipDue]'
+      '         , [FirstName]'
+      '         , [LastName]'
+      '         , [MembershipType].Caption AS MembershipType'
+      '         , [House].Caption AS HouseName'
+      '         , [Member].[IsSwimmer]'
+      '         , [IsActive]'
+      '         , [IsArchived]'
+      '    FROM [SwimClubMeet].[dbo].[Member]'
+      '        LEFT JOIN MembershipType'
       
-        'WHERE IsArchived <> 1 and IsActive = 1 and IsSwimmer = 1 and Mem' +
-        'bershipNum is not NULL '
+        '            ON Member.MembershipTypeID = MembershipType.Membersh' +
+        'ipTypeID'
+      '        LEFT JOIN House'
+      '            ON Member.HouseID = House.HouseID'
+      '    WHERE IsArchived <> 1'
+      '          AND IsActive = 1'
+      '          AND Member.IsSwimmer = 1'
+      '          AND MembershipNum IS NOT NULL;'
+      ''
+      'ELSE'
+      '    DECLARE @dtstart AS DATETIME;'
+      'DECLARE @dtend AS DATETIME;'
+      'DECLARE @s AS DATETIME;'
+      'DECLARE @e AS DATETIME;'
+      ''
+      'SET @dtStart = :STARTDT;  -- '#39'2021.8.1'#39'; -- '
+      'SET @dtEnd = :ENDDT;      -- '#39'2022.4.1'#39'; -- '
+      ''
+      '-- zero time on start date'
+      'SET @s = DATEADD(d, DATEDIFF(d, @dtStart, 0), @dtStart);'
+      '-- set end date'#39's time to midnight'
+      'SET @dtEnd = DATEADD(DAY, 1, @dtEnd);'
+      'SET @e = DATEADD(d, DATEDIFF(d, 0, @dtEnd), 0);'
+      ''
+      'SELECT [MemberID]'
+      '     , [MembershipNum]'
+      '     , [MembershipStr] AS Registration'
+      '     , [MembershipDue]'
+      '     , [FirstName]'
+      '     , [LastName]'
+      '     , [MembershipType].Caption AS MembershipType'
+      '     , [House].Caption AS HouseName'
+      '     , [Member].[IsSwimmer]'
+      '     , [IsActive]'
+      '     , [IsArchived]'
+      'FROM [SwimClubMeet].[dbo].[Member]'
+      '    LEFT JOIN MembershipType'
+      
+        '        ON Member.MembershipTypeID = MembershipType.MembershipTy' +
+        'peID'
+      '    LEFT JOIN House'
+      '        ON Member.HouseID = House.HouseID'
+      'WHERE IsArchived <> 1'
+      '      AND IsActive = 1'
+      '      AND Member.IsSwimmer = 1'
+      '      AND MembershipNum IS NOT NULL'
+      '      AND'
+      '      ('
+      '          CreatedOn >= @s'
+      '          AND CreatedOn <= @e'
+      '      );'
+      ''
       ''
       '')
     Left = 72
     Top = 184
+    ParamData = <
+      item
+        Name = 'SWITCH'
+        DataType = ftBoolean
+        ParamType = ptInput
+        Value = False
+      end
+      item
+        Name = 'STARTDT'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = 0d
+      end
+      item
+        Name = 'ENDDT'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = Null
+      end>
   end
   object frxPDFExport1: TfrxPDFExport
     UseFileCache = True

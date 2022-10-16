@@ -17,8 +17,6 @@ type
     btnOk: TButton;
     Label8: TLabel;
     Label9: TLabel;
-    imgDateFrom: TVirtualImage;
-    imgDateTo: TVirtualImage;
     calDateFrom: TCalendarPicker;
     calDateTo: TCalendarPicker;
     ImageCollection1: TImageCollection;
@@ -36,6 +34,11 @@ type
     procedure btnOkClick(Sender: TObject);
     procedure RadioBtnGenericClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure btnTodayClick(Sender: TObject);
+    procedure btnThisWeekClick(Sender: TObject);
+    procedure btnThisSeasonClick(Sender: TObject);
+    procedure imgDateFromClick(Sender: TObject);
+    procedure imgDateToClick(Sender: TObject);
   private
     { Private declarations }
     fTagNum: Integer;
@@ -50,6 +53,9 @@ var
   Membership: TMembership;
 
 implementation
+
+uses
+  System.DateUtils, dmSCM;
 
 {$R *.dfm}
 
@@ -73,6 +79,32 @@ begin
   ModalResult := mrOk;
 end;
 
+procedure TMembership.btnThisSeasonClick(Sender: TObject);
+var
+dt: TDateTime;
+begin
+  dt := Date;
+  // Get the start of season.
+  if Assigned(SCM) then
+  begin
+      dt := SCM.GetStartOfSwimmingSeason(1);
+  end;
+  calDateFrom.Date := dt;
+  calDateTo.Date := Date;
+end;
+
+procedure TMembership.btnThisWeekClick(Sender: TObject);
+begin
+  calDateFrom.Date := StartOfTheWeek(Date);
+  calDateTo.Date := EndOfTheWeek(date);
+end;
+
+procedure TMembership.btnTodayClick(Sender: TObject);
+begin
+  calDateFrom.Date := Date;
+  calDateTo.Date := Date;
+end;
+
 procedure TMembership.FormCreate(Sender: TObject);
 begin
   // TODO - load preferences- read last activated radiobutton.
@@ -85,6 +117,16 @@ procedure TMembership.FormKeyDown(Sender: TObject; var Key: Word;
 begin
   if Key = VK_ESCAPE then
     ModalResult := mrCancel;
+end;
+
+procedure TMembership.imgDateFromClick(Sender: TObject);
+begin
+  // TO DO
+end;
+
+procedure TMembership.imgDateToClick(Sender: TObject);
+begin
+// TODO
 end;
 
 procedure TMembership.RadioBtnGenericClick(Sender: TObject);

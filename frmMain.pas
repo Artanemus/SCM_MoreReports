@@ -78,7 +78,7 @@ implementation
 {$R *.dfm}
 
 uses dlgBasicLogin, exeinfo, Utility, dlgAbout, System.IniFiles, System.UITypes,
-  System.DateUtils, FireDAC.Stan.Param, dlgMembership;
+  System.DateUtils, FireDAC.Stan.Param, dlgMembership, dlgPickMember;
 
 procedure TMain.btnDesignMembershipCardClick(Sender: TObject);
 begin
@@ -90,7 +90,7 @@ begin
     begin
       TStyleManager.TrySetStyle('Windows');
     end;
-    RPTS.frxReport1.DesignReport(True);
+    RPTS.frxRptMembership.DesignReport(True);
     // restore application
     if Assigned(TStyleManager.ActiveStyle) then
       TStyleManager.TrySetStyle(fdefaultStyleName);
@@ -228,36 +228,59 @@ var
   TagNum: integer;
   doGenerate: Boolean;
   dtstart, dtend: TDatetime;
+  dlgPM: TPickMember;
 begin
+
+  if (not Assigned(SCM)) or (not Assigned(RPTS)) then
+    Exit;
+
   dlg := TMembership.Create(Self);
   if IsPositiveResult(dlg.ShowModal) then
   begin
     TagNum := dlg.TagNum;
     doGenerate := dlg.chkboxGenerateNum.Checked;
+
+    if doGenerate then
+    begin
+      SCM.GenerateMembershipNums(fSwimClubID);
+    end;
+
     case TagNum of
-    1:
-    begin
-      dtStart := dlg.calDateFrom.Date;
-      dtEnd := dlg.calDateTo.Date;
-      FreeAndNil(dlg);
-    end;
-    2: 
-    begin
-      // let user pick from list picklist 
-      FreeAndNil(dlg);
-      // create the checkbox picklist with search box...
-    end;
-    3:
-    begin
-      // dtstart := startofseason
-      // dtend := + 1 year...
-      FreeAndNil(dlg);
-    end;
+      1:
+        begin
+          RPTS.PrepareMembership(dlg.calDateFrom.Date, dlg.calDateTo.Date, true);
+          FreeAndNil(dlg);
+          RPTS.frxRptMembership.PrepareReport();
+          RPTS.frxRptMembership.ShowReport();
+        end;
+      2:
+        begin
+          // let user pick from list picklist
+          FreeAndNil(dlg);
+          // create the checkbox picklist with search box...
+          dlgPM := TPickMember.Create(Self);
+          if IsPositiveResult(dlgPM.ShowModal) then
+          begin
+            // RPTS.PrepareMembership(0, Date, false);
+            // build sql members' list
+          end;
+          FreeAndNil(dlgPM);
+        end;
+      3:
+        begin
+          FreeAndNil(dlg);
+          dtstart := SCM.GetStartOfSwimmingSeason(1);
+          dtend := IncMonth(dtstart, 6);
+          RPTS.PrepareMembership(0, 0, false);
+          RPTS.frxRptMembership.PrepareReport();
+          // no PREVIEW assignment needed ...
+          RPTS.frxRptMembership.ShowReport();
+        end;
     else
       // do nothing
     end;
   end;
-  
+
   if Assigned(dlg) then
     dlg.Free;
 

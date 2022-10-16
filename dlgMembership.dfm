@@ -60,28 +60,6 @@ object Membership: TMembership
       Alignment = taRightJustify
       Caption = 'Date to...'
     end
-    object imgDateFrom: TVirtualImage
-      Left = 218
-      Top = 104
-      Width = 32
-      Height = 32
-      ImageCollection = ImageCollection1
-      ImageWidth = 0
-      ImageHeight = 0
-      ImageIndex = 0
-      ImageName = 'outline_date_range_black_48dp'
-    end
-    object imgDateTo: TVirtualImage
-      Left = 218
-      Top = 167
-      Width = 32
-      Height = 32
-      ImageCollection = ImageCollection1
-      ImageWidth = 0
-      ImageHeight = 0
-      ImageIndex = 0
-      ImageName = 'outline_date_range_black_48dp'
-    end
     object GroupBox: TGroupBox
       Left = 16
       Top = 16
@@ -169,8 +147,8 @@ object Membership: TMembership
       TextHint = 'select a date'
     end
     object btnToday: TButton
-      Left = 301
-      Top = 94
+      Left = 250
+      Top = 103
       Width = 115
       Height = 29
       Caption = 'Today'
@@ -178,10 +156,11 @@ object Membership: TMembership
       ImageName = 'ic_action_keyboard_arrow_left'
       Images = VirtualImageList1
       TabOrder = 2
+      OnClick = btnTodayClick
     end
     object btnThisWeek: TButton
-      Left = 301
-      Top = 129
+      Left = 250
+      Top = 138
       Width = 115
       Height = 29
       Caption = 'This Week'
@@ -189,10 +168,11 @@ object Membership: TMembership
       ImageName = 'ic_action_keyboard_arrow_left'
       Images = VirtualImageList1
       TabOrder = 3
+      OnClick = btnThisWeekClick
     end
     object btnThisSeason: TButton
-      Left = 301
-      Top = 164
+      Left = 250
+      Top = 173
       Width = 115
       Height = 29
       Caption = 'This Season'
@@ -200,6 +180,7 @@ object Membership: TMembership
       ImageName = 'ic_action_keyboard_arrow_left'
       Images = VirtualImageList1
       TabOrder = 4
+      OnClick = btnThisSeasonClick
     end
   end
   object Panel1: TPanel

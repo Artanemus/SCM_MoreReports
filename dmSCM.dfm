@@ -185,7 +185,7 @@ object SCM: TSCM
   end
   object dsGetStartOfSession: TDataSource
     DataSet = qryGetStartOfSession
-    Left = 360
+    Left = 448
     Top = 64
   end
   object qryGetSessionCount: TFDQuery
@@ -227,6 +227,30 @@ object SCM: TSCM
         ParamType = ptInput
         Value = Null
       end
+      item
+        Name = 'SWIMCLUBID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 1
+      end>
+  end
+  object qryGenerateList: TFDQuery
+    IndexFieldNames = 'MemberID'
+    Connection = scmConnection
+    UpdateOptions.KeyFields = 'MemberID'
+    SQL.Strings = (
+      'Use SwimClubMeet;'
+      'DECLARE @SwimClubID AS INTEGER;'
+      'SET @SwimClubID = :SWIMCLUBID;'
+      ''
+      'SELECT '
+      #9#9' [MemberID]'
+      #9#9',[MembershipNum]'
+      'FROM [SwimClubMeet].[dbo].[Member] '
+      'WHERE SwimClubID = @SwimClubID ;')
+    Left = 312
+    Top = 240
+    ParamData = <
       item
         Name = 'SWIMCLUBID'
         DataType = ftInteger

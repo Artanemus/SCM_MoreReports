@@ -11,7 +11,8 @@ uses
   Vcl.Themes,
   Vcl.Styles,
   dmRPTS in 'dmRPTS.pas' {RPTS: TDataModule},
-  dlgMembership in 'dlgMembership.pas' {Membership};
+  dlgMembership in 'dlgMembership.pas' {Membership},
+  dlgPickMember in 'dlgPickMember.pas' {PickMember};
 
 {$R *.res}
 
