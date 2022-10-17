@@ -83,6 +83,15 @@ object Main: TMain
       Images = VirtualImageList1
       ExplicitLeft = 996
     end
+    object Button6: TButton
+      Left = 528
+      Top = 48
+      Width = 75
+      Height = 25
+      Caption = 'TwoString'
+      TabOrder = 0
+      OnClick = Button6Click
+    end
   end
   object Panel2: TPanel
     Left = 0

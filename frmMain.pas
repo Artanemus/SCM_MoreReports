@@ -56,11 +56,13 @@ type
     Label10: TLabel;
     Label11: TLabel;
     Button5: TButton;
+    Button6: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnMembershipCardsClick(Sender: TObject);
     procedure btnDesignMembershipCardClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
   private
     { Private declarations }
     fSwimClubID: integer;
@@ -78,7 +80,8 @@ implementation
 {$R *.dfm}
 
 uses dlgBasicLogin, exeinfo, Utility, dlgAbout, System.IniFiles, System.UITypes,
-  System.DateUtils, FireDAC.Stan.Param, dlgMembership, dlgPickMember;
+  System.DateUtils, FireDAC.Stan.Param, dlgMembership, dlgPickMember,
+  dlgTwoLists;
 
 procedure TMain.btnDesignMembershipCardClick(Sender: TObject);
 begin
@@ -227,7 +230,7 @@ var
   dlg: TMembership;
   TagNum: integer;
   doGenerate: Boolean;
-  dtstart, dtend: TDatetime;
+//  dtstart, dtend: TDatetime;
   dlgPM: TPickMember;
 begin
 
@@ -269,8 +272,8 @@ begin
       3:
         begin
           FreeAndNil(dlg);
-          dtstart := SCM.GetStartOfSwimmingSeason(1);
-          dtend := IncMonth(dtstart, 6);
+//          dtstart := SCM.GetStartOfSwimmingSeason(1);
+//          dtend := IncMonth(dtstart, 6);
           RPTS.PrepareMembership(0, 0, false);
           RPTS.frxRptMembership.PrepareReport();
           // no PREVIEW assignment needed ...
@@ -284,6 +287,18 @@ begin
   if Assigned(dlg) then
     dlg.Free;
 
+end;
+
+procedure TMain.Button6Click(Sender: TObject);
+var
+dlg: TTwoLists;
+begin
+  if Assigned(SCM) then
+  begin
+    dlg := TTwoLists.Create(Self);
+    dlg.ShowModal;
+    dlg.Free;
+  end;
 end;
 
 end.
