@@ -170,12 +170,8 @@
         <DCCReference Include="dlgMembership.pas">
             <Form>Membership</Form>
         </DCCReference>
-        <DCCReference Include="dlgPickMember.pas">
-            <Form>PickMember</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="dlgTwoLists.pas">
-            <Form>TwoLists</Form>
+        <DCCReference Include="dlgMemberPick.pas">
+            <Form>MemberPick</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Debug">

@@ -80,8 +80,7 @@ implementation
 {$R *.dfm}
 
 uses dlgBasicLogin, exeinfo, Utility, dlgAbout, System.IniFiles, System.UITypes,
-  System.DateUtils, FireDAC.Stan.Param, dlgMembership, dlgPickMember,
-  dlgTwoLists;
+  System.DateUtils, FireDAC.Stan.Param, dlgMembership, dlgMemberPick;
 
 procedure TMain.btnDesignMembershipCardClick(Sender: TObject);
 begin
@@ -190,6 +189,7 @@ begin
     DBtxtSwimClubNickName.DataSource := SCM.dsLBHeader;
     DBtxtStartOfSwimSeason.DataSource := SCM.dsLBHeader;
   end;
+    Application.ShowHint := true;
   // store the current theme
   if Assigned(TStyleManager.ActiveStyle) then
     fdefaultStyleName := TStyleManager.ActiveStyle.Name;
@@ -231,7 +231,7 @@ var
   TagNum: integer;
   doGenerate: Boolean;
 //  dtstart, dtend: TDatetime;
-  dlgPM: TPickMember;
+   dlgMP: TMemberPick;
 begin
 
   if (not Assigned(SCM)) or (not Assigned(RPTS)) then
@@ -261,13 +261,13 @@ begin
           // let user pick from list picklist
           FreeAndNil(dlg);
           // create the checkbox picklist with search box...
-          dlgPM := TPickMember.Create(Self);
-          if IsPositiveResult(dlgPM.ShowModal) then
+          dlgMP := TMemberPick.Create(Self);
+          if IsPositiveResult(dlgMP.ShowModal) then
           begin
             // RPTS.PrepareMembership(0, Date, false);
             // build sql members' list
           end;
-          FreeAndNil(dlgPM);
+          FreeAndNil(dlgMP);
         end;
       3:
         begin
@@ -291,11 +291,11 @@ end;
 
 procedure TMain.Button6Click(Sender: TObject);
 var
-dlg: TTwoLists;
+dlg: TMemberPick;
 begin
   if Assigned(SCM) then
   begin
-    dlg := TTwoLists.Create(Self);
+    dlg := TMemberPick.Create(Self);
     dlg.ShowModal;
     dlg.Free;
   end;

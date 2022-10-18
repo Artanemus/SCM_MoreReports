@@ -84,11 +84,11 @@ object Main: TMain
       ExplicitLeft = 996
     end
     object Button6: TButton
-      Left = 528
-      Top = 48
-      Width = 75
-      Height = 25
-      Caption = 'TwoString'
+      Left = 498
+      Top = 39
+      Width = 148
+      Height = 37
+      Caption = 'Member Picker'
       TabOrder = 0
       OnClick = Button6Click
     end

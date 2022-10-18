@@ -12,8 +12,7 @@ uses
   Vcl.Styles,
   dmRPTS in 'dmRPTS.pas' {RPTS: TDataModule},
   dlgMembership in 'dlgMembership.pas' {Membership},
-  dlgPickMember in 'dlgPickMember.pas' {PickMember},
-  dlgTwoLists in 'dlgTwoLists.pas' {TwoLists};
+  dlgMemberPick in 'dlgMemberPick.pas' {MemberPick};
 
 {$R *.res}
 
