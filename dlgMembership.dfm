@@ -15,6 +15,7 @@ object Membership: TMembership
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 21

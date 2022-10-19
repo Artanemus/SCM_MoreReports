@@ -21,6 +21,7 @@ type
     frxJPEGExport1: TfrxJPEGExport;
     frxDesigner1: TfrxDesigner;
     frxBarCodeObject1: TfrxBarCodeObject;
+    qryINDVmember: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

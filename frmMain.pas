@@ -56,17 +56,16 @@ type
     Label10: TLabel;
     Label11: TLabel;
     Button5: TButton;
-    Button6: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnMembershipCardsClick(Sender: TObject);
     procedure btnDesignMembershipCardClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure Button6Click(Sender: TObject);
   private
     { Private declarations }
-    fSwimClubID: integer;
+    fSwimClubID, fMaxAllowToPick: integer;
     fdefaultStyleName: string;
+
     procedure ReadPreferences(iniFileName: string);
   public
     { Public declarations }
@@ -158,21 +157,14 @@ begin
   // ----------------------------------------------------
   Application.ShowHint := True; // enable hints
   fSwimClubID := 1;
+  fMaxAllowToPick := 20;
   // ----------------------------------------------------
   // R E A D   P R E F E R E N C E S .
   // ----------------------------------------------------
   iniFileName := GetSCMPreferenceFileName;
   if FileExists(iniFileName) then
-    ReadPreferences(iniFileName)
-  else
-  begin
-    // SCM SYSTEM ERROR : The preference file couldn't be created.
-    MessageDlg('An unexpected SCM error occurred.' + sLineBreak +
-      'Unable to create the LeaderBoard ini file!' + sLineBreak +
-      'The application will terminate!', mtError, [mbOk], 0);
-    // note: cleans and destroys SCM
-    Application.Terminate;
-  end;
+    ReadPreferences(iniFileName);
+
   // ----------------------------------------------------
   // D I S P L A Y   H E A D E R   I N F O .
   // ----------------------------------------------------
@@ -189,7 +181,7 @@ begin
     DBtxtSwimClubNickName.DataSource := SCM.dsLBHeader;
     DBtxtStartOfSwimSeason.DataSource := SCM.dsLBHeader;
   end;
-    Application.ShowHint := true;
+  Application.ShowHint := True;
   // store the current theme
   if Assigned(TStyleManager.ActiveStyle) then
     fdefaultStyleName := TStyleManager.ActiveStyle.Name;
@@ -219,19 +211,20 @@ end;
 procedure TMain.ReadPreferences(iniFileName: string);
 var
   iFile: TIniFile;
-  // i: integer;
 begin
   iFile := TIniFile.Create(iniFileName);
+  fMaxAllowToPick := iFile.ReadInteger('MemberPicker', 'MaxAllowToPick', 20);
   iFile.Free;
 end;
 
 procedure TMain.btnMembershipCardsClick(Sender: TObject);
 var
   dlg: TMembership;
-  TagNum: integer;
-  doGenerate: Boolean;
-//  dtstart, dtend: TDatetime;
-   dlgMP: TMemberPick;
+  TagNum, I, J: integer;
+  doGenerate, doPrefix: Boolean;
+  dlgMP: TMemberPick;
+  filterStr, s: string;
+  obj: TscmMember;
 begin
 
   if (not Assigned(SCM)) or (not Assigned(RPTS)) then
@@ -251,29 +244,83 @@ begin
     case TagNum of
       1:
         begin
-          RPTS.PrepareMembership(dlg.calDateFrom.Date, dlg.calDateTo.Date, true);
+          // WITHIN A DATE RANGE ...
+          // -----------------------------------
+          if (RPTS.qryMember.Filtered) then
+            RPTS.qryMember.Filtered := false;
+          RPTS.PrepareMembership(dlg.calDateFrom.Date,
+            dlg.calDateTo.Date, True);
           FreeAndNil(dlg);
           RPTS.frxRptMembership.PrepareReport();
           RPTS.frxRptMembership.ShowReport();
         end;
       2:
         begin
-          // let user pick from list picklist
-          FreeAndNil(dlg);
-          // create the checkbox picklist with search box...
+          // USER PICKS MEMBERS FROM LIST ...
+          // -----------------------------------
+          FreeAndNil(dlg); // finished with dlg.
+          // create the quick pick dlg ...
           dlgMP := TMemberPick.Create(Self);
           if IsPositiveResult(dlgMP.ShowModal) then
           begin
-            // RPTS.PrepareMembership(0, Date, false);
-            // build sql members' list
+            // prepare - all swimmers
+            RPTS.PrepareMembership(0, 0, false);
+            // build a members' list for filtering.
+            filterStr := '';
+            doPrefix := false;
+            J := 0;
+
+            // limit to 20xCards (2xA4 pages)
+            // --------------------------------
+            if dlgMP.lboxR.Count > fMaxAllowToPick then
+            begin
+              MessageDlg('You have exceeded the allowed amount of members!' +
+                sLineBreak + 'Only the first ' + IntToStr(fMaxAllowToPick) +
+                ' will appear in the report.' + sLineBreak +
+                '(This limit can be changed in the config file.)',
+                TMsgDlgType.mtWarning, [mbOk], 0);
+            end;
+
+            for I := 0 to dlgMP.lboxR.Count - 1 do
+            begin
+              s := 'MemberID = ';
+              obj := dlgMP.lboxR.Items.Objects[I] as TscmMember;
+              s := s + IntToStr(obj.ID);
+              // first iteration doesn't require prefix
+              if doPrefix then
+                filterStr := filterStr + ' OR ' + s
+              else
+                filterStr := filterStr + s;
+              doPrefix := True;
+              J := J + 1;
+              if J > fMaxAllowToPick then
+                break;
+            end;
+            if (length(filterStr) > 0) then
+            begin
+              try
+                RPTS.qryMember.Filter := filterStr;
+                RPTS.qryMember.Filtered := True;
+                RPTS.frxRptMembership.PrepareReport();
+                RPTS.frxRptMembership.ShowReport();
+              finally
+                // disable filtering on query
+                if (RPTS.qryMember.Filtered) then
+                  RPTS.qryMember.Filtered := false;
+                RPTS.qryMember.Filter := '';
+              end;
+            end;
+
           end;
-          FreeAndNil(dlgMP);
+          FreeAndNil(dlgMP); // finished with quick pick dlg.
         end;
       3:
         begin
-          FreeAndNil(dlg);
-//          dtstart := SCM.GetStartOfSwimmingSeason(1);
-//          dtend := IncMonth(dtstart, 6);
+          // ALL ACTIVE SWIMMERS ...
+          // -----------------------------------
+          if (RPTS.qryMember.Filtered) then
+            RPTS.qryMember.Filtered := false;
+          FreeAndNil(dlg); // finished with dlg
           RPTS.PrepareMembership(0, 0, false);
           RPTS.frxRptMembership.PrepareReport();
           // no PREVIEW assignment needed ...
@@ -287,18 +334,6 @@ begin
   if Assigned(dlg) then
     dlg.Free;
 
-end;
-
-procedure TMain.Button6Click(Sender: TObject);
-var
-dlg: TMemberPick;
-begin
-  if Assigned(SCM) then
-  begin
-    dlg := TMemberPick.Create(Self);
-    dlg.ShowModal;
-    dlg.Free;
-  end;
 end;
 
 end.

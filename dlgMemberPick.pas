@@ -27,6 +27,8 @@ type
     { published declarations }
     constructor Create();
     destructor Destroy(); override;
+    property ID: integer read MemberID;
+
   end;
 
   TMemberPick = class(TForm)
@@ -42,7 +44,7 @@ type
     VirtualImageList1: TVirtualImageList;
     edtSearch: TEdit;
     Button5: TButton;
-    Label1: TLabel;
+    lbllboxR: TLabel;
     VirtualImageList2: TVirtualImageList;
     procedure lboxRDragOver(Sender, Source: TObject; X, Y: integer;
       State: TDragState; var Accept: Boolean);
@@ -62,11 +64,14 @@ type
     procedure btnDestSrcAllClick(Sender: TObject);
     procedure edtSearchChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     scmMemberList: TObjectList;
-    procedure TransferItems(Sender, Source: TObject);
+    fMaxAllowToPick: integer;
     function MemberIsAssigned(obj: TObject; lbox: TListBox): Boolean;
+    procedure TransferItems(Sender, Source: TObject);
+    procedure ReadPreferences(iniFileName: string);
   public
     { Public declarations }
   end;
@@ -78,7 +83,7 @@ implementation
 
 {$R *.dfm}
 
-uses System.StrUtils;
+uses System.StrUtils, System.IniFiles, Utility;
 
 { TLboxMember }
 
@@ -156,11 +161,13 @@ end;
 
 procedure TMemberPick.FormCreate(Sender: TObject);
 var
-  s: string;
+  s, iniFileName: string;
   obj: TscmMember;
   j: integer;
 begin
   scmMemberList := TObjectList.Create(true);
+  lbllboxR.Caption := 'Members selected for report.';
+  fMaxAllowToPick := 20;
   // Populate the lboxL with members details
   if Assigned(SCM) then
   begin
@@ -181,11 +188,31 @@ begin
       end;
     end;
   end;
+
+  // ----------------------------------------------------
+  // R E A D   P R E F E R E N C E S .
+  // ----------------------------------------------------
+  iniFileName := GetSCMPreferenceFileName;
+  if FileExists(iniFileName) then
+    ReadPreferences(iniFileName);
+  lbllboxR.Caption := lbllboxR.Caption + sLineBreak + '(Limit: ' +
+    IntToStr(fMaxAllowToPick) + ')';
+
 end;
 
 procedure TMemberPick.FormDestroy(Sender: TObject);
 begin
   scmMemberList.clear;
+end;
+
+procedure TMemberPick.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    ModalResult := mrCancel;
+    Key := 0;
+  end;
 end;
 
 procedure TMemberPick.FormShow(Sender: TObject);
@@ -247,6 +274,15 @@ begin
     end;
   end;
 
+end;
+
+procedure TMemberPick.ReadPreferences(iniFileName: string);
+var
+  iFile: TIniFile;
+begin
+  iFile := TIniFile.Create(iniFileName);
+  fMaxAllowToPick := iFile.ReadInteger('MemberPicker', 'MaxAllowToPick', 20);
+  iFile.Free;
 end;
 
 procedure TMemberPick.TransferItems(Sender, Source: TObject);

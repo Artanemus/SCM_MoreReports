@@ -83,15 +83,6 @@ object Main: TMain
       Images = VirtualImageList1
       ExplicitLeft = 996
     end
-    object Button6: TButton
-      Left = 498
-      Top = 39
-      Width = 148
-      Height = 37
-      Caption = 'Member Picker'
-      TabOrder = 0
-      OnClick = Button6Click
-    end
   end
   object Panel2: TPanel
     Left = 0
@@ -315,9 +306,9 @@ object Main: TMain
       object Label4: TLabel
         Left = 96
         Top = 4
-        Width = 113
+        Width = 93
         Height = 21
-        Caption = 'Report Header.'
+        Caption = 'Report Title.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -328,9 +319,9 @@ object Main: TMain
       object Label5: TLabel
         Left = 96
         Top = 31
-        Width = 137
+        Width = 112
         Height = 17
-        Caption = 'Report description text.'
+        Caption = 'Report description.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -380,9 +371,9 @@ object Main: TMain
       object Label6: TLabel
         Left = 96
         Top = 4
-        Width = 113
+        Width = 93
         Height = 21
-        Caption = 'Report Header.'
+        Caption = 'Report Title.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -393,9 +384,9 @@ object Main: TMain
       object Label7: TLabel
         Left = 96
         Top = 31
-        Width = 137
+        Width = 112
         Height = 17
-        Caption = 'Report description text.'
+        Caption = 'Report description.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -445,9 +436,9 @@ object Main: TMain
       object Label8: TLabel
         Left = 96
         Top = 4
-        Width = 113
+        Width = 93
         Height = 21
-        Caption = 'Report Header.'
+        Caption = 'Report Title.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -458,9 +449,9 @@ object Main: TMain
       object Label9: TLabel
         Left = 96
         Top = 31
-        Width = 137
+        Width = 112
         Height = 17
-        Caption = 'Report description text.'
+        Caption = 'Report description.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -519,9 +510,9 @@ object Main: TMain
       object Label10: TLabel
         Left = 96
         Top = 4
-        Width = 113
+        Width = 93
         Height = 21
-        Caption = 'Report Header.'
+        Caption = 'Report Title.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
@@ -532,9 +523,9 @@ object Main: TMain
       object Label11: TLabel
         Left = 96
         Top = 31
-        Width = 137
+        Width = 112
         Height = 17
-        Caption = 'Report description text.'
+        Caption = 'Report description.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13

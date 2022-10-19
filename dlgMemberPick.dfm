@@ -11,21 +11,24 @@ object MemberPick: TMemberPick
   Font.Height = -16
   Font.Name = 'Segoe UI'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 21
-  object Label1: TLabel
+  object lbllboxR: TLabel
     Left = 384
-    Top = 35
+    Top = 17
     Width = 241
-    Height = 21
+    Height = 40
     Alignment = taCenter
     AutoSize = False
-    Caption = 'Members for report.'
+    Caption = 'Members selected for report.'
+    WordWrap = True
   end
   object lboxL: TListBox
     Left = 32

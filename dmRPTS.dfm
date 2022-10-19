@@ -5144,4 +5144,40 @@ object RPTS: TRPTS
     Left = 440
     Top = 88
   end
+  object qryINDVmember: TFDQuery
+    ActiveStoredUsage = [auDesignTime]
+    IndexFieldNames = 'MemberID'
+    Connection = SCM.scmConnection
+    UpdateOptions.AssignedValues = [uvEDelete, uvEInsert, uvEUpdate]
+    UpdateOptions.EnableDelete = False
+    UpdateOptions.EnableInsert = False
+    UpdateOptions.EnableUpdate = False
+    SQL.Strings = (
+      'USE SwimClubMeet;'
+      ''
+      'SELECT [MemberID]'
+      '     , [MembershipNum]'
+      '     , [MembershipStr] AS Registration'
+      '     , [MembershipDue]'
+      '     , [FirstName]'
+      '     , [LastName]'
+      '     , [MembershipType].Caption AS MembershipType'
+      '     , [House].Caption AS HouseName'
+      '     , [Member].[IsSwimmer]'
+      '     , [IsActive]'
+      '     , [IsArchived]'
+      'FROM [SwimClubMeet].[dbo].[Member]'
+      '    LEFT JOIN MembershipType'
+      
+        '        ON Member.MembershipTypeID = MembershipType.MembershipTy' +
+        'peID'
+      '    LEFT JOIN House'
+      '        ON Member.HouseID = House.HouseID'
+      'WHERE IsArchived <> 1'
+      '      AND IsActive = 1'
+      '      AND Member.IsSwimmer = 1'
+      '      AND MembershipNum IS NOT NULL')
+    Left = 72
+    Top = 288
+  end
 end
