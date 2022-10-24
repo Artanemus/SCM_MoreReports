@@ -1,4 +1,4 @@
-unit dlgMemberPick;
+unit dlgPickMember;
 
 interface
 
@@ -31,7 +31,7 @@ type
 
   end;
 
-  TMemberPick = class(TForm)
+  TPickMember = class(TForm)
     lboxL: TListBox;
     lboxR: TListBox;
     btnScrDest: TButton;
@@ -77,7 +77,7 @@ type
   end;
 
 var
-  MemberPick: TMemberPick;
+  PickMember: TPickMember;
 
 implementation
 
@@ -101,23 +101,23 @@ end;
 
 { MAIN CLASS }
 
-procedure TMemberPick.btnScrDestAllClick(Sender: TObject);
+procedure TPickMember.btnScrDestAllClick(Sender: TObject);
 begin
   lboxL.SelectAll;
   TransferItems(lboxR, lboxL);
 end;
 
-procedure TMemberPick.btnScrDestClick(Sender: TObject);
+procedure TPickMember.btnScrDestClick(Sender: TObject);
 begin
   TransferItems(lboxR, lboxL);
 end;
 
-procedure TMemberPick.Button7Click(Sender: TObject);
+procedure TPickMember.Button7Click(Sender: TObject);
 begin
   ModalResult := mrOk;
 end;
 
-procedure TMemberPick.edtSearchChange(Sender: TObject);
+procedure TPickMember.edtSearchChange(Sender: TObject);
 var
   I: integer;
   obj: TscmMember;
@@ -143,23 +143,23 @@ begin
   end;
 end;
 
-procedure TMemberPick.btnDestSrcAllClick(Sender: TObject);
+procedure TPickMember.btnDestSrcAllClick(Sender: TObject);
 begin
   lboxR.SelectAll;
   TransferItems(lboxL, lboxR);
 end;
 
-procedure TMemberPick.btnDestSrcClick(Sender: TObject);
+procedure TPickMember.btnDestSrcClick(Sender: TObject);
 begin
   TransferItems(lboxL, lboxR);
 end;
 
-procedure TMemberPick.btnRefreshClick(Sender: TObject);
+procedure TPickMember.btnRefreshClick(Sender: TObject);
 begin
   lboxL.Refresh;
 end;
 
-procedure TMemberPick.FormCreate(Sender: TObject);
+procedure TPickMember.FormCreate(Sender: TObject);
 var
   s, iniFileName: string;
   obj: TscmMember;
@@ -200,12 +200,12 @@ begin
 
 end;
 
-procedure TMemberPick.FormDestroy(Sender: TObject);
+procedure TPickMember.FormDestroy(Sender: TObject);
 begin
   scmMemberList.clear;
 end;
 
-procedure TMemberPick.FormKeyDown(Sender: TObject; var Key: Word;
+procedure TPickMember.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_ESCAPE then
@@ -215,17 +215,17 @@ begin
   end;
 end;
 
-procedure TMemberPick.FormShow(Sender: TObject);
+procedure TPickMember.FormShow(Sender: TObject);
 begin
   edtSearch.SetFocus;
 end;
 
-procedure TMemberPick.lboxLDragDrop(Sender, Source: TObject; X, Y: integer);
+procedure TPickMember.lboxLDragDrop(Sender, Source: TObject; X, Y: integer);
 begin
   TransferItems(Sender, Source);
 end;
 
-procedure TMemberPick.lboxLDragOver(Sender, Source: TObject; X, Y: integer;
+procedure TPickMember.lboxLDragOver(Sender, Source: TObject; X, Y: integer;
   State: TDragState; var Accept: Boolean);
 begin
   { Only let another TListBox drop items }
@@ -235,7 +235,7 @@ begin
     Accept := false;
 end;
 
-procedure TMemberPick.lboxLDrawItem(Control: TWinControl; Index: integer;
+procedure TPickMember.lboxLDrawItem(Control: TWinControl; Index: integer;
   Rect: TRect; State: TOwnerDrawState);
 var
   lb: TListBox;
@@ -244,12 +244,12 @@ begin
   lb.Canvas.TextOut(Rect.Left, Rect.Top, lb.Items[Index]);
 end;
 
-procedure TMemberPick.lboxRDragDrop(Sender, Source: TObject; X, Y: integer);
+procedure TPickMember.lboxRDragDrop(Sender, Source: TObject; X, Y: integer);
 begin
   TransferItems(Sender, Source);
 end;
 
-procedure TMemberPick.lboxRDragOver(Sender, Source: TObject; X, Y: integer;
+procedure TPickMember.lboxRDragOver(Sender, Source: TObject; X, Y: integer;
   State: TDragState; var Accept: Boolean);
 begin
   { Only let another TListBox drop items }
@@ -259,7 +259,7 @@ begin
     Accept := false;
 end;
 
-function TMemberPick.MemberIsAssigned(obj: TObject; lbox: TListBox): Boolean;
+function TPickMember.MemberIsAssigned(obj: TObject; lbox: TListBox): Boolean;
 var
   I: integer;
 begin
@@ -276,7 +276,7 @@ begin
 
 end;
 
-procedure TMemberPick.ReadPreferences(iniFileName: string);
+procedure TPickMember.ReadPreferences(iniFileName: string);
 var
   iFile: TIniFile;
 begin
@@ -285,7 +285,7 @@ begin
   iFile.Free;
 end;
 
-procedure TMemberPick.TransferItems(Sender, Source: TObject);
+procedure TPickMember.TransferItems(Sender, Source: TObject);
 var
   I: integer;
 begin

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   enable-background="new 0 0 20 20"
+   height="48px"
+   viewBox="0 0 20 20"
+   width="48px"
+   fill="#000000"
+   version="1.1"
+   id="svg14"
+   sodipodi:docname="PodiumTrophy.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs18">
+    <linearGradient
+       id="linearGradient1240">
+      <stop
+         style="stop-color:#f2f607;stop-opacity:1;"
+         offset="0"
+         id="stop1236" />
+      <stop
+         style="stop-color:#f0e7d2;stop-opacity:1;"
+         offset="1"
+         id="stop1238" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient1216-1">
+      <stop
+         style="stop-color:#b79222;stop-opacity:1;"
+         offset="0"
+         id="stop1231" />
+      <stop
+         style="stop-color:#f0e7d2;stop-opacity:1;"
+         offset="1"
+         id="stop1233" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient1216-2">
+      <stop
+         style="stop-color:#b79222;stop-opacity:1;"
+         offset="0"
+         id="stop1212" />
+      <stop
+         style="stop-color:#f0e7d2;stop-opacity:1;"
+         offset="1"
+         id="stop1214" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient1195-1">
+      <stop
+         style="stop-color:#575245;stop-opacity:1;"
+         offset="0"
+         id="stop1191" />
+      <stop
+         style="stop-color:#f0e7d2;stop-opacity:1;"
+         offset="1"
+         id="stop1193" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1195-1"
+       id="radialGradient1197"
+       cx="70"
+       cy="10"
+       fx="70"
+       fy="10"
+       r="6.0416665"
+       gradientTransform="matrix(1,0,0,0.91724136,-0.62317429,0.02865746)"
+       gradientUnits="userSpaceOnUse" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1216-1"
+       id="radialGradient1210"
+       cx="40"
+       cy="10"
+       fx="40"
+       fy="10"
+       r="6.0416665"
+       gradientTransform="matrix(1,0,0,0.91724137,-0.62317429,0.02865737)"
+       gradientUnits="userSpaceOnUse" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1240"
+       id="radialGradient1229"
+       cx="100"
+       cy="10"
+       fx="100"
+       fy="10"
+       r="6.0416665"
+       gradientTransform="matrix(1,0,0,0.9172414,-0.62317429,0.02865711)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview16"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="23.354167"
+     inkscape:cx="96.021409"
+     inkscape:cy="24"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:page
+       x="0"
+       y="0"
+       width="20"
+       height="20"
+       id="page543" />
+    <inkscape:page
+       x="30"
+       y="0"
+       width="20"
+       height="20"
+       id="page545"
+       inkscape:export-filename="..\Podium3rd.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <inkscape:page
+       x="60"
+       y="0"
+       width="20"
+       height="20"
+       id="page569"
+       inkscape:export-filename="..\Podium2nd.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <inkscape:page
+       x="90"
+       y="0"
+       width="20"
+       height="20"
+       id="page584"
+       inkscape:export-filename="..\Podium1st.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+  </sodipodi:namedview>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Source">
+    <g
+       id="g4"
+       style="display:inline"
+       inkscape:label="PageRectangle">
+      <rect
+         fill="none"
+         height="20"
+         width="20"
+         x="0"
+         id="rect2"
+         y="0" />
+    </g>
+    <g
+       id="g12"
+       transform="translate(0,-0.5)"
+       style="display:inline"
+       inkscape:label="SourceIcon">
+      <g
+         id="g6" />
+      <g
+         id="g10">
+        <path
+           d="M 15,6 H 13 V 5 H 7 V 6 H 5 C 4.45,6 4,6.45 4,7 v 1 c 0,1.66 1.34,3 3,3 h 0.18 c 0.36,1.01 1.24,1.77 2.32,1.95 V 15 H 7 v 1 h 2.5 1 2.5 V 15 H 10.5 V 12.95 C 11.58,12.77 12.46,12.01 12.82,11 H 13 c 1.66,0 3,-1.34 3,-3 V 7 C 16,6.45 15.55,6 15,6 Z M 5,8 V 7 h 2 v 3 C 5.9,10 5,9.1 5,8 Z m 5,4 C 8.9,12 8,11.1 8,10 V 6 h 4 v 4 c 0,1.1 -0.9,2 -2,2 z m 5,-4 c 0,1.1 -0.9,2 -2,2 V 7 h 2 z"
+           id="path8" />
+      </g>
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Gold">
+    <path
+       d="m 104.37683,4.7010709 h -2 v -1 h -6.000004 v 1 h -2 c -0.549999,0 -1,0.45 -1,1 v 1 c 0,1.66 1.340001,3.0000002 3,3.0000002 h 0.180001 c 0.36,1.0099999 1.239999,1.7699999 2.319999,1.9499999 v 2.05 h -2.5 v 1 h 2.5 1 2.500004 v -1 h -2.500004 v -2.05 c 1.080004,-0.18 1.960004,-0.94 2.320004,-1.9499999 h 0.18 c 1.66,0 3,-1.3400002 3,-3.0000002 v -1 c 0,-0.55 -0.45,-1 -1,-1 z m -10.000004,2 v -1 h 2 v 3.0000004 c -1.099999,0 -2,-0.9000004 -2,-2.0000004 z m 10.000004,0 c 0,1.1 -0.9,2.0000004 -2,2.0000004 V 5.7010709 h 2 z"
+       id="path8-1"
+       style="fill:url(#radialGradient1229);fill-opacity:1;stroke:#000000;stroke-width:0.41666667;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="Gold"
+       sodipodi:nodetypes="sccccssssccccccccccccssssscccsscccs" />
+    <text
+       xml:space="preserve"
+       style="font-size:12.2222px;line-height:1.25;font-family:sans-serif;display:inline;stroke-width:0.416667"
+       x="97.800537"
+       y="16.892279"
+       id="text1310-7"
+       inkscape:label="txt1st"><tspan
+         sodipodi:role="line"
+         id="tspan1308-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.2222px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.416667"
+         x="0"
+         y="0">1</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Silver">
+    <path
+       d="m 74.376826,4.7010713 h -2 v -1 h -6 v 1 h -2 c -0.55,0 -1,0.45 -1,1 v 0.9999996 c 0,1.66 1.34,3.0000002 3,3.0000002 h 0.18 c 0.36,1.0099999 1.24,1.7699999 2.32,1.9499999 v 2.05 h -2.5 v 1 h 2.5 1 2.5 v -1 h -2.5 v -2.05 c 1.08,-0.18 1.96,-0.94 2.32,-1.9499999 h 0.18 c 1.66,0 3,-1.3400002 3,-3.0000002 V 5.7010713 c 0,-0.55 -0.45,-1 -1,-1 z m -10,1.9999996 V 5.7010713 h 2 v 2.9999996 c -1.1,0 -2,-0.9 -2,-2 z m 10,0 c 0,1.1 -0.9,2 -2,2 V 5.7010713 h 2 z"
+       id="path8-6"
+       style="fill:url(#radialGradient1197);fill-opacity:1;stroke:#000000;stroke-width:0.41666667;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="Silver"
+       sodipodi:nodetypes="sccccssssccccccccccccssssscccsscccs" />
+    <text
+       xml:space="preserve"
+       style="font-size:12.2222px;line-height:1.25;font-family:sans-serif;display:inline;stroke-width:0.416667"
+       x="68.272766"
+       y="16.892279"
+       id="text1310-3"
+       inkscape:label="txt2nd"><tspan
+         sodipodi:role="line"
+         id="tspan1308-5"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.2222px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.416667"
+         x="0"
+         y="0">2</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Bronze">
+    <path
+       d="m 44.376826,4.7010712 h -2 v -1 h -6 v 1 h -2 c -0.55,0 -1,0.45 -1,1 v 0.9999999 c 0,1.66 1.34,3 3,3 h 0.18 c 0.36,1.0099999 1.24,1.7699999 2.32,1.9499999 v 2.05 h -2.5 v 1 h 2.5 1 2.5 v -1 h -2.5 v -2.05 c 1.08,-0.18 1.96,-0.94 2.32,-1.9499999 h 0.18 c 1.66,0 3,-1.3400001 3,-3 v -1 c 0,-0.55 -0.45,-1 -1,-0.9999999 z m -10,1.9999999 v -1 h 2 v 3 c -1.1,0 -2,-0.8999999 -2,-2 z m 10,0 c 0,1.1 -0.9,2 -2,2 V 5.7010712 h 2 z"
+       id="path8-2"
+       style="fill:url(#radialGradient1210);fill-opacity:1;stroke:#000000;stroke-width:0.41666667;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="Bronze"
+       sodipodi:nodetypes="sccccssssccccccccccccssssscccsscccs" />
+    <text
+       xml:space="preserve"
+       style="font-size:12.2222px;line-height:1.25;font-family:sans-serif;display:inline;stroke-width:0.416667"
+       x="38.580273"
+       y="16.707275"
+       id="text1310"
+       inkscape:label="txt3rd"><tspan
+         sodipodi:role="line"
+         id="tspan1308"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.2222px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:0.416667"
+         x="0"
+         y="0">3</tspan></text>
+  </g>
+</svg>

@@ -1,4 +1,4 @@
-object MemberPick: TMemberPick
+object PickMember: TPickMember
   Left = 0
   Top = 0
   BorderStyle = bsDialog

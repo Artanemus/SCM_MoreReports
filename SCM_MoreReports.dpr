@@ -12,7 +12,8 @@ uses
   Vcl.Styles,
   dmRPTS in 'dmRPTS.pas' {RPTS: TDataModule},
   dlgMembership in 'dlgMembership.pas' {Membership},
-  dlgMemberPick in 'dlgMemberPick.pas' {MemberPick};
+  dlgPickMember in 'dlgPickMember.pas' {PickMember},
+  dlgPodiumCertif in 'dlgPodiumCertif.pas' {PodiumCertif};
 
 {$R *.res}
 
@@ -22,5 +23,7 @@ begin
   Application.Title := 'SCM_MoreReports';
   TStyleManager.TrySetStyle('Windows10 SlateGray');
   Application.CreateForm(TMain, Main);
+  Application.CreateForm(TPickMember, PickMember);
+  Application.CreateForm(TPodiumCertif, PodiumCertif);
   Application.Run;
 end.
