@@ -13,6 +13,8 @@ object PodiumCertif: TPodiumCertif
   Font.Style = []
   OldCreateOrder = False
   Position = poOwnerFormCenter
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 21
@@ -26,8 +28,6 @@ object PodiumCertif: TPodiumCertif
     BevelKind = bkFlat
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitTop = 582
-    ExplicitWidth = 490
     object btnOk: TButton
       Left = 207
       Top = 13
@@ -48,7 +48,6 @@ object PodiumCertif: TPodiumCertif
     BevelKind = bkFlat
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 490
     object Label1: TLabel
       Left = 19
       Top = 11
@@ -57,14 +56,27 @@ object PodiumCertif: TPodiumCertif
       Alignment = taRightJustify
       Caption = 'Select Session :'
     end
-    object DBComboBox1: TDBComboBox
+    object ComboBox1: TComboBox
       Left = 19
-      Top = 48
+      Top = 38
       Width = 450
       Height = 29
-      DataField = 'Caption'
-      DataSource = dsSession
+      ItemIndex = 0
       TabOrder = 0
+      Text = 'Oct Thu 07 2021 - Club Night 07.10.2021'
+      Items.Strings = (
+        'Oct Thu 07 2021 - Club Night 07.10.2021'
+        'Oct Thu 14 2021 - Club Night 14.10.2021'
+        'Oct Thu 28 2021 - Club Night 28.10.2021'
+        'Nov Thu 04 2021 - Club Night 04.11.2021'
+        'Nov Thu 11 2021 - CLub Nught 11.11.2021'
+        'Nov Thu 18 2021 - CLub Night 17.1122021'
+        'Nov Thu 25 2021 - Club Night 25.11.2021'
+        'Dec Thu 02 2021 - Club Night 02.12.2021'
+        'Jan Thu 27 2022 - Club Night 27.01.2022'
+        'Feb Thu 10 2022 - Club Night 10.02.2022'
+        'Aug Wed 10 2022 - Clear skies + bar-b-que'
+        'Sep Sat 10 2022 - test')
     end
   end
   object Panel3: TPanel
@@ -77,8 +89,6 @@ object PodiumCertif: TPodiumCertif
     Padding.Left = 20
     Padding.Right = 20
     TabOrder = 2
-    ExplicitWidth = 490
-    ExplicitHeight = 485
     object ControlList1: TControlList
       Left = 20
       Top = 0
@@ -93,27 +103,29 @@ object PodiumCertif: TPodiumCertif
       ItemMargins.Bottom = 0
       ParentColor = False
       TabOrder = 0
-      ExplicitWidth = 450
-      ExplicitHeight = 485
-      object Label2: TLabel
-        Left = 16
+      OnBeforeDrawItem = ControlList1BeforeDrawItem
+      OnItemClick = ControlList1ItemClick
+      ExplicitLeft = 19
+      ExplicitTop = -6
+      object lblTitle: TLabel
+        Left = 55
         Top = 6
         Width = 134
         Height = 21
         Caption = 'Ev#.Distance.Stroke'
       end
-      object Label3: TLabel
-        Left = 16
+      object lblDetail: TLabel
+        Left = 55
         Top = 33
         Width = 266
         Height = 40
         AutoSize = False
-        Caption = 'Event description'
+        Caption = 'Event detail'
         WordWrap = True
       end
-      object ControlListButton1: TControlListButton
+      object btnGold: TControlListButton
         Left = 269
-        Top = 10
+        Top = 16
         Width = 48
         Height = 48
         Images = VirtualImageList1
@@ -121,9 +133,9 @@ object PodiumCertif: TPodiumCertif
         ImageName = 'Podium1st'
         LinkHotColor = clHighlight
       end
-      object ControlListButton2: TControlListButton
+      object btnSilver: TControlListButton
         Left = 323
-        Top = 10
+        Top = 16
         Width = 48
         Height = 48
         Images = VirtualImageList1
@@ -131,15 +143,27 @@ object PodiumCertif: TPodiumCertif
         ImageName = 'Podium2nd'
         LinkHotColor = clHighlight
       end
-      object ControlListButton3: TControlListButton
+      object btnBronze: TControlListButton
         Left = 377
-        Top = 10
+        Top = 16
         Width = 48
         Height = 48
         Images = VirtualImageList1
         ImageIndex = 2
         ImageName = 'Podium3rd'
         LinkHotColor = clHighlight
+      end
+      object imgCheck: TVirtualImage
+        Left = 3
+        Top = 16
+        Width = 48
+        Height = 48
+        ImageCollection = ImageCollection1
+        ImageWidth = 0
+        ImageHeight = 0
+        ImageIndex = 3
+        ImageName = 'outline_check_box_black_48dp'
+        OnClick = imgCheckClick
       end
     end
   end
@@ -348,6 +372,45 @@ object PodiumCertif: TPodiumCertif
               996DC05BC0DAA16EC73EE9FE34081C4C7C16E7C03EE13081438DC3040E353EF7
               04FE076DA6C1A1292B007D0000000049454E44AE426082}
           end>
+      end
+      item
+        Name = 'outline_check_box_black_48dp'
+        SourceImages = <
+          item
+            Image.Data = {
+              89504E470D0A1A0A0000000D49484452000000600000006008040000004891BF
+              B3000001C74944415478DAED9B5B4E02311486CF0B51DF5887FB71076EC12BC1
+              05200E827BF182C605F88C1B99E749B08D10113BD2CEF49C3987FCFF792BC9F4
+              FB9229B4B42542100441100441EA734C057D52494BE12A5DAF85EBBD557A34A3
+              4A1C7DB32A47D06B8E3FEF147E5DF3A60A5315F8BEA6CDDEFD4A8D40D5642C14
+              6AF07D15E9020B55028B7481529540992EB0FD08E9B4EE1F0210800004200001
+              0844A54FA79605FAF4E19E3EB42AF08DEF6B6051E007DFD7B53581DFF8BE2E2D
+              09FCC5F7756E45208CBFA4331B02BBF1550BC4E02B1688C3572B108BAF54201E
+              5FA5400ABE4281347C7502A9F8CA04D2F145044EE8800D5F40E0C2B53D462834
+              C36717B85AB53ED1210B3EB3C060A3FD3F85E6F8AC02C3AD4F9E6B14DAE0330A
+              DC04905E020AEDF019051E6A76128FB2E2B3BE42B39D0AEDF199077158E175A5
+              90039FFD6B34BC87FCE614F2E00BFC908515DE33E18B4C25EEA3F718D3F18526
+              7313367CB1D9E884095F703A5DB0E08BAE070A067CE105CD5D767CF115D93833
+              7E074BCA7156FC4ED6C4B719F13B5AD48FB2E177F6AFC428133EB65921000108
+              4000022DFB377FF0D5FCD163F387BFCD1FBF377F01620FAEA098BF04B41E0B86
+              AF61210882200882EC77BE00D2539D6ADA39369E0000000049454E44AE426082}
+          end>
+      end
+      item
+        Name = 'outline_check_box_outline_blank_black_48dp'
+        SourceImages = <
+          item
+            Image.Data = {
+              89504E470D0A1A0A0000000D494844520000006000000060040300000010B66A
+              0B00000024504C54450000000000000000000000000000000000000000000000
+              00000000000000000000000000A65802470000000C74524E53002A8ED5F2FF05
+              92FCBA91D4041031BA0000008049444154780162A0361805A340C824140F7056
+              44579FDE1A8A174494A1AA679B1A4A004426A068E00A250816A0689020ACA111
+              45832A610D41281AB612D6108DA2C195B08610140D2011B480C62F0F68BF0E6D
+              0000601886FDFFF56E88064A5C6EDE00000000000000C000E4A39BAF743EEB39
+              077270E4A4C9D154B3EC3FB3031F5F4FAE9F31A2130000000049454E44AE4260
+              82}
+          end>
       end>
     Left = 272
     Top = 8
@@ -380,9 +443,11 @@ object PodiumCertif: TPodiumCertif
     Left = 360
     Top = 8
   end
-  object qrySession: TFDQuery
+  object qryPSession: TFDQuery
     ActiveStoredUsage = [auDesignTime]
     Active = True
+    IndexFieldNames = 'SessionID'
+    AggregatesActive = True
     Connection = SCM.scmConnection
     FormatOptions.AssignedValues = [fvFmtDisplayDateTime, fvFmtDisplayDate, fvFmtDisplayTime]
     FormatOptions.FmtDisplayDateTime = 'dd/mm/yy HH:MM'
@@ -392,37 +457,88 @@ object PodiumCertif: TPodiumCertif
     UpdateOptions.EnableDelete = False
     UpdateOptions.EnableInsert = False
     UpdateOptions.EnableUpdate = False
+    UpdateOptions.KeyFields = 'SessionID'
     SQL.Strings = (
-      'USE SwimClubMeet'
+      'USE SwimClubMeet;'
       ''
-      'DECLARE @SwimClubID AS INT;'
-      'SET @SwimClubID = :SWIMCLUBID;'
-      ''
-      'SELECT Session.SessionID'
-      #9',Session.SessionStart'
-      #9',Session.SwimClubID'
-      #9',Session.SessionStatusID'
-      #9',SessionStatus.Caption AS StatusStr'
-      #9',Session.Caption'
-      'FROM Session'
       
-        'LEFT OUTER JOIN SessionStatus ON Session.SessionStatusID = Sessi' +
-        'onStatus.SessionStatusID'
-      'WHERE SwimClubID = @SwimClubID AND Session.SessionStatusID <> 2'
-      'ORDER BY Session.SessionStart DESC')
+        '-- Select rows from a Table or View '#39'[Session]'#39' in schema '#39'[dbo]' +
+        #39
+      'SELECT SessionID'
+      
+        '     , CONCAT(FORMAT(SessionStart, '#39'MMM ddd dd yyyy'#39'), '#39' - '#39', Ca' +
+        'ption) AS SessionStr'
+      'FROM [dbo].[Session]'
+      'WHERE SessionStatusID <> 2'
+      'ORDER BY SessionStart DESC;')
     Left = 88
     Top = 256
-    ParamData = <
-      item
-        Name = 'SWIMCLUBID'
-        DataType = ftInteger
-        ParamType = ptInput
-        Value = 1
-      end>
   end
   object dsSession: TDataSource
-    DataSet = qrySession
+    DataSet = qryPSession
     Left = 160
     Top = 256
+  end
+  object qryEvent: TFDQuery
+    ActiveStoredUsage = [auDesignTime]
+    Active = True
+    IndexFieldNames = 'SessionID;EventID'
+    MasterSource = dsSession
+    MasterFields = 'SessionID'
+    Connection = SCM.scmConnection
+    UpdateOptions.AssignedValues = [uvEDelete, uvEInsert, uvEUpdate]
+    UpdateOptions.EnableDelete = False
+    UpdateOptions.EnableInsert = False
+    UpdateOptions.EnableUpdate = False
+    UpdateOptions.KeyFields = 'EventID'
+    SQL.Strings = (
+      'USE SwimClubMeet;'
+      ''
+      '-- Select rows from a Table or View '#39'[Event]'#39' in schema '#39'[dbo]'#39
+      'SELECT '
+      #9#9' [EventID]'
+      #9#9',[EventNum]'
+      #9#9',[ClosedDT]'
+      #9#9',[SessionID]'
+      #9#9',[EventTypeID]'
+      #9#9',Event.[StrokeID]'
+      #9#9',Event.[DistanceID]'
+      #9#9',[EventStatusID]'
+      
+        '        , Concat(Distance.Caption, '#39' '#39', Stroke.Caption) AS Title' +
+        'Str'
+      #9#9',Event.[Caption] As DetailStr'
+      'FROM [SwimClubMeet].[dbo].[Event]'
+      'INNER JOIN Distance ON Event.DistanceID = Distance.DistanceID'
+      'INNER JOIN Stroke ON Event.StrokeID = Stroke.StrokeID'
+      'Order by SessionID DESC, EventNum ASC')
+    Left = 88
+    Top = 344
+  end
+  object dsevent: TDataSource
+    DataSet = qryEvent
+    Left = 160
+    Top = 344
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = qryPSession
+    ScopeMappings = <>
+    Left = 232
+    Top = 408
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 20
+    Top = 5
+    object LinkListControlToField1: TLinkListControlToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'SessionStr'
+      Control = ComboBox1
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
   end
 end

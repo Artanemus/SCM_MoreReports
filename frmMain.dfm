@@ -116,6 +116,7 @@ object Main: TMain
         ImageIndex = 2
         ImageName = 'outline_play_circle_black_48dp'
         Images = VirtualImageList1
+        OnClick = sbtnPodiumCertificatesClick
       end
       object Label2: TLabel
         Left = 96

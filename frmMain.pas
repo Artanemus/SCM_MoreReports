@@ -61,6 +61,7 @@ type
     procedure btnMembershipCardsClick(Sender: TObject);
     procedure btnDesignMembershipCardClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure sbtnPodiumCertificatesClick(Sender: TObject);
   private
     { Private declarations }
     fSwimClubID, fMaxAllowToPick: integer;
@@ -79,7 +80,8 @@ implementation
 {$R *.dfm}
 
 uses dlgBasicLogin, exeinfo, Utility, dlgAbout, System.IniFiles, System.UITypes,
-  System.DateUtils, FireDAC.Stan.Param, dlgMembership, dlgMemberPick;
+  System.DateUtils, FireDAC.Stan.Param, dlgMembership, dlgPickMember,
+  dlgPodiumCertif;
 
 procedure TMain.btnDesignMembershipCardClick(Sender: TObject);
 begin
@@ -217,12 +219,26 @@ begin
   iFile.Free;
 end;
 
+procedure TMain.sbtnPodiumCertificatesClick(Sender: TObject);
+var
+dlg: TPodiumCertif;
+begin
+  if not Assigned(SCM) then
+    Exit;
+  dlg := TPodiumCertif.Create(Self);
+  if IsPositiveResult(dlg.ShowModal) then
+  begin
+    // do something
+  end;
+  dlg.Free;
+end;
+
 procedure TMain.btnMembershipCardsClick(Sender: TObject);
 var
   dlg: TMembership;
   TagNum, I, J: integer;
   doGenerate, doPrefix: Boolean;
-  dlgMP: TMemberPick;
+  dlgMP: TPickMember;
   filterStr, s: string;
   obj: TscmMember;
 begin
@@ -260,7 +276,7 @@ begin
           // -----------------------------------
           FreeAndNil(dlg); // finished with dlg.
           // create the quick pick dlg ...
-          dlgMP := TMemberPick.Create(Self);
+          dlgMP := TPickMember.Create(Self);
           if IsPositiveResult(dlgMP.ShowModal) then
           begin
             // prepare - all swimmers

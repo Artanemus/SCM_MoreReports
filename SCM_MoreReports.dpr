@@ -23,7 +23,5 @@ begin
   Application.Title := 'SCM_MoreReports';
   TStyleManager.TrySetStyle('Windows10 SlateGray');
   Application.CreateForm(TMain, Main);
-  Application.CreateForm(TPickMember, PickMember);
-  Application.CreateForm(TPodiumCertif, PodiumCertif);
   Application.Run;
 end.
