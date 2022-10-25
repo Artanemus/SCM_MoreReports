@@ -70,9 +70,6 @@ Coordinates=611,232,100,33
 [SCM.qrySession]
 Coordinates=415,320,95,51
 
-[imgCheck]
-Coordinates=69,388,63,33
-
 [dsevent]
 Coordinates=355,463,53,33
 
@@ -80,7 +77,7 @@ Coordinates=355,463,53,33
 Coordinates=10,10,72,231
 
 []
-Coordinates=101,1,82,33
+Coordinates=69,388,63,33
 Visible=True
 
 [ComboBox1]

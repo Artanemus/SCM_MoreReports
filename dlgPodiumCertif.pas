@@ -46,11 +46,11 @@ type
     dsSession: TDataSource;
     qryEvent: TFDQuery;
     dsevent: TDataSource;
-    imgCheck: TVirtualImage;
     ComboBox1: TComboBox;
     BindSourceDB1: TBindSourceDB;
     BindingsList1: TBindingsList;
     LinkListControlToField1: TLinkListControlToField;
+    btnCheck: TControlListButton;
     procedure btnOkClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
@@ -59,10 +59,15 @@ type
       ARect: TRect; AState: TOwnerDrawState);
     procedure FormDestroy(Sender: TObject);
     procedure ControlList1ItemClick(Sender: TObject);
-    procedure imgCheckClick(Sender: TObject);
+    procedure btnGoldClick(Sender: TObject);
+    procedure btnCheckClick(Sender: TObject);
+    procedure btnSilverClick(Sender: TObject);
+    procedure btnBronzeClick(Sender: TObject);
+    procedure ComboBox1Change(Sender: TObject);
   private
     { Private declarations }
     PodiumList: TObjectList;
+    IsInit: Boolean;
     procedure UpdatePodiumList();
   public
     { Public declarations }
@@ -95,9 +100,72 @@ end;
 
 { MAIN COMPONENT }
 
+procedure TPodiumCertif.btnBronzeClick(Sender: TObject);
+var
+  obj: TPodium;
+  idx: integer;
+begin
+    idx := ControlList1.ItemIndex;
+  if (idx > -1) and (idx < PodiumList.Count) then
+  begin
+    obj := PodiumList.Items[idx] as TPodium;
+    obj.doBronze := not (obj.doBronze);
+    ControlList1.Paint;
+  end;
+end;
+
+procedure TPodiumCertif.btnCheckClick(Sender: TObject);
+var
+  obj: TPodium;
+  idx: integer;
+begin
+    idx := ControlList1.ItemIndex;
+  if (idx > -1) and (idx < PodiumList.Count) then
+  begin
+    obj := PodiumList.Items[idx] as TPodium;
+    obj.fChecked := not (obj.fChecked);
+    ControlList1.Paint;
+  end;
+end;
+
+procedure TPodiumCertif.btnGoldClick(Sender: TObject);
+var
+  obj: TPodium;
+  idx: integer;
+begin
+    idx := ControlList1.ItemIndex;
+  if (idx > -1) and (idx < PodiumList.Count) then
+  begin
+    obj := PodiumList.Items[idx] as TPodium;
+    obj.doGold := not (obj.doGold);
+    ControlList1.Paint;
+  end;
+end;
+
 procedure TPodiumCertif.btnOkClick(Sender: TObject);
 begin
   ModalResult := mrOk;
+end;
+
+procedure TPodiumCertif.btnSilverClick(Sender: TObject);
+var
+  obj: TPodium;
+  idx: integer;
+begin
+    idx := ControlList1.ItemIndex;
+  if (idx > -1) and (idx < PodiumList.Count) then
+  begin
+    obj := PodiumList.Items[idx] as TPodium;
+    obj.doSilver := not (obj.doSilver);
+    ControlList1.Paint;
+  end;
+end;
+
+procedure TPodiumCertif.ComboBox1Change(Sender: TObject);
+begin
+  if IsInit then exit;
+  UpdatePodiumList;
+  ControlList1.ItemCount := PodiumList.Count;
 end;
 
 procedure TPodiumCertif.ControlList1BeforeDrawItem(AIndex: Integer;
@@ -108,26 +176,27 @@ begin
   if (AIndex > -1) and (AIndex < PodiumList.Count) then
   begin
     obj := PodiumList.Items[AIndex] as TPodium;
+    // if check then process a podium certificate for this event
     if obj.fChecked then
-      imgCheck.ImageIndex := 3
+      btnCheck.ImageIndex := 6
     else
-      imgCheck.ImageIndex := 4;
-
+      btnCheck.ImageIndex := 7;
+    // distance.stroke and event details
     lblTitle.Caption := obj.fTitle;
     lblDetail.Caption := obj.fDetail;
-
+    // determins which certificate is printed.
     if obj.doGold then
       btnGold.ImageIndex := 0
     else
-      btnGold.ImageIndex := 0;
+      btnGold.ImageIndex := 3;
     if obj.doSilver then
       btnSilver.ImageIndex := 1
     else
-      btnSilver.ImageIndex := 1;
+      btnSilver.ImageIndex := 4;
     if obj.doBronze then
       btnBronze.ImageIndex := 2
     else
-      btnBronze.ImageIndex := 2;
+      btnBronze.ImageIndex := 5;
   end;
 end;
 
@@ -148,6 +217,8 @@ begin
     Close;
 
   PodiumList := TObjectList.Create;
+  IsInit := true;
+
 
   if SCM.scmConnection.Connected then
   begin
@@ -164,6 +235,8 @@ begin
       ControlList1.ItemCount := PodiumList.Count;
     end;
   end;
+
+    IsInit := false;
 
 end;
 
@@ -182,14 +255,6 @@ begin
     ModalResult := mrCancel;
     Key := 0;
   end;
-end;
-
-procedure TPodiumCertif.imgCheckClick(Sender: TObject);
-begin
-    if (imgCheck.ImageIndex = 3) then
-      imgCheck.ImageIndex := 4
-    else
-      imgCheck.ImageIndex := 3;
 end;
 
 procedure TPodiumCertif.qrySessionAfterScroll(DataSet: TDataSet);
