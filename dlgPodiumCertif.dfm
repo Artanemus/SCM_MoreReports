@@ -28,7 +28,6 @@ object PodiumCertif: TPodiumCertif
     BevelKind = bkFlat
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 489
     object btnOk: TButton
       Left = 207
       Top = 13
@@ -49,7 +48,6 @@ object PodiumCertif: TPodiumCertif
     BevelKind = bkFlat
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 489
     object Label1: TLabel
       Left = 19
       Top = 11
@@ -63,9 +61,23 @@ object PodiumCertif: TPodiumCertif
       Top = 38
       Width = 450
       Height = 29
+      ItemIndex = 0
       TabOrder = 0
-      Text = 'Oct Thu 07 2021 - Club Night 07.10.2021'
+      Text = 'Sep Sat 10 2022 - test'
       OnChange = ComboBox1Change
+      Items.Strings = (
+        'Sep Sat 10 2022 - test'
+        'Aug Wed 10 2022 - Clear skies + bar-b-que'
+        'Feb Thu 10 2022 - Club Night 10.02.2022'
+        'Jan Thu 27 2022 - Club Night 27.01.2022'
+        'Dec Thu 02 2021 - Club Night 02.12.2021'
+        'Nov Thu 25 2021 - Club Night 25.11.2021'
+        'Nov Thu 18 2021 - CLub Night 17.1122021'
+        'Nov Thu 11 2021 - CLub Nught 11.11.2021'
+        'Nov Thu 04 2021 - Club Night 04.11.2021'
+        'Oct Thu 28 2021 - Club Night 28.10.2021'
+        'Oct Thu 14 2021 - Club Night 14.10.2021'
+        'Oct Thu 07 2021 - Club Night 07.10.2021')
     end
   end
   object Panel3: TPanel
@@ -78,7 +90,6 @@ object PodiumCertif: TPodiumCertif
     Padding.Left = 20
     Padding.Right = 20
     TabOrder = 2
-    ExplicitWidth = 489
     object ControlList1: TControlList
       Left = 20
       Top = 0
@@ -95,7 +106,6 @@ object PodiumCertif: TPodiumCertif
       TabOrder = 0
       OnBeforeDrawItem = ControlList1BeforeDrawItem
       OnItemClick = ControlList1ItemClick
-      ExplicitWidth = 450
       object lblTitle: TLabel
         Left = 63
         Top = 10
@@ -787,6 +797,7 @@ object PodiumCertif: TPodiumCertif
   end
   object qryPSession: TFDQuery
     ActiveStoredUsage = [auDesignTime]
+    Active = True
     Indexes = <
       item
         Active = True
@@ -872,14 +883,14 @@ object PodiumCertif: TPodiumCertif
   object BindSourceDB1: TBindSourceDB
     DataSet = qryPSession
     ScopeMappings = <>
-    Left = 232
-    Top = 408
+    Left = 336
+    Top = 392
   end
   object BindingsList1: TBindingsList
     Methods = <>
     OutputConverters = <>
-    Left = 20
-    Top = 5
+    Left = 340
+    Top = 341
     object LinkListControlToField1: TLinkListControlToField
       Category = 'Quick Bindings'
       DataSource = BindSourceDB1

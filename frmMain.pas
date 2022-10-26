@@ -221,14 +221,76 @@ end;
 
 procedure TMain.sbtnPodiumCertificatesClick(Sender: TObject);
 var
-dlg: TPodiumCertif;
+  dlg: TPodiumCertif;
+  I, J: integer;
+  obj: TPodium;
 begin
   if not Assigned(SCM) then
     Exit;
+  if not Assigned(RPTS) then
+    Exit;
+
   dlg := TPodiumCertif.Create(Self);
   if IsPositiveResult(dlg.ShowModal) then
   begin
-    // do something
+    if not Assigned(RPTS.qryPodiumWinners.Connection) then
+      RPTS.qryPodiumWinners.Connection := SCM.scmConnection;
+    if RPTS.qryPodiumWinners.Active then
+      RPTS.qryPodiumWinners.Close;
+
+    // iterate accross events in podiumlist
+    for I := 0 to dlg.PodiumList.Count-1 do
+    begin
+      obj := dlg.PodiumList.Items[I] as TPodium;
+      if obj.fChecked then
+      begin
+        RPTS.qryPodiumWinners.ParamByName('EVENTID').AsInteger := obj.fEventID;
+        RPTS.qryPodiumWinners.Prepare;
+        RPTS.qryPodiumWinners.Open;
+        // query finds the top three 'fastest' swimmers for the event
+        // fastest swimmer - first
+        if RPTS.qryPodiumWinners.Active then
+        begin
+          // assert
+          // clear report
+          J := 1;
+          while not RPTS.qryPodiumWinners.Eof do
+          begin
+            case J of
+              1:
+                begin
+                  if obj.doGold then
+                  begin
+                    // assign correct layoutA
+                    // report prepare(false) // appended
+                  end;
+                end;
+              2:
+                begin
+                  if obj.doSilver then
+                  begin
+                    // assign correct layoutB
+                    // report prepareReport(false)  // appended
+                  end;
+
+                end;
+              3:
+                begin
+                  if obj.doBronze then
+                  begin
+                    // assign correct layoutC
+                    // report prepareReport(false) // appended
+                  end;
+                end;
+            end;
+            J := J + 1;
+            RPTS.qryPodiumWinners.Next;
+          end;
+          // report.ShowReport
+        end;
+      end;
+    end;
+
   end;
   dlg.Free;
 end;

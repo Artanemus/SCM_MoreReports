@@ -19,11 +19,12 @@ type
 
   TPodium = class(TObject)
   private
+  public
     fTitle, fDetail: string;
     doGold, doSilver, doBronze: Boolean;
     fEventID: Integer;
     fChecked: Boolean;
-  public
+
     constructor Create();
     destructor Destroy(); override;
   end;
@@ -66,11 +67,11 @@ type
     procedure ComboBox1Change(Sender: TObject);
   private
     { Private declarations }
-    PodiumList: TObjectList;
     IsInit: Boolean;
     procedure UpdatePodiumList();
   public
     { Public declarations }
+    PodiumList: TObjectList;
   end;
 
 var

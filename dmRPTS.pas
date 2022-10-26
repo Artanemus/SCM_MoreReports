@@ -22,6 +22,9 @@ type
     frxDesigner1: TfrxDesigner;
     frxBarCodeObject1: TfrxBarCodeObject;
     qryINDVmember: TFDQuery;
+    qryPodiumWinners: TFDQuery;
+    frxDBPodiumWinners: TfrxDBDataset;
+    frxRptPodiumGold: TfrxReport;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
