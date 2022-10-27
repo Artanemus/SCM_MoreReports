@@ -5,20 +5,14 @@ SET @EventID = 506;
 
 SELECT TOP 3
        [Event].[EventID]
-     , [EventNum]
-     , [Event].[Caption] AS DetailStr
      , [Event].[SessionID]
-     , [EventTypeID]
-     , [Event].[StrokeID]
-     , [Event].[DistanceID]
-     , [EventStatusID]
+     , [EventNum]
      , CONCAT(distance.Caption, ' - ', Stroke.Caption) AS EventStr
-     , Session.Caption AS SessionStr
+     , [Event].[Caption] AS EventDetailStr
      , CONCAT(FirstName, ' ', LastName) AS FullName
      , dbo.SwimTimeToString(RaceTime) AS RaceTimeStr
-     , RaceTime
-     , EntrantID
-     ,CAST(CAST(racetime AS DATETIME) AS FLOAT)  as fl
+     , [Session].Caption AS SessionStr
+     , FORMAT(SessionStart, 'ddd, dd MMM yyyy') AS SessionDate
 FROM [SwimClubMeet].[dbo].[Event]
     INNER JOIN Distance
         ON [Event].DistanceID = Distance.DistanceID
@@ -33,7 +27,7 @@ FROM [SwimClubMeet].[dbo].[Event]
     INNER JOIN Member
         ON Entrant.MemberID = Member.MemberID
 WHERE racetime IS NOT NULL
-and CAST(CAST(RaceTime AS DATETIME) AS FLOAT) <> 0 -- resolves assigned 00:00:00.000
+      AND CAST(CAST(RaceTime AS DATETIME) AS FLOAT) <> 0 -- resolves assigned 00:00:00.000
       AND entrant.MemberID IS NOT NULL
       AND IsDisqualified <> 1
       AND IsScratched <> 1

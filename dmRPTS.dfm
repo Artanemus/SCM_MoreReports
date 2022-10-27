@@ -5193,26 +5193,20 @@ object RPTS: TRPTS
       'USE SwimClubMeet;'
       ''
       'DECLARE @EventID AS INTEGER;'
-      'SET @EventID = :EventID; --506;'
+      'SET @EventID = :EVENTID; -- 506;'
       ''
       'SELECT TOP 3'
       '       [Event].[EventID]'
-      '     , [EventNum]'
-      '     , [Event].[Caption] AS DetailStr'
       '     , [Event].[SessionID]'
-      '     , [EventTypeID]'
-      '     , [Event].[StrokeID]'
-      '     , [Event].[DistanceID]'
-      '     , [EventStatusID]'
+      '     , [EventNum]'
       
         '     , CONCAT(distance.Caption, '#39' - '#39', Stroke.Caption) AS EventS' +
         'tr'
-      '     , Session.Caption AS SessionStr'
+      '     , [Event].[Caption] AS EventDetailStr'
       '     , CONCAT(FirstName, '#39' '#39', LastName) AS FullName'
       '     , dbo.SwimTimeToString(RaceTime) AS RaceTimeStr'
-      '     , RaceTime'
-      '     , EntrantID'
-      '     ,CAST(CAST(racetime AS DATETIME) AS FLOAT)  as fl'
+      '     , [Session].Caption AS SessionStr'
+      '     , FORMAT(SessionStart, '#39'ddd, dd MMM yyyy'#39') AS SessionDate'
       'FROM [SwimClubMeet].[dbo].[Event]'
       '    INNER JOIN Distance'
       '        ON [Event].DistanceID = Distance.DistanceID'
@@ -5228,8 +5222,8 @@ object RPTS: TRPTS
       '        ON Entrant.MemberID = Member.MemberID'
       'WHERE racetime IS NOT NULL'
       
-        'and CAST(CAST(RaceTime AS DATETIME) AS FLOAT) <> 0 -- resolves a' +
-        'ssigned 00:00:00.000'
+        '      AND CAST(CAST(RaceTime AS DATETIME) AS FLOAT) <> 0 -- reso' +
+        'lves assigned 00:00:00.000'
       '      AND entrant.MemberID IS NOT NULL'
       '      AND IsDisqualified <> 1'
       '      AND IsScratched <> 1'
@@ -5248,6 +5242,16 @@ object RPTS: TRPTS
   object frxDBPodiumWinners: TfrxDBDataset
     UserName = 'PodiumWinners'
     CloseDataSource = False
+    FieldAliases.Strings = (
+      'EventID=EventID'
+      'SessionID=SessionID'
+      'EventNum=EventNum'
+      'EventStr=EventStr'
+      'EventDetailStr=EventDetailStr'
+      'FullName=FullName'
+      'RaceTimeStr=RaceTimeStr'
+      'SessionStr=SessionStr'
+      'SessionDate=SessionDate')
     DataSet = qryPodiumWinners
     BCDToCurrency = False
     Left = 176
@@ -5262,7 +5266,7 @@ object RPTS: TRPTS
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44860.587846261600000000
-    ReportOptions.LastChange = 44860.587846261600000000
+    ReportOptions.LastChange = 44861.499442951390000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -5300,9 +5304,9 @@ object RPTS: TRPTS
         Top = -2.608695650000000000
         Width = 745.792597830000000000
         Height = 1017.673817480000000000
-        DataField = 'ClubName'
-        DataSet = frxDBSharedHeader
-        DataSetName = 'dsHeader'
+        DataField = 'SessionStr'
+        DataSet = frxDBPodiumWinners
+        DataSetName = 'PodiumWinners'
         Frame.Typ = []
         Picture.Data = {
           0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000031A00
@@ -14085,7 +14089,6 @@ object RPTS: TRPTS
         Top = 875.925925930000000000
         Width = 716.370920750000000000
         Height = 73.527279630000000000
-        DataField = 'DetailStr'
         DataSet = frxDBPodiumWinners
         DataSetName = 'PodiumWinners'
         Font.Charset = DEFAULT_CHARSET
@@ -14096,7 +14099,28 @@ object RPTS: TRPTS
         Frame.Typ = []
         HAlign = haCenter
         Memo.UTF8W = (
-          '[PodiumWinners."DetailStr"]')
+          '[PodiumWinners."EventDetailStr"]')
+        ParentFont = False
+      end
+      object PodiumWinnersSessionDate: TfrxMemoView
+        IndexTag = 1
+        AllowVectorExport = True
+        Left = 125.000000000000000000
+        Top = 231.481481490000000000
+        Width = 468.222772590000000000
+        Height = 18.897650000000000000
+        DataField = 'SessionDate'
+        DataSet = frxDBPodiumWinners
+        DataSetName = 'PodiumWinners'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Frame.Typ = []
+        HAlign = haCenter
+        Memo.UTF8W = (
+          '[PodiumWinners."SessionDate"]')
         ParentFont = False
       end
     end

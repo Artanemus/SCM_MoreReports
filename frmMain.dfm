@@ -29,7 +29,7 @@ object Main: TMain
       1125
       113)
     object DBtxtSwimClubCaption: TDBText
-      Left = 118
+      Left = 126
       Top = 22
       Width = 162
       Height = 21
@@ -38,7 +38,7 @@ object Main: TMain
       DataField = 'Caption'
     end
     object DBtxtSwimClubNickName: TDBText
-      Left = 118
+      Left = 126
       Top = 49
       Width = 181
       Height = 21
@@ -47,7 +47,7 @@ object Main: TMain
       DataField = 'NickName'
     end
     object DBtxtStartOfSwimSeason: TDBText
-      Left = 118
+      Left = 126
       Top = 76
       Width = 144
       Height = 16
@@ -62,7 +62,7 @@ object Main: TMain
       ParentFont = False
     end
     object VirtualImage1: TVirtualImage
-      Left = 12
+      Left = 20
       Top = 7
       Width = 100
       Height = 100
@@ -108,16 +108,6 @@ object Main: TMain
       DesignSize = (
         509
         70)
-      object sbtnPodiumCertificates: TSpeedButton
-        Left = 23
-        Top = 11
-        Width = 48
-        Height = 48
-        ImageIndex = 2
-        ImageName = 'outline_play_circle_black_48dp'
-        Images = VirtualImageList1
-        OnClick = sbtnPodiumCertificatesClick
-      end
       object Label2: TLabel
         Left = 96
         Top = 4
@@ -153,7 +143,19 @@ object Main: TMain
         ImageIndex = 3
         ImageName = 'outline_draw_black_48dp'
         Images = VirtualImageList1
+        TabOrder = 1
+      end
+      object Button6: TButton
+        Left = 23
+        Top = 11
+        Width = 48
+        Height = 48
+        ImageAlignment = iaCenter
+        ImageIndex = 2
+        ImageName = 'outline_play_circle_black_48dp'
+        Images = VirtualImageList1
         TabOrder = 0
+        OnClick = btnPodiumCertificatesClick
       end
     end
     object Panel3: TPanel
@@ -210,7 +212,7 @@ object Main: TMain
         ImageIndex = 3
         ImageName = 'outline_draw_black_48dp'
         Images = VirtualImageList1
-        TabOrder = 0
+        TabOrder = 1
         OnClick = btnDesignMembershipCardClick
       end
       object btnMembershipCards: TButton
@@ -222,255 +224,8 @@ object Main: TMain
         ImageIndex = 2
         ImageName = 'outline_play_circle_black_48dp'
         Images = VirtualImageList1
-        TabOrder = 1
+        TabOrder = 0
         OnClick = btnMembershipCardsClick
-      end
-    end
-    object Panel5: TPanel
-      AlignWithMargins = True
-      Left = 20
-      Top = 163
-      Width = 513
-      Height = 74
-      Margins.Left = 20
-      Margins.Right = 20
-      Align = alTop
-      BevelKind = bkFlat
-      BevelOuter = bvNone
-      BorderWidth = 1
-      Enabled = False
-      TabOrder = 2
-      DesignSize = (
-        509
-        70)
-      object sbtnAttendanceRecords: TSpeedButton
-        Left = 23
-        Top = 11
-        Width = 48
-        Height = 48
-        ImageIndex = 2
-        ImageName = 'outline_play_circle_black_48dp'
-        Images = VirtualImageList1
-      end
-      object Label3: TLabel
-        Left = 96
-        Top = 4
-        Width = 156
-        Height = 21
-        Caption = 'Attendance Records.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Button2: TButton
-        Left = 432
-        Top = 11
-        Width = 48
-        Height = 48
-        Anchors = [akTop, akRight]
-        ImageIndex = 3
-        ImageName = 'outline_draw_black_48dp'
-        Images = VirtualImageList1
-        TabOrder = 0
-        OnClick = btnDesignMembershipCardClick
-      end
-    end
-    object Panel6: TPanel
-      AlignWithMargins = True
-      Left = 20
-      Top = 403
-      Width = 513
-      Height = 74
-      Margins.Left = 20
-      Margins.Right = 20
-      Align = alTop
-      BevelKind = bkFlat
-      BevelOuter = bvNone
-      BorderWidth = 1
-      Enabled = False
-      TabOrder = 3
-      DesignSize = (
-        509
-        70)
-      object SpeedButton1: TSpeedButton
-        Left = 23
-        Top = 11
-        Width = 48
-        Height = 48
-        ImageIndex = 2
-        ImageName = 'outline_play_circle_black_48dp'
-        Images = VirtualImageList1
-      end
-      object Label4: TLabel
-        Left = 96
-        Top = 4
-        Width = 93
-        Height = 21
-        Caption = 'Report Title.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label5: TLabel
-        Left = 96
-        Top = 31
-        Width = 112
-        Height = 17
-        Caption = 'Report description.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Button1: TButton
-        Left = 432
-        Top = 11
-        Width = 48
-        Height = 48
-        Anchors = [akTop, akRight]
-        ImageIndex = 3
-        ImageName = 'outline_draw_black_48dp'
-        Images = VirtualImageList1
-        TabOrder = 0
-        OnClick = btnDesignMembershipCardClick
-      end
-    end
-    object Panel7: TPanel
-      AlignWithMargins = True
-      Left = 20
-      Top = 323
-      Width = 513
-      Height = 74
-      Margins.Left = 20
-      Margins.Right = 20
-      Align = alTop
-      BevelKind = bkFlat
-      BevelOuter = bvNone
-      BorderWidth = 1
-      Enabled = False
-      TabOrder = 4
-      DesignSize = (
-        509
-        70)
-      object SpeedButton2: TSpeedButton
-        Left = 23
-        Top = 11
-        Width = 48
-        Height = 48
-        ImageIndex = 2
-        ImageName = 'outline_play_circle_black_48dp'
-        Images = VirtualImageList1
-      end
-      object Label6: TLabel
-        Left = 96
-        Top = 4
-        Width = 93
-        Height = 21
-        Caption = 'Report Title.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label7: TLabel
-        Left = 96
-        Top = 31
-        Width = 112
-        Height = 17
-        Caption = 'Report description.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Button3: TButton
-        Left = 432
-        Top = 11
-        Width = 48
-        Height = 48
-        Anchors = [akTop, akRight]
-        ImageIndex = 3
-        ImageName = 'outline_draw_black_48dp'
-        Images = VirtualImageList1
-        TabOrder = 0
-        OnClick = btnDesignMembershipCardClick
-      end
-    end
-    object Panel8: TPanel
-      AlignWithMargins = True
-      Left = 20
-      Top = 243
-      Width = 513
-      Height = 74
-      Margins.Left = 20
-      Margins.Right = 20
-      Align = alTop
-      BevelKind = bkFlat
-      BevelOuter = bvNone
-      BorderWidth = 1
-      Enabled = False
-      TabOrder = 5
-      DesignSize = (
-        509
-        70)
-      object SpeedButton3: TSpeedButton
-        Left = 23
-        Top = 11
-        Width = 48
-        Height = 48
-        ImageIndex = 2
-        ImageName = 'outline_play_circle_black_48dp'
-        Images = VirtualImageList1
-      end
-      object Label8: TLabel
-        Left = 96
-        Top = 4
-        Width = 93
-        Height = 21
-        Caption = 'Report Title.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label9: TLabel
-        Left = 96
-        Top = 31
-        Width = 112
-        Height = 17
-        Caption = 'Report description.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Button4: TButton
-        Left = 432
-        Top = 11
-        Width = 48
-        Height = 48
-        Anchors = [akTop, akRight]
-        ImageIndex = 3
-        ImageName = 'outline_draw_black_48dp'
-        Images = VirtualImageList1
-        TabOrder = 0
-        OnClick = btnDesignMembershipCardClick
       end
     end
   end
@@ -482,71 +237,8 @@ object Main: TMain
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
-    object Panel10: TPanel
-      AlignWithMargins = True
-      Left = 20
-      Top = 3
-      Width = 532
-      Height = 74
-      Margins.Left = 20
-      Margins.Right = 20
-      Align = alTop
-      BevelKind = bkFlat
-      BevelOuter = bvNone
-      BorderWidth = 1
-      Enabled = False
-      TabOrder = 0
-      DesignSize = (
-        528
-        70)
-      object SpeedButton4: TSpeedButton
-        Left = 23
-        Top = 11
-        Width = 48
-        Height = 48
-        ImageIndex = 2
-        ImageName = 'outline_play_circle_black_48dp'
-        Images = VirtualImageList1
-      end
-      object Label10: TLabel
-        Left = 96
-        Top = 4
-        Width = 93
-        Height = 21
-        Caption = 'Report Title.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label11: TLabel
-        Left = 96
-        Top = 31
-        Width = 112
-        Height = 17
-        Caption = 'Report description.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Button5: TButton
-        Left = 424
-        Top = 11
-        Width = 48
-        Height = 48
-        Anchors = [akTop, akRight]
-        ImageIndex = 3
-        ImageName = 'outline_draw_black_48dp'
-        Images = VirtualImageList1
-        TabOrder = 0
-        OnClick = btnDesignMembershipCardClick
-      end
-    end
+    ExplicitLeft = 601
+    ExplicitTop = 61
   end
   object ImageCollection1: TImageCollection
     Images = <

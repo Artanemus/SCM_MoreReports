@@ -13,7 +13,8 @@ uses
   dmRPTS in 'dmRPTS.pas' {RPTS: TDataModule},
   dlgMembership in 'dlgMembership.pas' {Membership},
   dlgPickMember in 'dlgPickMember.pas' {PickMember},
-  dlgPodiumCertif in 'dlgPodiumCertif.pas' {PodiumCertif};
+  dlgPodiumCertif in 'dlgPodiumCertif.pas' {PodiumCertif},
+  dlgPodiumPreview in 'dlgPodiumPreview.pas' {PodiumPreview};
 
 {$R *.res}
 

@@ -23,45 +23,21 @@ type
     Panel2: TPanel;
     lblMembershipcardHeader: TLabel;
     Label2: TLabel;
-    Label3: TLabel;
-    sbtnPodiumCertificates: TSpeedButton;
-    sbtnAttendanceRecords: TSpeedButton;
     btnDesignMembershipCard: TButton;
     btnDesignPodium: TButton;
-    Button2: TButton;
     lblMembershipCardDetail: TLabel;
     Panel3: TPanel;
     Panel4: TPanel;
     Label1: TLabel;
-    Panel5: TPanel;
-    Panel6: TPanel;
-    SpeedButton1: TSpeedButton;
-    Label4: TLabel;
-    Button1: TButton;
-    Label5: TLabel;
-    Panel7: TPanel;
-    SpeedButton2: TSpeedButton;
-    Label6: TLabel;
-    Label7: TLabel;
-    Button3: TButton;
-    Panel8: TPanel;
-    SpeedButton3: TSpeedButton;
-    Label8: TLabel;
-    Label9: TLabel;
-    Button4: TButton;
     btnMembershipCards: TButton;
     Panel9: TPanel;
-    Panel10: TPanel;
-    SpeedButton4: TSpeedButton;
-    Label10: TLabel;
-    Label11: TLabel;
-    Button5: TButton;
+    Button6: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnMembershipCardsClick(Sender: TObject);
     procedure btnDesignMembershipCardClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure sbtnPodiumCertificatesClick(Sender: TObject);
+    procedure btnPodiumCertificatesClick(Sender: TObject);
   private
     { Private declarations }
     fSwimClubID, fMaxAllowToPick: integer;
@@ -81,7 +57,7 @@ implementation
 
 uses dlgBasicLogin, exeinfo, Utility, dlgAbout, System.IniFiles, System.UITypes,
   System.DateUtils, FireDAC.Stan.Param, dlgMembership, dlgPickMember,
-  dlgPodiumCertif;
+  dlgPodiumCertif, dlgPodiumPreview, System.Contnrs;
 
 procedure TMain.btnDesignMembershipCardClick(Sender: TObject);
 begin
@@ -207,7 +183,7 @@ end;
 
 procedure TMain.FormShow(Sender: TObject);
 begin
-  btnMembershipCards.SetFocus;
+  // btnMembershipCards.SetFocus;
 end;
 
 procedure TMain.ReadPreferences(iniFileName: string);
@@ -219,9 +195,11 @@ begin
   iFile.Free;
 end;
 
-procedure TMain.sbtnPodiumCertificatesClick(Sender: TObject);
+procedure TMain.btnPodiumCertificatesClick(Sender: TObject);
 var
   dlg: TPodiumCertif;
+  dlgPP: TPodiumPreview;
+
   I, J: integer;
   obj: TPodium;
 begin
@@ -238,8 +216,11 @@ begin
     if RPTS.qryPodiumWinners.Active then
       RPTS.qryPodiumWinners.Close;
 
+    // Clear last report
+    //RPTS.frxRptPodiumGold.PreviewPages.Clear;
+
     // iterate accross events in podiumlist
-    for I := 0 to dlg.PodiumList.Count-1 do
+    for I := 0 to dlg.PodiumList.count - 1 do
     begin
       obj := dlg.PodiumList.Items[I] as TPodium;
       if obj.fChecked then
@@ -261,8 +242,8 @@ begin
                 begin
                   if obj.doGold then
                   begin
-                    // assign correct layoutA
-                    // report prepare(false) // appended
+                    // assign correct layout GOLD - append to..
+                    RPTS.frxRptPodiumGold.PrepareReport(false);
                   end;
                 end;
               2:
@@ -286,21 +267,27 @@ begin
             J := J + 1;
             RPTS.qryPodiumWinners.Next;
           end;
-          // report.ShowReport
+          if RPTS.qryPodiumWinners.RecordCount > 0 then
+          begin
+            // report.ShowReport
+            dlgPP := TPodiumPreview.Create(Self);
+            dlgPP.ShowModal;
+            dlgPP.Free;
+          end;
         end;
       end;
     end;
-
   end;
   dlg.Free;
+
 end;
 
 procedure TMain.btnMembershipCardsClick(Sender: TObject);
 var
   dlg: TMembership;
+  dlgMP: TPickMember;
   TagNum, I, J: integer;
   doGenerate, doPrefix: Boolean;
-  dlgMP: TPickMember;
   filterStr, s: string;
   obj: TscmMember;
 begin
@@ -350,7 +337,7 @@ begin
 
             // limit to 20xCards (2xA4 pages)
             // --------------------------------
-            if dlgMP.lboxR.Count > fMaxAllowToPick then
+            if dlgMP.lboxR.count > fMaxAllowToPick then
             begin
               MessageDlg('You have exceeded the allowed amount of members!' +
                 sLineBreak + 'Only the first ' + IntToStr(fMaxAllowToPick) +
@@ -359,7 +346,7 @@ begin
                 TMsgDlgType.mtWarning, [mbOk], 0);
             end;
 
-            for I := 0 to dlgMP.lboxR.Count - 1 do
+            for I := 0 to dlgMP.lboxR.count - 1 do
             begin
               s := 'MemberID = ';
               obj := dlgMP.lboxR.Items.Objects[I] as TscmMember;
