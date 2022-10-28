@@ -4,7 +4,7 @@ object PodiumCertif: TPodiumCertif
   BorderStyle = bsDialog
   Caption = 'Podium Certificates'
   ClientHeight = 809
-  ClientWidth = 519
+  ClientWidth = 721
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,33 +21,49 @@ object PodiumCertif: TPodiumCertif
   object Panel2: TPanel
     Left = 0
     Top = 745
-    Width = 519
+    Width = 721
     Height = 64
     Align = alBottom
     BevelEdges = [beTop]
     BevelKind = bkFlat
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 519
+    DesignSize = (
+      721
+      62)
     object btnOk: TButton
-      Left = 207
+      Left = 595
       Top = 13
-      Width = 75
+      Width = 110
       Height = 36
+      Anchors = [akTop, akRight]
       Caption = 'Ok'
       TabOrder = 0
       OnClick = btnOkClick
+    end
+    object btnCancel: TButton
+      Left = 479
+      Top = 13
+      Width = 110
+      Height = 36
+      Anchors = [akTop, akRight]
+      Caption = 'Cancel'
+      TabOrder = 1
+      OnClick = btnCancelClick
     end
   end
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 519
+    Width = 721
     Height = 97
     Align = alTop
     BevelEdges = [beBottom]
     BevelKind = bkFlat
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitWidth = 519
     object Label1: TLabel
       Left = 19
       Top = 11
@@ -61,6 +77,8 @@ object PodiumCertif: TPodiumCertif
       Top = 38
       Width = 450
       Height = 29
+      Style = csDropDownList
+      DropDownCount = 14
       ItemIndex = 0
       TabOrder = 0
       Text = 'Sep Sat 10 2022 - test'
@@ -83,19 +101,19 @@ object PodiumCertif: TPodiumCertif
   object Panel3: TPanel
     Left = 0
     Top = 97
-    Width = 519
+    Width = 721
     Height = 648
     Align = alClient
     BevelOuter = bvNone
     Padding.Left = 20
-    Padding.Right = 20
     TabOrder = 2
+    ExplicitWidth = 519
     object ControlList1: TControlList
       Left = 20
       Top = 0
-      Width = 479
+      Width = 501
       Height = 648
-      Align = alClient
+      Align = alLeft
       BorderStyle = bsNone
       ItemHeight = 80
       ItemMargins.Left = 0
@@ -166,6 +184,78 @@ object PodiumCertif: TPodiumCertif
         LinkHotColor = clHighlight
         Style = clbkToolButton
         OnClick = btnCheckClick
+      end
+    end
+    object Panel4: TPanel
+      Left = 536
+      Top = 0
+      Width = 185
+      Height = 648
+      Align = alRight
+      BevelEdges = [beRight]
+      BevelKind = bkFlat
+      BevelOuter = bvNone
+      TabOrder = 1
+      ExplicitLeft = 516
+      object btnSelectAll: TButton
+        Left = 11
+        Top = 36
+        Width = 158
+        Height = 36
+        Caption = 'Select All'
+        TabOrder = 0
+        OnClick = btnSelectAllClick
+      end
+      object btnSelectNone: TButton
+        Left = 11
+        Top = 78
+        Width = 158
+        Height = 36
+        Caption = 'Select None'
+        TabOrder = 1
+        OnClick = btnSelectNoneClick
+      end
+      object btnToggleGold: TButton
+        Left = 11
+        Top = 152
+        Width = 158
+        Height = 36
+        Caption = 'Toggle'
+        ImageIndex = 0
+        ImageName = 'Podium1st'
+        ImageMargins.Left = 1
+        ImageMargins.Top = 4
+        Images = VirtualImageList1
+        TabOrder = 2
+        OnClick = btnToggleGoldClick
+      end
+      object btnToggleSilver: TButton
+        Left = 11
+        Top = 194
+        Width = 158
+        Height = 36
+        Caption = 'Toggle'
+        ImageIndex = 1
+        ImageName = 'Podium2nd'
+        ImageMargins.Left = 1
+        ImageMargins.Top = 4
+        Images = VirtualImageList1
+        TabOrder = 3
+        OnClick = btnToggleSilverClick
+      end
+      object btnToggleBronze: TButton
+        Left = 11
+        Top = 236
+        Width = 158
+        Height = 36
+        Caption = 'Toggle'
+        ImageIndex = 2
+        ImageName = 'Podium3rd'
+        ImageMargins.Left = 1
+        ImageMargins.Top = 4
+        Images = VirtualImageList1
+        TabOrder = 4
+        OnClick = btnToggleBronzeClick
       end
     end
   end
@@ -841,7 +931,6 @@ object PodiumCertif: TPodiumCertif
   end
   object qryEvent: TFDQuery
     ActiveStoredUsage = [auDesignTime]
-    Active = True
     IndexFieldNames = 'SessionID;EventID'
     MasterSource = dsSession
     MasterFields = 'SessionID'
@@ -865,8 +954,8 @@ object PodiumCertif: TPodiumCertif
       #9#9',Event.[DistanceID]'
       #9#9',[EventStatusID]'
       
-        '        , Concat(Distance.Caption, '#39' '#39', Stroke.Caption) AS Title' +
-        'Str'
+        '        ,Concat('#39'Event:'#39', FORMAT(EventNum, '#39'0#'#39'), '#39'  '#39', Distance' +
+        '.Caption, '#39' '#39', Stroke.Caption) AS TitleStr'
       #9#9',Event.[Caption] As DetailStr'
       'FROM [SwimClubMeet].[dbo].[Event]'
       'INNER JOIN Distance ON Event.DistanceID = Distance.DistanceID'

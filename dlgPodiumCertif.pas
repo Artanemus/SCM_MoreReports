@@ -52,6 +52,13 @@ type
     BindingsList1: TBindingsList;
     LinkListControlToField1: TLinkListControlToField;
     btnCheck: TControlListButton;
+    Panel4: TPanel;
+    btnSelectAll: TButton;
+    btnSelectNone: TButton;
+    btnToggleGold: TButton;
+    btnToggleSilver: TButton;
+    btnToggleBronze: TButton;
+    btnCancel: TButton;
     procedure btnOkClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
@@ -65,6 +72,12 @@ type
     procedure btnSilverClick(Sender: TObject);
     procedure btnBronzeClick(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
+    procedure btnSelectAllClick(Sender: TObject);
+    procedure btnSelectNoneClick(Sender: TObject);
+    procedure btnToggleGoldClick(Sender: TObject);
+    procedure btnToggleSilverClick(Sender: TObject);
+    procedure btnToggleBronzeClick(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
   private
     { Private declarations }
     IsInit: Boolean;
@@ -115,6 +128,11 @@ begin
   end;
 end;
 
+procedure TPodiumCertif.btnCancelClick(Sender: TObject);
+begin
+  ModalResult := mrCancel;
+end;
+
 procedure TPodiumCertif.btnCheckClick(Sender: TObject);
 var
   obj: TPodium;
@@ -148,6 +166,28 @@ begin
   ModalResult := mrOk;
 end;
 
+procedure TPodiumCertif.btnSelectAllClick(Sender: TObject);
+var
+  I: Integer;
+begin
+  for I := 0 to PodiumList.Count-1 do
+  begin
+    (PodiumList.Items[I] as TPodium).fChecked := true;
+  end;
+  ControlList1.Paint;
+end;
+
+procedure TPodiumCertif.btnSelectNoneClick(Sender: TObject);
+var
+  I: Integer;
+begin
+  for I := 0 to PodiumList.Count-1 do
+  begin
+    (PodiumList.Items[I] as TPodium).fChecked := false;
+  end;
+  ControlList1.Paint;
+end;
+
 procedure TPodiumCertif.btnSilverClick(Sender: TObject);
 var
   obj: TPodium;
@@ -160,6 +200,45 @@ begin
     obj.doSilver := not (obj.doSilver);
     ControlList1.Paint;
   end;
+end;
+
+procedure TPodiumCertif.btnToggleBronzeClick(Sender: TObject);
+var
+  I: Integer;
+  obj: TPodium;
+begin
+  for I := 0 to PodiumList.Count-1 do
+  begin
+    obj := PodiumList.Items[I] as TPodium;
+    obj.doBronze := not obj.doBronze;
+  end;
+  ControlList1.Paint;
+end;
+
+procedure TPodiumCertif.btnToggleGoldClick(Sender: TObject);
+var
+  I: Integer;
+  obj: TPodium;
+begin
+  for I := 0 to PodiumList.Count-1 do
+  begin
+    obj := PodiumList.Items[I] as TPodium;
+    obj.doGold := not obj.doGold;
+  end;
+  ControlList1.Paint;
+end;
+
+procedure TPodiumCertif.btnToggleSilverClick(Sender: TObject);
+var
+  I: Integer;
+  obj: TPodium;
+begin
+  for I := 0 to PodiumList.Count-1 do
+  begin
+    obj := PodiumList.Items[I] as TPodium;
+    obj.doSilver := not obj.doSilver;
+  end;
+  ControlList1.Paint;
 end;
 
 procedure TPodiumCertif.ComboBox1Change(Sender: TObject);

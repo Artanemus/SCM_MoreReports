@@ -5,6 +5,7 @@ SET @EventID = 506;
 
 SELECT TOP 3
        [Event].[EventID]
+     , ROW_NUMBER() OVER (ORDER BY RaceTime ASC) AS Place
      , [Event].[SessionID]
      , [EventNum]
      , CONCAT(distance.Caption, ' - ', Stroke.Caption) AS EventStr

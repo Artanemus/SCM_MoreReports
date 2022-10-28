@@ -10,7 +10,7 @@ SELECT
 		,Event.[StrokeID]
 		,Event.[DistanceID]
 		,[EventStatusID]
-        ,Concat(Distance.Caption, ' ', Stroke.Caption) AS TitleStr
+        ,Concat('Event:', FORMAT(EventNum, '0#'), '  ', Distance.Caption, ' ', Stroke.Caption) AS TitleStr
 		,Event.[Caption] As DetailStr
 FROM [SwimClubMeet].[dbo].[Event]
 INNER JOIN Distance ON Event.DistanceID = Distance.DistanceID

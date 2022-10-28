@@ -24,8 +24,12 @@ type
     qryINDVmember: TFDQuery;
     qryPodiumWinners: TFDQuery;
     frxDBPodiumWinners: TfrxDBDataset;
+    frxRptPodiumGeneric: TfrxReport;
+    frxRptPodiumSilver: TfrxReport;
+    frxRptPodiumBronze: TfrxReport;
     frxRptPodiumGold: TfrxReport;
     procedure DataModuleCreate(Sender: TObject);
+    procedure frxRptPodiumGoldBeforePrint(Sender: TfrxReportComponent);
   private
     { Private declarations }
     fIsActive: boolean;
@@ -60,6 +64,22 @@ begin
 
   end;
 end;
+
+procedure TRPTS.frxRptPodiumGoldBeforePrint(Sender: TfrxReportComponent);
+//var
+//page: TfrxReportPage;
+//obj: TObject;
+begin
+//  obj := frxRptPodiumGold.FindObject('Page1');
+//  if assigned(obj) then
+//  begin
+//  page := obj as TfrxReportPage;
+
+
+  //page.BackPicture.Assign('D:\Scard\Pictures\abbasi.jpg');
+end;
+
+
 
 procedure TRPTS.PrepareMembership(sdate, edate: TDATETIME; switch: boolean);
 begin

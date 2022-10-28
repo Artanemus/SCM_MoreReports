@@ -198,9 +198,7 @@ end;
 procedure TMain.btnPodiumCertificatesClick(Sender: TObject);
 var
   dlg: TPodiumCertif;
-  dlgPP: TPodiumPreview;
-
-  I, J: integer;
+  I: integer;
   obj: TPodium;
 begin
   if not Assigned(SCM) then
@@ -217,7 +215,9 @@ begin
       RPTS.qryPodiumWinners.Close;
 
     // Clear last report
-    //RPTS.frxRptPodiumGold.PreviewPages.Clear;
+    RPTS.frxRptPodiumGold.PreviewPages.Clear;
+    RPTS.frxRptPodiumSilver.PreviewPages.Clear;
+    RPTS.frxRptPodiumBronze.PreviewPages.Clear;
 
     // iterate accross events in podiumlist
     for I := 0 to dlg.PodiumList.count - 1 do
@@ -229,50 +229,39 @@ begin
         RPTS.qryPodiumWinners.Prepare;
         RPTS.qryPodiumWinners.Open;
         // query finds the top three 'fastest' swimmers for the event
-        // fastest swimmer - first
         if RPTS.qryPodiumWinners.Active then
         begin
-          // assert
-          // clear report
-          J := 1;
-          while not RPTS.qryPodiumWinners.Eof do
-          begin
-            case J of
-              1:
-                begin
-                  if obj.doGold then
-                  begin
-                    // assign correct layout GOLD - append to..
-                    RPTS.frxRptPodiumGold.PrepareReport(false);
-                  end;
-                end;
-              2:
-                begin
-                  if obj.doSilver then
-                  begin
-                    // assign correct layoutB
-                    // report prepareReport(false)  // appended
-                  end;
-
-                end;
-              3:
-                begin
-                  if obj.doBronze then
-                  begin
-                    // assign correct layoutC
-                    // report prepareReport(false) // appended
-                  end;
-                end;
-            end;
-            J := J + 1;
-            RPTS.qryPodiumWinners.Next;
-          end;
+          // record 1 = GOLD
           if RPTS.qryPodiumWinners.RecordCount > 0 then
           begin
-            // report.ShowReport
-            dlgPP := TPodiumPreview.Create(Self);
-            dlgPP.ShowModal;
-            dlgPP.Free;
+            if obj.doGold then
+            begin
+              RPTS.frxRptPodiumGold.PrepareReport(false);
+              if RPTS.frxRptPodiumGold.PreviewPages.count > 0 then
+                RPTS.frxRptPodiumGold.ShowPreparedReport;
+            end;
+          end;
+          // record 2 = SILVER
+          if RPTS.qryPodiumWinners.RecordCount > 1 then
+          begin
+            RPTS.qryPodiumWinners.Next;
+            if obj.doSilver then
+            begin
+              RPTS.frxRptPodiumSilver.PrepareReport(false);
+              if RPTS.frxRptPodiumSilver.PreviewPages.count > 0 then
+                RPTS.frxRptPodiumSilver.ShowPreparedReport;
+            end;
+          end;
+          // record 3 = BRONZE
+          if RPTS.qryPodiumWinners.RecordCount > 2 then
+          begin
+            RPTS.qryPodiumWinners.Next;
+            if obj.doBronze then
+            begin
+              RPTS.frxRptPodiumBronze.PrepareReport(false);
+              if RPTS.frxRptPodiumBronze.PreviewPages.count > 0 then
+                RPTS.frxRptPodiumBronze.ShowPreparedReport;
+            end;
           end;
         end;
       end;

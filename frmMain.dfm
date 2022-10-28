@@ -237,8 +237,6 @@ object Main: TMain
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitLeft = 601
-    ExplicitTop = 61
   end
   object ImageCollection1: TImageCollection
     Images = <
