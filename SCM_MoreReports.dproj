@@ -174,12 +174,12 @@
             <Form>PickMember</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="dlgPodiumCertif.pas">
-            <Form>PodiumCertif</Form>
+        <DCCReference Include="dlgPickCertif.pas">
+            <Form>PickCertif</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="dlgPodiumPreview.pas">
-            <Form>PodiumPreview</Form>
+        <DCCReference Include="dlgDesignCertif.pas">
+            <Form>DesignCertif</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Debug">

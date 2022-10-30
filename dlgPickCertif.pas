@@ -1,4 +1,4 @@
-unit dlgPodiumCertif;
+unit dlgPickCertif;
 
 interface
 
@@ -29,7 +29,7 @@ type
     destructor Destroy(); override;
   end;
 
-  TPodiumCertif = class(TForm)
+  TPickCertif = class(TForm)
     Panel2: TPanel;
     Label1: TLabel;
     btnOk: TButton;
@@ -88,7 +88,7 @@ type
   end;
 
 var
-  PodiumCertif: TPodiumCertif;
+  PickCertif: TPickCertif;
 
 implementation
 
@@ -114,7 +114,7 @@ end;
 
 { MAIN COMPONENT }
 
-procedure TPodiumCertif.btnBronzeClick(Sender: TObject);
+procedure TPickCertif.btnBronzeClick(Sender: TObject);
 var
   obj: TPodium;
   idx: integer;
@@ -128,12 +128,12 @@ begin
   end;
 end;
 
-procedure TPodiumCertif.btnCancelClick(Sender: TObject);
+procedure TPickCertif.btnCancelClick(Sender: TObject);
 begin
   ModalResult := mrCancel;
 end;
 
-procedure TPodiumCertif.btnCheckClick(Sender: TObject);
+procedure TPickCertif.btnCheckClick(Sender: TObject);
 var
   obj: TPodium;
   idx: integer;
@@ -147,7 +147,7 @@ begin
   end;
 end;
 
-procedure TPodiumCertif.btnGoldClick(Sender: TObject);
+procedure TPickCertif.btnGoldClick(Sender: TObject);
 var
   obj: TPodium;
   idx: integer;
@@ -161,12 +161,12 @@ begin
   end;
 end;
 
-procedure TPodiumCertif.btnOkClick(Sender: TObject);
+procedure TPickCertif.btnOkClick(Sender: TObject);
 begin
   ModalResult := mrOk;
 end;
 
-procedure TPodiumCertif.btnSelectAllClick(Sender: TObject);
+procedure TPickCertif.btnSelectAllClick(Sender: TObject);
 var
   I: Integer;
 begin
@@ -177,7 +177,7 @@ begin
   ControlList1.Paint;
 end;
 
-procedure TPodiumCertif.btnSelectNoneClick(Sender: TObject);
+procedure TPickCertif.btnSelectNoneClick(Sender: TObject);
 var
   I: Integer;
 begin
@@ -188,7 +188,7 @@ begin
   ControlList1.Paint;
 end;
 
-procedure TPodiumCertif.btnSilverClick(Sender: TObject);
+procedure TPickCertif.btnSilverClick(Sender: TObject);
 var
   obj: TPodium;
   idx: integer;
@@ -202,7 +202,7 @@ begin
   end;
 end;
 
-procedure TPodiumCertif.btnToggleBronzeClick(Sender: TObject);
+procedure TPickCertif.btnToggleBronzeClick(Sender: TObject);
 var
   I: Integer;
   obj: TPodium;
@@ -215,7 +215,7 @@ begin
   ControlList1.Paint;
 end;
 
-procedure TPodiumCertif.btnToggleGoldClick(Sender: TObject);
+procedure TPickCertif.btnToggleGoldClick(Sender: TObject);
 var
   I: Integer;
   obj: TPodium;
@@ -228,7 +228,7 @@ begin
   ControlList1.Paint;
 end;
 
-procedure TPodiumCertif.btnToggleSilverClick(Sender: TObject);
+procedure TPickCertif.btnToggleSilverClick(Sender: TObject);
 var
   I: Integer;
   obj: TPodium;
@@ -241,14 +241,14 @@ begin
   ControlList1.Paint;
 end;
 
-procedure TPodiumCertif.ComboBox1Change(Sender: TObject);
+procedure TPickCertif.ComboBox1Change(Sender: TObject);
 begin
   if IsInit then exit;
   UpdatePodiumList;
   ControlList1.ItemCount := PodiumList.Count;
 end;
 
-procedure TPodiumCertif.ControlList1BeforeDrawItem(AIndex: Integer;
+procedure TPickCertif.ControlList1BeforeDrawItem(AIndex: Integer;
   ACanvas: TCanvas; ARect: TRect; AState: TOwnerDrawState);
 var
   obj: TPodium;
@@ -280,7 +280,7 @@ begin
   end;
 end;
 
-procedure TPodiumCertif.ControlList1ItemClick(Sender: TObject);
+procedure TPickCertif.ControlList1ItemClick(Sender: TObject);
 begin
   if (Sender is TVirtualImage) then
   begin
@@ -291,7 +291,7 @@ begin
   end;
 end;
 
-procedure TPodiumCertif.FormCreate(Sender: TObject);
+procedure TPickCertif.FormCreate(Sender: TObject);
 begin
   if not Assigned(SCM) then
     Close;
@@ -320,14 +320,14 @@ begin
 
 end;
 
-procedure TPodiumCertif.FormDestroy(Sender: TObject);
+procedure TPickCertif.FormDestroy(Sender: TObject);
 begin
   if Assigned(PodiumList) then
     PodiumList.Clear;
   FreeAndNil(PodiumList);
 end;
 
-procedure TPodiumCertif.FormKeyDown(Sender: TObject; var Key: Word;
+procedure TPickCertif.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_ESCAPE then
@@ -337,13 +337,13 @@ begin
   end;
 end;
 
-procedure TPodiumCertif.qrySessionAfterScroll(DataSet: TDataSet);
+procedure TPickCertif.qrySessionAfterScroll(DataSet: TDataSet);
 begin
   // UpdatePodiumList;
   // ControlList1.ItemCount := PodiumList.Count;
 end;
 
-procedure TPodiumCertif.UpdatePodiumList;
+procedure TPickCertif.UpdatePodiumList;
 var
   obj: TPodium;
 begin

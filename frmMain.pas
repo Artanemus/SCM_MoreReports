@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, dmSCM, Vcl.StdCtrls, Vcl.DBCtrls,
   Vcl.ExtCtrls, Vcl.VirtualImage, Vcl.BaseImageCollection, Vcl.ImageCollection,
   Vcl.Buttons, System.ImageList, Vcl.ImgList, Vcl.VirtualImageList, dmRPTS,
-  Vcl.Themes;
+  Vcl.Themes, Vcl.ComCtrls;
 
 type
   TMain = class(TForm)
@@ -32,12 +32,16 @@ type
     btnMembershipCards: TButton;
     Panel9: TPanel;
     Button6: TButton;
+    ProgressBar1: TProgressBar;
+    sbtnInfo: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnMembershipCardsClick(Sender: TObject);
     procedure btnDesignMembershipCardClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnPodiumCertificatesClick(Sender: TObject);
+    procedure btnDesignPodiumClick(Sender: TObject);
+    procedure sbtnInfoClick(Sender: TObject);
   private
     { Private declarations }
     fSwimClubID, fMaxAllowToPick: integer;
@@ -57,7 +61,7 @@ implementation
 
 uses dlgBasicLogin, exeinfo, Utility, dlgAbout, System.IniFiles, System.UITypes,
   System.DateUtils, FireDAC.Stan.Param, dlgMembership, dlgPickMember,
-  dlgPodiumCertif, dlgPodiumPreview, System.Contnrs;
+  dlgPickCertif, System.Contnrs, dlgDesignCertif;
 
 procedure TMain.btnDesignMembershipCardClick(Sender: TObject);
 begin
@@ -195,9 +199,18 @@ begin
   iFile.Free;
 end;
 
+procedure TMain.sbtnInfoClick(Sender: TObject);
+var
+dlg: TAbout;
+begin
+  dlg := TAbout.Create(Self);
+  dlg.ShowModal;
+  dlg.Free;
+end;
+
 procedure TMain.btnPodiumCertificatesClick(Sender: TObject);
 var
-  dlg: TPodiumCertif;
+  dlg: TPickCertif;
   I: integer;
   obj: TPodium;
 begin
@@ -206,18 +219,17 @@ begin
   if not Assigned(RPTS) then
     Exit;
 
-  dlg := TPodiumCertif.Create(Self);
+  dlg := TPickCertif.Create(Self);
   if IsPositiveResult(dlg.ShowModal) then
   begin
     if not Assigned(RPTS.qryPodiumWinners.Connection) then
       RPTS.qryPodiumWinners.Connection := SCM.scmConnection;
-    if RPTS.qryPodiumWinners.Active then
-      RPTS.qryPodiumWinners.Close;
 
     // Clear last report
-    RPTS.frxRptPodiumGold.PreviewPages.Clear;
-    RPTS.frxRptPodiumSilver.PreviewPages.Clear;
-    RPTS.frxRptPodiumBronze.PreviewPages.Clear;
+    RPTS.frxRptPodium.PreviewPages.Clear;
+    ProgressBar1.Max := dlg.PodiumList.count;
+    ProgressBar1.Position := 0;
+    ProgressBar1.Visible := True;
 
     // iterate accross events in podiumlist
     for I := 0 to dlg.PodiumList.count - 1 do
@@ -225,6 +237,8 @@ begin
       obj := dlg.PodiumList.Items[I] as TPodium;
       if obj.fChecked then
       begin
+        if RPTS.qryPodiumWinners.Active then
+          RPTS.qryPodiumWinners.Close;
         RPTS.qryPodiumWinners.ParamByName('EVENTID').AsInteger := obj.fEventID;
         RPTS.qryPodiumWinners.Prepare;
         RPTS.qryPodiumWinners.Open;
@@ -236,9 +250,8 @@ begin
           begin
             if obj.doGold then
             begin
-              RPTS.frxRptPodiumGold.PrepareReport(false);
-              if RPTS.frxRptPodiumGold.PreviewPages.count > 0 then
-                RPTS.frxRptPodiumGold.ShowPreparedReport;
+              RPTS.AssignParams(1);
+              RPTS.frxRptPodium.PrepareReport(false);
             end;
           end;
           // record 2 = SILVER
@@ -247,9 +260,8 @@ begin
             RPTS.qryPodiumWinners.Next;
             if obj.doSilver then
             begin
-              RPTS.frxRptPodiumSilver.PrepareReport(false);
-              if RPTS.frxRptPodiumSilver.PreviewPages.count > 0 then
-                RPTS.frxRptPodiumSilver.ShowPreparedReport;
+              RPTS.AssignParams(2);
+              RPTS.frxRptPodium.PrepareReport(false);
             end;
           end;
           // record 3 = BRONZE
@@ -258,17 +270,32 @@ begin
             RPTS.qryPodiumWinners.Next;
             if obj.doBronze then
             begin
-              RPTS.frxRptPodiumBronze.PrepareReport(false);
-              if RPTS.frxRptPodiumBronze.PreviewPages.count > 0 then
-                RPTS.frxRptPodiumBronze.ShowPreparedReport;
+              RPTS.AssignParams(3);
+              RPTS.frxRptPodium.PrepareReport(false);
             end;
           end;
         end;
       end;
+      ProgressBar1.StepIt;
     end;
+    if RPTS.frxRptPodium.PreviewPages.count > 0 then
+      RPTS.frxRptPodium.ShowPreparedReport;
   end;
   dlg.Free;
+  ProgressBar1.Visible := false;
 
+end;
+
+procedure TMain.btnDesignPodiumClick(Sender: TObject);
+var
+dlg: TDesignCertif;
+begin
+  if Assigned(RPTS) then
+  begin
+    dlg := TDesignCertif.Create(Self);
+    dlg.ShowModal;
+    dlg.Free;
+  end;
 end;
 
 procedure TMain.btnMembershipCardsClick(Sender: TObject);

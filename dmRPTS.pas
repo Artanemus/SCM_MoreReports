@@ -7,7 +7,9 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   frxClass, frxDBSet, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  frxDesgn, frxExportImage, frxExportBaseDialog, frxExportPDF, frxBarcode;
+  frxDesgn, frxExportImage, frxExportBaseDialog, frxExportPDF, frxBarcode,
+  Vcl.BaseImageCollection, Vcl.ImageCollection, Vcl.Graphics, System.ImageList,
+  Vcl.ImgList, Vcl.VirtualImageList;
 
 type
   TRPTS = class(TDataModule)
@@ -24,12 +26,8 @@ type
     qryINDVmember: TFDQuery;
     qryPodiumWinners: TFDQuery;
     frxDBPodiumWinners: TfrxDBDataset;
-    frxRptPodiumGeneric: TfrxReport;
-    frxRptPodiumSilver: TfrxReport;
-    frxRptPodiumBronze: TfrxReport;
-    frxRptPodiumGold: TfrxReport;
+    frxRptPodium: TfrxReport;
     procedure DataModuleCreate(Sender: TObject);
-    procedure frxRptPodiumGoldBeforePrint(Sender: TfrxReportComponent);
   private
     { Private declarations }
     fIsActive: boolean;
@@ -37,6 +35,7 @@ type
   public
     { Public declarations }
     procedure PrepareMembership(sdate, edate: TDATETIME; switch: boolean);
+    procedure AssignParams(Place: integer);
   end;
 
 var
@@ -46,6 +45,48 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 {$R *.dfm}
+
+procedure TRPTS.AssignParams(Place: integer);
+var
+  page: TfrxReportPage;
+  sl: TfrxMemoView;
+begin
+  sl := frxRptPodium.FindComponent('MemoPodiumPlace') As TfrxMemoView;
+  page := frxRptPodium.FindComponent('Page1') AS TfrxReportPage;
+
+  if Assigned(sl) then
+  begin
+    sl.Memo.Clear;
+  end;
+  case Place of
+    1:
+      begin
+        if Assigned(sl) then
+          sl.Memo.Add('1st Place');
+        if Assigned(page) then
+        begin
+          page.BackPicture.LoadFromFile
+            ('C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\CertificateGold.png');
+        end;
+      end;
+    2:
+      begin
+        if Assigned(sl) then
+          sl.Memo.Add('2nd Place');
+        if Assigned(page) then
+          page.BackPicture.LoadFromFile
+            ('C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\CertificateSilver.png');
+      end;
+    3:
+      begin
+        if Assigned(sl) then
+          sl.Memo.Add('3rd Place');
+        if Assigned(page) then
+          page.BackPicture.LoadFromFile
+            ('C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\CertificateBronze.png');
+      end;
+  end;
+end;
 
 procedure TRPTS.DataModuleCreate(Sender: TObject);
 begin
@@ -64,22 +105,6 @@ begin
 
   end;
 end;
-
-procedure TRPTS.frxRptPodiumGoldBeforePrint(Sender: TfrxReportComponent);
-//var
-//page: TfrxReportPage;
-//obj: TObject;
-begin
-//  obj := frxRptPodiumGold.FindObject('Page1');
-//  if assigned(obj) then
-//  begin
-//  page := obj as TfrxReportPage;
-
-
-  //page.BackPicture.Assign('D:\Scard\Pictures\abbasi.jpg');
-end;
-
-
 
 procedure TRPTS.PrepareMembership(sdate, edate: TDATETIME; switch: boolean);
 begin
@@ -100,7 +125,7 @@ begin
         // DO something
       end;
     finally
-        // qryMember.Close;
+      // qryMember.Close;
     end;
   end;
 end;
