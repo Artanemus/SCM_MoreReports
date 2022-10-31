@@ -3,7 +3,7 @@ object DesignCertif: TDesignCertif
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Podium Certificates - Preview, print and export.'
-  ClientHeight = 420
+  ClientHeight = 283
   ClientWidth = 602
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object DesignCertif: TDesignCertif
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 21
-  object VirtualImage1: TVirtualImage
+  object vimgGold: TVirtualImage
     Left = 24
     Top = 24
     Width = 169
@@ -26,10 +26,11 @@ object DesignCertif: TDesignCertif
     ImageCollection = ImageCollection1
     ImageWidth = 0
     ImageHeight = 0
-    ImageIndex = 3
-    ImageName = 'CertificateGold'
+    ImageIndex = 0
+    ImageName = 'PodiumMedalGold'
+    OnClick = vimgGoldClick
   end
-  object VirtualImage2: TVirtualImage
+  object vimgSilver: TVirtualImage
     Left = 216
     Top = 24
     Width = 169
@@ -37,10 +38,10 @@ object DesignCertif: TDesignCertif
     ImageCollection = ImageCollection1
     ImageWidth = 0
     ImageHeight = 0
-    ImageIndex = 4
-    ImageName = 'CertificateSilver'
+    ImageIndex = 1
+    ImageName = 'PodiumMedalSilver'
   end
-  object VirtualImage3: TVirtualImage
+  object vimgBronze: TVirtualImage
     Left = 408
     Top = 24
     Width = 169
@@ -48,66 +49,15 @@ object DesignCertif: TDesignCertif
     ImageCollection = ImageCollection1
     ImageWidth = 0
     ImageHeight = 0
-    ImageIndex = 5
-    ImageName = 'CertificateBronze'
+    ImageIndex = 2
+    ImageName = 'PodiumMedalBronze'
   end
-  object btnBkgrdGold: TButton
-    Left = 24
+  object Label1: TLabel
+    Left = 136
     Top = 232
-    Width = 169
-    Height = 57
-    Caption = 'Pick Gold Background Picture'
-    TabOrder = 0
-    WordWrap = True
-    OnClick = btnBkgrdGoldClick
-  end
-  object btnBkgrdSilver: TButton
-    Left = 216
-    Top = 232
-    Width = 169
-    Height = 57
-    Caption = 'Pick Silver Background Picture'
-    TabOrder = 1
-    WordWrap = True
-  end
-  object btnBkgrdBronze: TButton
-    Left = 408
-    Top = 232
-    Width = 169
-    Height = 57
-    Caption = 'Pick Bronze Background Picture'
-    TabOrder = 2
-    WordWrap = True
-  end
-  object Panel1: TPanel
-    Left = 0
-    Top = 366
-    Width = 602
-    Height = 54
-    Align = alBottom
-    BevelEdges = [beTop]
-    BevelKind = bkFlat
-    BevelOuter = bvNone
-    TabOrder = 3
-    ExplicitTop = 296
-    object btnClose: TButton
-      Left = 264
-      Top = 8
-      Width = 75
-      Height = 36
-      Caption = 'Close'
-      TabOrder = 0
-      OnClick = btnCloseClick
-    end
-  end
-  object btnDesignReport: TButton
-    Left = 24
-    Top = 312
-    Width = 553
-    Height = 41
-    Caption = 'Design Podium Certificate Report.'
-    TabOrder = 4
-    OnClick = btnDesignReportClick
+    Width = 317
+    Height = 21
+    Caption = 'Click the report icon to review, print or export.'
   end
   object ImageCollection1: TImageCollection
     Images = <
@@ -26704,11 +26654,7 @@ object DesignCertif: TDesignCertif
               9D7F04FBFD1F6EC366A13C0000000049454E44AE426082}
           end>
       end>
-    Left = 96
-    Top = 376
-  end
-  object OpenPictureDialog1: TOpenPictureDialog
-    Left = 448
-    Top = 376
+    Left = 168
+    Top = 8
   end
 end

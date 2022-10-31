@@ -61,7 +61,7 @@ implementation
 
 uses dlgBasicLogin, exeinfo, Utility, dlgAbout, System.IniFiles, System.UITypes,
   System.DateUtils, FireDAC.Stan.Param, dlgMembership, dlgPickMember,
-  dlgPickCertif, System.Contnrs, dlgDesignCertif;
+  dlgPickCertif, System.Contnrs, dlgDesignCertif, System.StrUtils;
 
 procedure TMain.btnDesignMembershipCardClick(Sender: TObject);
 begin
@@ -201,7 +201,7 @@ end;
 
 procedure TMain.sbtnInfoClick(Sender: TObject);
 var
-dlg: TAbout;
+  dlg: TAbout;
 begin
   dlg := TAbout.Create(Self);
   dlg.ShowModal;
@@ -211,8 +211,10 @@ end;
 procedure TMain.btnPodiumCertificatesClick(Sender: TObject);
 var
   dlg: TPickCertif;
+  dlg2: TDesignCertif;
   I: integer;
   obj: TPodium;
+  s1, s2, s3: string;
 begin
   if not Assigned(SCM) then
     Exit;
@@ -222,73 +224,59 @@ begin
   dlg := TPickCertif.Create(Self);
   if IsPositiveResult(dlg.ShowModal) then
   begin
-    if not Assigned(RPTS.qryPodiumWinners.Connection) then
-      RPTS.qryPodiumWinners.Connection := SCM.scmConnection;
-
-    // Clear last report
-    RPTS.frxRptPodium.PreviewPages.Clear;
-    ProgressBar1.Max := dlg.PodiumList.count;
-    ProgressBar1.Position := 0;
-    ProgressBar1.Visible := True;
-
+    RPTS.PreparePodium(SCM.qrySession.ParamByName('SessionID').AsInteger);
     // iterate accross events in podiumlist
+    s1 := '';
+    s2 := '';
+    s3 := '';
     for I := 0 to dlg.PodiumList.count - 1 do
     begin
       obj := dlg.PodiumList.Items[I] as TPodium;
       if obj.fChecked then
       begin
-        if RPTS.qryPodiumWinners.Active then
-          RPTS.qryPodiumWinners.Close;
-        RPTS.qryPodiumWinners.ParamByName('EVENTID').AsInteger := obj.fEventID;
-        RPTS.qryPodiumWinners.Prepare;
-        RPTS.qryPodiumWinners.Open;
-        // query finds the top three 'fastest' swimmers for the event
-        if RPTS.qryPodiumWinners.Active then
-        begin
-          // record 1 = GOLD
-          if RPTS.qryPodiumWinners.RecordCount > 0 then
-          begin
-            if obj.doGold then
-            begin
-              RPTS.AssignParams(1);
-              RPTS.frxRptPodium.PrepareReport(false);
-            end;
-          end;
-          // record 2 = SILVER
-          if RPTS.qryPodiumWinners.RecordCount > 1 then
-          begin
-            RPTS.qryPodiumWinners.Next;
-            if obj.doSilver then
-            begin
-              RPTS.AssignParams(2);
-              RPTS.frxRptPodium.PrepareReport(false);
-            end;
-          end;
-          // record 3 = BRONZE
-          if RPTS.qryPodiumWinners.RecordCount > 2 then
-          begin
-            RPTS.qryPodiumWinners.Next;
-            if obj.doBronze then
-            begin
-              RPTS.AssignParams(3);
-              RPTS.frxRptPodium.PrepareReport(false);
-            end;
-          end;
-        end;
+        if obj.doGold then
+          s1 := s1 + 'EventID = ' + IntToStr(obj.fEventID) + ' AND ';
+        if obj.doSilver then
+          s2 := s2 + 'EventID = ' + IntToStr(obj.fEventID) + ' AND ';
+        if obj.doBronze then
+          s3 := s3 + 'EventID = ' + IntToStr(obj.fEventID) + ' AND ';
       end;
-      ProgressBar1.StepIt;
     end;
-    if RPTS.frxRptPodium.PreviewPages.count > 0 then
-      RPTS.frxRptPodium.ShowPreparedReport;
+    // Trim AND
+    if Length(s1) > 5 then
+      s1 := LeftStr(s1, Length(s1) - 5);
+    if Length(s2) > 5 then
+      s2 := LeftStr(s2, Length(s2) - 5);
+    if Length(s3) > 5 then
+      s3 := LeftStr(s3, Length(s3) - 5);
+    // Assign Filters
+    RPTS.qryPodiumGold.Filter := s1;
+    RPTS.qryPodiumSilver.Filter := s2;
+    RPTS.qryPodiumBronze.Filter := s3;
+    // enable filters
+    if not RPTS.qryPodiumGold.Filtered then
+      RPTS.qryPodiumGold.Filtered := True;
+    if not RPTS.qryPodiumSilver.Filtered then
+      RPTS.qryPodiumSilver.Filtered := True;
+    if not RPTS.qryPodiumBronze.Filtered then
+      RPTS.qryPodiumBronze.Filtered := True;
+    // prepare report ...
+    RPTS.frxRptGold.PrepareReport();
+    RPTS.frxRptSilver.PrepareReport();
+    RPTS.frxRptBronze.PrepareReport();
   end;
   dlg.Free;
-  ProgressBar1.Visible := false;
+
+  // display dialogue to preview, print, export
+  dlg2 := TDesignCertif.Create(self);
+  dlg2.ShowModal;
+  dlg2.Free;
 
 end;
 
 procedure TMain.btnDesignPodiumClick(Sender: TObject);
 var
-dlg: TDesignCertif;
+  dlg: TDesignCertif;
 begin
   if Assigned(RPTS) then
   begin
@@ -377,7 +365,7 @@ begin
               if J > fMaxAllowToPick then
                 break;
             end;
-            if (length(filterStr) > 0) then
+            if (Length(filterStr) > 0) then
             begin
               try
                 RPTS.qryMember.Filter := filterStr;

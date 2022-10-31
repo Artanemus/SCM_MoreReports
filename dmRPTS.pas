@@ -24,9 +24,15 @@ type
     frxDesigner1: TfrxDesigner;
     frxBarCodeObject1: TfrxBarCodeObject;
     qryINDVmember: TFDQuery;
-    qryPodiumWinners: TFDQuery;
-    frxDBPodiumWinners: TfrxDBDataset;
-    frxRptPodium: TfrxReport;
+    qryPodiumGold: TFDQuery;
+    qryPodiumSilver: TFDQuery;
+    qryPodiumBronze: TFDQuery;
+    frxDBSilver: TfrxDBDataset;
+    frxDBBronze: TfrxDBDataset;
+    frxRptGold: TfrxReport;
+    frxDBGold: TfrxDBDataset;
+    frxRptSilver: TfrxReport;
+    frxRptBronze: TfrxReport;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -35,7 +41,7 @@ type
   public
     { Public declarations }
     procedure PrepareMembership(sdate, edate: TDATETIME; switch: boolean);
-    procedure AssignParams(Place: integer);
+    procedure PreparePodium(SessionID: integer);
   end;
 
 var
@@ -45,48 +51,47 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 {$R *.dfm}
-
-procedure TRPTS.AssignParams(Place: integer);
-var
-  page: TfrxReportPage;
-  sl: TfrxMemoView;
-begin
-  sl := frxRptPodium.FindComponent('MemoPodiumPlace') As TfrxMemoView;
-  page := frxRptPodium.FindComponent('Page1') AS TfrxReportPage;
-
-  if Assigned(sl) then
-  begin
-    sl.Memo.Clear;
-  end;
-  case Place of
-    1:
-      begin
-        if Assigned(sl) then
-          sl.Memo.Add('1st Place');
-        if Assigned(page) then
-        begin
-          page.BackPicture.LoadFromFile
-            ('C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\CertificateGold.png');
-        end;
-      end;
-    2:
-      begin
-        if Assigned(sl) then
-          sl.Memo.Add('2nd Place');
-        if Assigned(page) then
-          page.BackPicture.LoadFromFile
-            ('C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\CertificateSilver.png');
-      end;
-    3:
-      begin
-        if Assigned(sl) then
-          sl.Memo.Add('3rd Place');
-        if Assigned(page) then
-          page.BackPicture.LoadFromFile
-            ('C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\CertificateBronze.png');
-      end;
-  end;
-end;
+// procedure TRPTS.AssignParams(Place: integer);
+// var
+// page: TfrxReportPage;
+// sl: TfrxMemoView;
+// begin
+// sl := frxRptPodium.FindComponent('MemoPodiumPlace') As TfrxMemoView;
+// page := frxRptPodium.FindComponent('Page1') AS TfrxReportPage;
+//
+// if Assigned(sl) then
+// begin
+// sl.Memo.Clear;
+// end;
+// case Place of
+// 1:
+// begin
+// if Assigned(sl) then
+// sl.Memo.Add('1st Place');
+// if Assigned(page) then
+// begin
+// page.BackPicture.LoadFromFile
+// ('C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\CertificateGold.png');
+// end;
+// end;
+// 2:
+// begin
+// if Assigned(sl) then
+// sl.Memo.Add('2nd Place');
+// if Assigned(page) then
+// page.BackPicture.LoadFromFile
+// ('C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\CertificateSilver.png');
+// end;
+// 3:
+// begin
+// if Assigned(sl) then
+// sl.Memo.Add('3rd Place');
+// if Assigned(page) then
+// page.BackPicture.LoadFromFile
+// ('C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\CertificateBronze.png');
+// end;
+// end;
+// end;
 
 procedure TRPTS.DataModuleCreate(Sender: TObject);
 begin
@@ -96,13 +101,16 @@ begin
   // C O N N E C T .
   if Assigned(SCM) then
   begin
-    // qryRptSharedHeader.Connection := SCM.scmConnection;
-    // qryRptSharedHeader.Open;
-    // if qryRptSharedHeader.Active then
-    // fIsActive := True;
-
-    // qryMembershipCard.Connection := SCM.scmConnection;
-
+    fIsActive := True;
+    // CONNECTIONS DONE ON DEMAND
+    // if not Assigned(qryMember.Connection) then
+    // qryMember.Connection := SCM.scmConnection;
+    // if not Assigned(qryPodiumSessionGold.Connection) then
+    // qryPodiumSessionGold.Connection := SCM.scmConnection;
+    // if not Assigned(qryPodiumSessionSilver.Connection) then
+    // qryPodiumSessionSilver.Connection := SCM.scmConnection;
+    // if not Assigned(qryPodiumSessionBronze.Connection) then
+    // qryPodiumSessionBronze.Connection := SCM.scmConnection;
   end;
 end;
 
@@ -129,5 +137,35 @@ begin
     end;
   end;
 end;
+
+procedure TRPTS.PreparePodium(SessionID: integer);
+begin
+  if Assigned(SCM) then
+  begin
+    if not Assigned(qryPodiumGold.Connection) then
+      qryPodiumGold.Connection := SCM.scmConnection;
+    if qryPodiumGold.Active then
+      qryPodiumGold.close;
+    qryPodiumGold.ParamByName('SESSIONID').AsInteger := SessionID;
+    qryPodiumGold.Prepare;
+    qryPodiumGold.Open;
+    if not Assigned(qryPodiumSilver.Connection) then
+      qryPodiumSilver.Connection := SCM.scmConnection;
+    if qryPodiumSilver.Active then
+      qryPodiumSilver.close;
+    qryPodiumSilver.ParamByName('SESSIONID').AsInteger := SessionID;
+    qryPodiumSilver.Prepare;
+    qryPodiumSilver.Open;
+    if not Assigned(qryPodiumBronze.Connection) then
+      qryPodiumBronze.Connection := SCM.scmConnection;
+    if qryPodiumBronze.Active then
+      qryPodiumBronze.close;
+    qryPodiumBronze.ParamByName('SESSIONID').AsInteger := SessionID;
+    qryPodiumBronze.Prepare;
+    qryPodiumBronze.Open;
+  end;
+end;
+
+
 
 end.
