@@ -94,6 +94,17 @@ object Main: TMain
       Images = VirtualImageList1
       OnClick = sbtnInfoClick
     end
+    object sbtnOptions: TSpeedButton
+      Left = 949
+      Top = 7
+      Width = 48
+      Height = 48
+      Anchors = [akTop, akRight]
+      ImageIndex = 4
+      ImageName = 'outline_menu_black_48dp'
+      Images = VirtualImageList1
+      OnClick = sbtnOptionsClick
+    end
   end
   object Panel2: TPanel
     Left = 0

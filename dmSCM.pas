@@ -23,6 +23,7 @@ type
     dsGetStartOfSession: TDataSource;
     qryGetSessionCount: TFDQuery;
     qryGenerateList: TFDQuery;
+    qrySampleSession: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
 
   private
@@ -35,6 +36,8 @@ type
     function GetStartOfSession(SessionID: integer): TDateTime;
     function GetSessionCount(SwimClubID: integer;
       SDate, EDate: TDateTime): integer;
+    function GetSampleSessionID(): integer;
+
     procedure ActivateTable();
     procedure SimpleLoadSettingString(Section, Name: string; var Value: string);
     procedure SimpleMakeTemporyFDConnection(Server, User, Password: string;
@@ -116,6 +119,22 @@ begin
     qryGenerateList.Close;
   end;
 
+end;
+
+function TSCM.GetSampleSessionID: integer;
+begin
+  // this returns a session with lots of entrants and racetimes
+  result := 0;
+  if not Assigned(qrySampleSession.Connection) then
+    qrySampleSession.Connection := scmConnection;
+  if not qrySampleSession.active then
+    qrySampleSession.Open;
+  if qrySampleSession.active then
+  begin
+    if qrySampleSession.RecordCount > 0 then
+      result := qrySampleSession.FieldByName('SessionID').AsInteger;
+  end;
+  qrySampleSession.Close;
 end;
 
 function TSCM.GetSessionCount(SwimClubID: integer;

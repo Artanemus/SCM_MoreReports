@@ -14,7 +14,8 @@ uses
   dlgMembership in 'dlgMembership.pas' {Membership},
   dlgPickMember in 'dlgPickMember.pas' {PickMember},
   dlgPickCertif in 'dlgPickCertif.pas' {PickCertif},
-  dlgDesignCertif in 'dlgDesignCertif.pas' {DesignCertif};
+  dlgDesignCertif in 'dlgDesignCertif.pas' {DesignCertif},
+  dlgPref in 'dlgPref.pas' {Pref};
 
 {$R *.res}
 

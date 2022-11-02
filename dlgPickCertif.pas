@@ -17,6 +17,9 @@ uses
 
 type
 
+  TPodiumMode = (pmGold, pmSilver, pmBronze);
+
+
   TPodium = class(TObject)
   private
   public
@@ -62,7 +65,6 @@ type
     procedure btnOkClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
-    procedure qrySessionAfterScroll(DataSet: TDataSet);
     procedure ControlList1BeforeDrawItem(AIndex: Integer; ACanvas: TCanvas;
       ARect: TRect; AState: TOwnerDrawState);
     procedure FormDestroy(Sender: TObject);
@@ -82,10 +84,16 @@ type
     { Private declarations }
     IsInit: Boolean;
     procedure UpdatePodiumList();
+    function GetFilterStr(PodiumMode: TPodiumMode): string;
   public
     { Public declarations }
     PodiumList: TObjectList;
+    function GetCurrSessionID(): integer;
+    function GetGoldFilterStr(): string;
+    function GetSilverFilterStr(): string;
+    function GetBronzeFilterStr(): string;
   end;
+
 
 var
   PickCertif: TPickCertif;
@@ -94,6 +102,8 @@ implementation
 
 {$R *.dfm}
 { TPodium }
+
+uses System.StrUtils;
 
 constructor TPodium.Create;
 begin
@@ -337,10 +347,74 @@ begin
   end;
 end;
 
-procedure TPickCertif.qrySessionAfterScroll(DataSet: TDataSet);
+function TPickCertif.GetBronzeFilterStr: string;
 begin
-  // UpdatePodiumList;
-  // ControlList1.ItemCount := PodiumList.Count;
+  result := GetFilterStr(pmBronze);
+end;
+
+function TPickCertif.GetCurrSessionID: integer;
+begin
+  result := 0;
+  if qryPSession.Active then
+  begin
+    if qryPSession.RecordCount > 0  then
+      result := qryPSession.FieldByName('SessionID').AsInteger;
+  end;
+end;
+
+function TPickCertif.GetFilterStr(PodiumMode: TPodiumMode): string;
+var
+s: string;
+obj: TPodium;
+I: integer;
+begin
+    // iterate accross events in podiumlist
+    result := '';
+    s := '';
+    for I := 0 to PodiumList.count - 1 do
+    begin
+      obj := PodiumList.Items[I] as TPodium;
+      if obj.fChecked then
+      begin
+      // TODO: does the event have swimmers with racetimes?
+
+      case PodiumMode of
+        pmGold:
+          begin
+          if obj.doGold then
+            s := s + 'EventID = ' + IntToStr(obj.fEventID) + ' OR ';
+          end;
+        pmSilver:
+          begin
+          if obj.doSilver then
+            s := s + 'EventID = ' + IntToStr(obj.fEventID) + ' OR ';
+          end;
+        pmBronze:
+          begin
+          if obj.doBronze then
+            s := s + 'EventID = ' + IntToStr(obj.fEventID) + ' OR ';
+          end;
+      end;
+
+      end;
+    end;
+    // Trim redundant ' AND ' at eos.
+    if Length(s) > 4 then
+      s := LeftStr(s, Length(s) - 4);
+    // Empty dataSet.
+    if (s = '') then
+      s := 'EventID = 0';
+    result := s;
+end;
+
+function TPickCertif.GetGoldFilterStr: string;
+begin
+  result := GetFilterStr(pmGold);
+end;
+
+function TPickCertif.GetSilverFilterStr: string;
+begin
+  result := GetFilterStr(pmSilver);
 end;
 
 procedure TPickCertif.UpdatePodiumList;

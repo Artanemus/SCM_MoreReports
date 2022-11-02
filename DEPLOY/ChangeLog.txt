@@ -1,7 +1,9 @@
 ChangeLog.
 
-2022/09/22
-Prepared beta release for trial
+2022/11/02
+Prepared release v1.0.0.0
+Two reports available. Membership Cards, Podium Certificates (A4).
+User customization enabled.
 
 Cheers Artanemus.
 Have a great club night :-)

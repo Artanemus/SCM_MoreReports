@@ -9,7 +9,7 @@ uses
 
 type
   TAbout = class(TForm)
-    Button1: TButton;
+    btnClose: TButton;
     Image1: TImage;
     Image2: TImage;
     Label1: TLabel;
@@ -24,6 +24,8 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure btnCloseClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -38,10 +40,14 @@ implementation
 
 {$R *.dfm}
 
+procedure TAbout.btnCloseClick(Sender: TObject);
+begin
+  ModalResult := mrOk;
+end;
+
 procedure TAbout.FormCreate(Sender: TObject);
 begin
 	ExeInfo1 := TExeInfo.Create(self);
-
 end;
 
 procedure TAbout.FormDestroy(Sender: TObject);
@@ -49,13 +55,22 @@ begin
 	ExeInfo1.Free;
 end;
 
+procedure TAbout.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = VK_ESCAPE then
+  begin
+    ModalResult := mrOk;
+  end;
+end;
+
 procedure TAbout.FormShow(Sender: TObject);
 begin
-	Label5.Caption := ExeInfo1.FileDescription;
-	Label6.Caption := ExeInfo1.FileVersion;
-	Label7.Caption := ExeInfo1.ProductName;
-	Label8.Caption := ExeInfo1.ProductVersion;
-	Label9.Caption := ExeInfo1.LegalCopyright;
+	Label7.Caption := ExeInfo1.ProductName;    // SCM_MoreReports
+	Label5.Caption := ExeInfo1.Comments;       // Extra reporting ....
+	Label8.Caption := ExeInfo1.ProductVersion; // 1.0
+	Label6.Caption := ExeInfo1.FileVersion;    // 1.0.0.0
+	Label9.Caption := ExeInfo1.LegalCopyright; //© 2019-2022
 end;
 
 end.

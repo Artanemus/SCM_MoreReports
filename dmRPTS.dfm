@@ -5182,7 +5182,7 @@ object RPTS: TRPTS
   end
   object qryPodiumGold: TFDQuery
     ActiveStoredUsage = [auDesignTime]
-    Active = True
+    IndexFieldNames = 'EventID'
     Connection = SCM.scmConnection
     UpdateOptions.AssignedValues = [uvEDelete, uvEInsert, uvEUpdate]
     UpdateOptions.EnableDelete = False
@@ -5247,7 +5247,7 @@ object RPTS: TRPTS
   end
   object qryPodiumSilver: TFDQuery
     ActiveStoredUsage = [auDesignTime]
-    Active = True
+    IndexFieldNames = 'EventID'
     Connection = SCM.scmConnection
     UpdateOptions.AssignedValues = [uvEDelete, uvEInsert, uvEUpdate]
     UpdateOptions.EnableDelete = False
@@ -5312,7 +5312,7 @@ object RPTS: TRPTS
   end
   object qryPodiumBronze: TFDQuery
     ActiveStoredUsage = [auDesignTime]
-    Active = True
+    IndexFieldNames = 'EventID'
     Connection = SCM.scmConnection
     UpdateOptions.AssignedValues = [uvEDelete, uvEInsert, uvEUpdate]
     UpdateOptions.EnableDelete = False

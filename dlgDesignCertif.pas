@@ -20,13 +20,19 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
     procedure vimgGoldClick(Sender: TObject);
+    procedure vimgSilverClick(Sender: TObject);
+    procedure vimgBronzeClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     fdefaultStyleName: string;
-    fdoDesign: boolean;
+    fDoPodiumDesign: boolean;
     fSessionID: integer;
+    procedure GoDesignReport(pick: integer);
   public
     { Public declarations }
+    property doPodiumDesign: boolean read fDoPodiumDesign write fDoPodiumDesign;
+    property SessionID: integer read fSessionID write fSessionID;
   end;
 
 var
@@ -36,7 +42,7 @@ implementation
 
 {$R *.dfm}
 
-uses Vcl.themes;
+uses Vcl.themes, Data.DB;
 
 procedure TDesignCertif.btnCloseClick(Sender: TObject);
 begin
@@ -48,9 +54,8 @@ begin
   // store the current theme
   if Assigned(TStyleManager.ActiveStyle) then
     fdefaultStyleName := TStyleManager.ActiveStyle.Name;
-  fdoDesign := false;
+  fDoPodiumDesign := false;
   fSessionID := 0;
-
   // TODO: mode - preview prepared reports - hide virt-images that have no records.
 
 end;
@@ -65,48 +70,94 @@ begin
   end;
 end;
 
-procedure TDesignCertif.vimgGoldClick(Sender: TObject);
+procedure TDesignCertif.FormShow(Sender: TObject);
 begin
-  if not Assigned(SCM) then
-    exit;
-  if not Assigned(RPTS) then
-    exit;
-
-  if fdoDesign then
+  if Assigned(SCM) AND Assigned(RPTS) then
   begin
-    if fSessionID = 0 then
-      exit;
-//    Hide;
-    // set style to default - designer looks better.
-    if Assigned(TStyleManager.ActiveStyle) and
-      (TStyleManager.ActiveStyle.Name <> 'Windows') then
+    if fDoPodiumDesign then
     begin
-      TStyleManager.TrySetStyle('Windows');
+      Caption := 'Podium Certificates - DESIGN.';
+      Label1.Caption := 'Click the report icon to run the report designer.';
+    end
+    else
+    begin
+      // Caption
+      Caption := 'Podium Certificates - Preview, print and export.';
+      Label1.Caption := 'Click the report icon to review, print or export.';
+      // Message line
+      if RPTS.qryPodiumGold.IsEmpty then
+        vimgGold.ImageIndex := 3;
+      if RPTS.qryPodiumSilver.IsEmpty then
+        vimgSilver.ImageIndex := 3;
+      if RPTS.qryPodiumBronze.IsEmpty then
+        vimgBronze.ImageIndex := 3;
     end;
-    // assert that all is connected ...
-    // TODO: move into RPTS module
-    if not Assigned(RPTS.qryPodiumGold.Connection) then
-      RPTS.qryPodiumGold.Connection := SCM.scmConnection;
-    if not RPTS.qryPodiumGold.Active then
-      RPTS.qryPodiumGold.Close;
-    // need valid data to preview report during design mode.
-    RPTS.qryPodiumGold.ParamByName('SESSIONID').AsInteger := fSessionID;
-    RPTS.qryPodiumGold.Prepare;
-    RPTS.qryPodiumGold.Open;
-    if RPTS.qryPodiumGold.Active then
-    begin
-      // go design the report
+  end;
+end;
+
+procedure TDesignCertif.GoDesignReport(pick: integer);
+begin
+  Hide;
+  // set style to default - designer looks better.
+  if Assigned(TStyleManager.ActiveStyle) and
+    (TStyleManager.ActiveStyle.Name <> 'Windows') then
+  begin
+    TStyleManager.TrySetStyle('Windows');
+  end;
+  case pick of
+    1:
       RPTS.frxRptGold.DesignReport(True);
-    end;
-    // restore theme
-    if Assigned(TStyleManager.ActiveStyle) then
-      TStyleManager.TrySetStyle(fdefaultStyleName);
-//    Show;
-//    SetFocus;
-  end
+    2:
+      RPTS.frxRptSilver.DesignReport(True);
+    3:
+      RPTS.frxRptBronze.DesignReport(True);
+  end;
+  // restore theme
+  if Assigned(TStyleManager.ActiveStyle) then
+    TStyleManager.TrySetStyle(fdefaultStyleName);
+  Show;
+  SetFocus;
+end;
+
+procedure TDesignCertif.vimgBronzeClick(Sender: TObject);
+begin
+  if (not Assigned(SCM)) or (not Assigned(RPTS)) then
+    exit;
+  if fDoPodiumDesign then
+     GoDesignReport(3)
   else
   begin
+    if RPTS.qryPodiumBronze.IsEmpty then
+      exit;
+    RPTS.frxRptBronze.ShowReport();
+  end;
+end;
+
+procedure TDesignCertif.vimgGoldClick(Sender: TObject);
+begin
+  if (not Assigned(SCM)) OR (not Assigned(RPTS)) then
+    exit;
+  if fDoPodiumDesign then
+     GoDesignReport(1)
+  else
+  begin
+    if RPTS.qryPodiumGold.IsEmpty then
+      exit;
     RPTS.frxRptGold.ShowReport();
+  end;
+end;
+
+procedure TDesignCertif.vimgSilverClick(Sender: TObject);
+begin
+  if (not Assigned(SCM)) or (not Assigned(RPTS)) then
+    exit;
+  if fDoPodiumDesign then
+     GoDesignReport(2)
+  else
+  begin
+    if RPTS.qryPodiumSilver.IsEmpty then
+      exit;
+    RPTS.frxRptSilver.ShowReport();
   end;
 end;
 

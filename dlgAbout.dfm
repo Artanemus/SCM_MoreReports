@@ -1,26 +1,30 @@
 object About: TAbout
   Left = 0
   Top = 0
-  Caption = 'About'
-  ClientHeight = 392
-  ClientWidth = 456
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'About SCM MoreReports'
+  ClientHeight = 402
+  ClientWidth = 466
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -16
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 19
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 456
+    Width = 466
     Height = 100
     Align = alTop
     Picture.Data = {
@@ -4382,12 +4386,13 @@ object About: TAbout
     Caption = 'Label9'
     WordWrap = True
   end
-  object Button1: TButton
+  object btnClose: TButton
     Left = 359
     Top = 344
     Width = 80
     Height = 31
     Caption = 'Close'
     TabOrder = 0
+    OnClick = btnCloseClick
   end
 end

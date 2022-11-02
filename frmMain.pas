@@ -34,6 +34,7 @@ type
     Button6: TButton;
     ProgressBar1: TProgressBar;
     sbtnInfo: TSpeedButton;
+    sbtnOptions: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnMembershipCardsClick(Sender: TObject);
@@ -42,6 +43,7 @@ type
     procedure btnPodiumCertificatesClick(Sender: TObject);
     procedure btnDesignPodiumClick(Sender: TObject);
     procedure sbtnInfoClick(Sender: TObject);
+    procedure sbtnOptionsClick(Sender: TObject);
   private
     { Private declarations }
     fSwimClubID, fMaxAllowToPick: integer;
@@ -61,7 +63,7 @@ implementation
 
 uses dlgBasicLogin, exeinfo, Utility, dlgAbout, System.IniFiles, System.UITypes,
   System.DateUtils, FireDAC.Stan.Param, dlgMembership, dlgPickMember,
-  dlgPickCertif, System.Contnrs, dlgDesignCertif, System.StrUtils;
+  dlgPickCertif, System.Contnrs, dlgDesignCertif, dlgPref;
 
 procedure TMain.btnDesignMembershipCardClick(Sender: TObject);
 begin
@@ -208,13 +210,20 @@ begin
   dlg.Free;
 end;
 
+procedure TMain.sbtnOptionsClick(Sender: TObject);
+var
+dlg: TPref;
+begin
+  dlg := TPref.Create(self);
+  dlg.ShowModal;
+  dlg.Free;
+end;
+
 procedure TMain.btnPodiumCertificatesClick(Sender: TObject);
 var
   dlg: TPickCertif;
   dlg2: TDesignCertif;
-  I: integer;
-  obj: TPodium;
-  s1, s2, s3: string;
+  SessionID: integer;
 begin
   if not Assigned(SCM) then
     Exit;
@@ -224,54 +233,35 @@ begin
   dlg := TPickCertif.Create(Self);
   if IsPositiveResult(dlg.ShowModal) then
   begin
-    RPTS.PreparePodium(SCM.qrySession.ParamByName('SessionID').AsInteger);
-    // iterate accross events in podiumlist
-    s1 := '';
-    s2 := '';
-    s3 := '';
-    for I := 0 to dlg.PodiumList.count - 1 do
-    begin
-      obj := dlg.PodiumList.Items[I] as TPodium;
-      if obj.fChecked then
-      begin
-        if obj.doGold then
-          s1 := s1 + 'EventID = ' + IntToStr(obj.fEventID) + ' AND ';
-        if obj.doSilver then
-          s2 := s2 + 'EventID = ' + IntToStr(obj.fEventID) + ' AND ';
-        if obj.doBronze then
-          s3 := s3 + 'EventID = ' + IntToStr(obj.fEventID) + ' AND ';
-      end;
-    end;
-    // Trim AND
-    if Length(s1) > 5 then
-      s1 := LeftStr(s1, Length(s1) - 5);
-    if Length(s2) > 5 then
-      s2 := LeftStr(s2, Length(s2) - 5);
-    if Length(s3) > 5 then
-      s3 := LeftStr(s3, Length(s3) - 5);
+    SessionID := dlg.GetCurrSessionID;
+    if SessionID = 0 then
+      Exit;
+    // prepare and open gold, silver, bronze podium queries
+    RPTS.PreparePodium(SessionID);
     // Assign Filters
-    RPTS.qryPodiumGold.Filter := s1;
-    RPTS.qryPodiumSilver.Filter := s2;
-    RPTS.qryPodiumBronze.Filter := s3;
-    // enable filters
+    RPTS.qryPodiumGold.Filter := dlg.GetGoldFilterStr;
+    RPTS.qryPodiumSilver.Filter := dlg.GetSilverFilterStr;
+    RPTS.qryPodiumBronze.Filter := dlg.GetBronzeFilterStr;
+    // Asset - enable filters
     if not RPTS.qryPodiumGold.Filtered then
       RPTS.qryPodiumGold.Filtered := True;
     if not RPTS.qryPodiumSilver.Filtered then
       RPTS.qryPodiumSilver.Filtered := True;
     if not RPTS.qryPodiumBronze.Filtered then
       RPTS.qryPodiumBronze.Filtered := True;
-    // prepare report ...
+    // Fianlly - prepare report ...
     RPTS.frxRptGold.PrepareReport();
     RPTS.frxRptSilver.PrepareReport();
     RPTS.frxRptBronze.PrepareReport();
+    // finished with dialogue - dispose off
+    FreeAndNil(dlg);
+    // display dialogue to preview, print, export
+    dlg2 := TDesignCertif.Create(Self);
+    dlg2.ShowModal;
+    dlg2.Free;
   end;
-  dlg.Free;
-
-  // display dialogue to preview, print, export
-  dlg2 := TDesignCertif.Create(self);
-  dlg2.ShowModal;
-  dlg2.Free;
-
+  if Assigned(dlg) then
+    dlg.Free;
 end;
 
 procedure TMain.btnDesignPodiumClick(Sender: TObject);
@@ -281,6 +271,13 @@ begin
   if Assigned(RPTS) then
   begin
     dlg := TDesignCertif.Create(Self);
+    dlg.doPodiumDesign := True;
+    if Assigned(SCM) then
+      // Finds a session with 1st,2nd,3rd place holders...
+      // so FastReport preview has some data to display.
+      dlg.SessionID := SCM.GetSampleSessionID;
+    // prepare and open gold, silver, bronze podium queries
+    RPTS.PreparePodium(dlg.SessionID);
     dlg.ShowModal;
     dlg.Free;
   end;

@@ -1,15 +1,15 @@
-Set-Location C:\Users\Ben\Documents\GitHub\SCM_LeaderBoard\DEPLOY\INNO\
+Set-Location C:\Users\Ben\Documents\GitHub\SCM_MoreReports\DEPLOY\INNO\
 
 <#
 Creation of leaderboard PNG - orginates from GitHub\SCM_ASSETS\
 Output used by INNO.
 #>
 
-$inpath = 'C:\Users\Ben\Documents\GitHub\SCM_LeaderBoard\ASSETS\'
-$leftpanel = $inpath + 'INNO_LeftPanel_scmLeaderBoard.png'
-$square = $inpath + 'LeaderBoard_800x800.png'
+$inpath = 'C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\'
+$leftpanel = $inpath + 'INNO-LeftPanel_SCM_MoreReports.png'
+$square = $inpath + 'SCM_MoreReports-800x800.png'
 
-$outpath = 'C:\Users\Ben\Documents\GitHub\SCM_LeaderBoard\DEPLOY\INNO\'
+$outpath = 'C:\Users\Ben\Documents\GitHub\SCM_MoreReports\DEPLOY\INNO\'
 $outfileA = $outpath + 'WizardImage_SCM_*.bmp'
 $outfileB = $outpath + 'WizardSmall_SCM_*.bmp'
 

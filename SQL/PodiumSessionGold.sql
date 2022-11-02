@@ -1,7 +1,7 @@
 USE SwimClubMeet;
 
 DECLARE @SessionID AS INTEGER;
-SET @SessionID = 64;
+SET @SessionID = 99;
 
 SELECT [Event].[EventID]
      --, dbo.ABSEventPlace([Event].[EventID], Entrant.MemberID) AS Place
