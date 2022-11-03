@@ -39,7 +39,6 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure btnMembershipCardsClick(Sender: TObject);
     procedure btnDesignMembershipCardClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure btnPodiumCertificatesClick(Sender: TObject);
     procedure btnDesignPodiumClick(Sender: TObject);
     procedure sbtnInfoClick(Sender: TObject);
@@ -47,9 +46,12 @@ type
   private
     { Private declarations }
     fSwimClubID, fMaxAllowToPick: integer;
-    fdefaultStyleName: string;
+    fdefaultStyleName, fCustRptMemShip: string;
+    fCustRptCertifGOLD, fCustRptCertifSILVER, fCustRptCertifBRONZE: string;
 
+    // P R E F E R E N C E   F I L E   A C C E S S .
     procedure ReadPreferences(iniFileName: string);
+
   public
     { Public declarations }
   end;
@@ -66,6 +68,9 @@ uses dlgBasicLogin, exeinfo, Utility, dlgAbout, System.IniFiles, System.UITypes,
   dlgPickCertif, System.Contnrs, dlgDesignCertif, dlgPref;
 
 procedure TMain.btnDesignMembershipCardClick(Sender: TObject);
+var
+  iniFileName: string;
+  iFile: TIniFile;
 begin
   if Assigned(RPTS) then
   begin
@@ -79,6 +84,14 @@ begin
     // restore application
     if Assigned(TStyleManager.ActiveStyle) then
       TStyleManager.TrySetStyle(fdefaultStyleName);
+    // update customisation filename...
+    iniFileName := GetSCMPreferenceFileName;
+    if FileExists(iniFileName) then
+    begin
+      iFile := TIniFile.create(iniFileName);
+      fCustRptMemShip := iFile.ReadString(IniSectionName, 'CustRptMemShip', '');
+      iFile.free;
+    end;
   end;
 end;
 
@@ -92,7 +105,7 @@ begin
   // C R E A T E   D A T A M O D U L E   S C M .
   // ----------------------------------------------------
   try
-    SCM := TSCM.Create(Self);
+    SCM := TSCM.create(Self);
   finally
     // with SCM created and the essential tables are open then
     // asserting the connection should be true
@@ -108,9 +121,9 @@ begin
   // ----------------------------------------------------
   // C O N N E C T   T O   S E R V E R .
   // ----------------------------------------------------
-  aBasicLogin := TBasicLogin.Create(Self);
+  aBasicLogin := TBasicLogin.create(Self);
   result := aBasicLogin.ShowModal;
-  aBasicLogin.Free;
+  aBasicLogin.free;
 
   if (result = mrAbort) or (result = mrCancel) then
   begin
@@ -120,7 +133,7 @@ begin
   // ----------------------------------------------------
   // C R E A T E   D A T A M O D U L E   R P T S .
   // ----------------------------------------------------
-  RPTS := TRPTS.Create(Self);
+  RPTS := TRPTS.create(Self);
   RPTS.qrySharedHeader.Connection := SCM.scmConnection;
   RPTS.qryMember.Connection := SCM.scmConnection;
   // ----------------------------------------------------
@@ -142,12 +155,19 @@ begin
   Application.ShowHint := True; // enable hints
   fSwimClubID := 1;
   fMaxAllowToPick := 20;
+  fCustRptMemShip := '';
+  fCustRptCertifGOLD := '';
+  fCustRptCertifSILVER := '';
+  fCustRptCertifBRONZE := '';
+
   // ----------------------------------------------------
   // R E A D   P R E F E R E N C E S .
   // ----------------------------------------------------
   iniFileName := GetSCMPreferenceFileName;
   if FileExists(iniFileName) then
+  begin
     ReadPreferences(iniFileName);
+  end;
 
   // ----------------------------------------------------
   // D I S P L A Y   H E A D E R   I N F O .
@@ -187,36 +207,75 @@ begin
   end;
 end;
 
-procedure TMain.FormShow(Sender: TObject);
-begin
-  // btnMembershipCards.SetFocus;
-end;
-
 procedure TMain.ReadPreferences(iniFileName: string);
 var
   iFile: TIniFile;
 begin
-  iFile := TIniFile.Create(iniFileName);
-  fMaxAllowToPick := iFile.ReadInteger('MemberPicker', 'MaxAllowToPick', 20);
-  iFile.Free;
+  iFile := TIniFile.create(iniFileName);
+  fMaxAllowToPick := iFile.ReadInteger(IniSectionName, 'MaxAllowToPick', 20);
+  fCustRptCertifGOLD := iFile.ReadString(IniSectionName,
+    'CustRptCertifGOLD', '');
+  fCustRptCertifSILVER := iFile.ReadString(IniSectionName,
+    'CustRptCertifSILVER', '');
+  fCustRptCertifBRONZE := iFile.ReadString(IniSectionName,
+    'CustRptCertifBRONZE', '');
+  fCustRptMemShip := iFile.ReadString(IniSectionName, 'CustRptMemShip', '');
+  iFile.free;
+  // ----------------------------------------------------
+  // Load customized report
+  // if the FileName is empty, then the default report design is used.
+  // ----------------------------------------------------
+  if Assigned(RPTS) then
+  begin
+    if Length(fCustRptMemShip) > 0 then
+    BEGIN
+      if FileExists(fCustRptMemShip) then
+        RPTS.frxRptMembership.LoadFromFile(fCustRptMemShip);
+    END;
+    if Length(fCustRptCertifGOLD) > 0 then
+    begin
+      if FileExists(fCustRptCertifGOLD) then
+        RPTS.frxRptGold.LoadFromFile(fCustRptCertifGOLD);
+    end;
+    if Length(fCustRptCertifSILVER) > 0 then
+    begin
+      if FileExists(fCustRptCertifSILVER) then
+        RPTS.frxRptSilver.LoadFromFile(fCustRptCertifSILVER);
+    end;
+    if Length(fCustRptCertifBRONZE) > 0 then
+    begin
+      if FileExists(fCustRptCertifBRONZE) then
+        RPTS.frxRptBronze.LoadFromFile(fCustRptCertifBRONZE);
+    end;
+  end;
+
 end;
 
 procedure TMain.sbtnInfoClick(Sender: TObject);
 var
   dlg: TAbout;
 begin
-  dlg := TAbout.Create(Self);
+  dlg := TAbout.create(Self);
   dlg.ShowModal;
-  dlg.Free;
+  dlg.free;
 end;
 
 procedure TMain.sbtnOptionsClick(Sender: TObject);
 var
-dlg: TPref;
+  dlg: TPref;
+  iniFileName: string;
 begin
-  dlg := TPref.Create(self);
+  dlg := TPref.create(Self);
   dlg.ShowModal;
-  dlg.Free;
+  dlg.free;
+  // ----------------------------------------------------
+  // R E - R E A D   P R E F E R E N C E S .
+  // ----------------------------------------------------
+  iniFileName := GetSCMPreferenceFileName;
+  if FileExists(iniFileName) then
+  begin
+    ReadPreferences(iniFileName);
+  end;
 end;
 
 procedure TMain.btnPodiumCertificatesClick(Sender: TObject);
@@ -230,7 +289,7 @@ begin
   if not Assigned(RPTS) then
     Exit;
 
-  dlg := TPickCertif.Create(Self);
+  dlg := TPickCertif.create(Self);
   if IsPositiveResult(dlg.ShowModal) then
   begin
     SessionID := dlg.GetCurrSessionID;
@@ -249,6 +308,7 @@ begin
       RPTS.qryPodiumSilver.Filtered := True;
     if not RPTS.qryPodiumBronze.Filtered then
       RPTS.qryPodiumBronze.Filtered := True;
+
     // Fianlly - prepare report ...
     RPTS.frxRptGold.PrepareReport();
     RPTS.frxRptSilver.PrepareReport();
@@ -256,12 +316,12 @@ begin
     // finished with dialogue - dispose off
     FreeAndNil(dlg);
     // display dialogue to preview, print, export
-    dlg2 := TDesignCertif.Create(Self);
+    dlg2 := TDesignCertif.create(Self);
     dlg2.ShowModal;
-    dlg2.Free;
+    dlg2.free;
   end;
   if Assigned(dlg) then
-    dlg.Free;
+    dlg.free;
 end;
 
 procedure TMain.btnDesignPodiumClick(Sender: TObject);
@@ -270,7 +330,7 @@ var
 begin
   if Assigned(RPTS) then
   begin
-    dlg := TDesignCertif.Create(Self);
+    dlg := TDesignCertif.create(Self);
     dlg.doPodiumDesign := True;
     if Assigned(SCM) then
       // Finds a session with 1st,2nd,3rd place holders...
@@ -279,7 +339,7 @@ begin
     // prepare and open gold, silver, bronze podium queries
     RPTS.PreparePodium(dlg.SessionID);
     dlg.ShowModal;
-    dlg.Free;
+    dlg.free;
   end;
 end;
 
@@ -296,7 +356,7 @@ begin
   if (not Assigned(SCM)) or (not Assigned(RPTS)) then
     Exit;
 
-  dlg := TMembership.Create(Self);
+  dlg := TMembership.create(Self);
   if IsPositiveResult(dlg.ShowModal) then
   begin
     TagNum := dlg.TagNum;
@@ -326,7 +386,7 @@ begin
           // -----------------------------------
           FreeAndNil(dlg); // finished with dlg.
           // create the quick pick dlg ...
-          dlgMP := TPickMember.Create(Self);
+          dlgMP := TPickMember.create(Self);
           if IsPositiveResult(dlgMP.ShowModal) then
           begin
             // prepare - all swimmers
@@ -398,7 +458,7 @@ begin
   end;
 
   if Assigned(dlg) then
-    dlg.Free;
+    dlg.free;
 
 end;
 

@@ -14,7 +14,6 @@ object Main: TMain
   Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 21
   object Panel1: TPanel

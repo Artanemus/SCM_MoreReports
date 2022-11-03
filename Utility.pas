@@ -23,6 +23,8 @@ const
   PrefFileName = 'SCM_MoreReportsPref.ini';
   HelpPrefFileName = 'SCM_MoreReportsHelpPref.ini';
   SCMSubFolder = '\Artanemus\SCM\';
+  IniSectionName = 'MoreReports';
+
   // DEPRECIATED
   SCMConnectionDefsFileName = 'SCMConnectionDefs.ini';
   SCMConnectionDefsName = 'MSSQL_SwimClubMeet';

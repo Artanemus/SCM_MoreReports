@@ -42,7 +42,7 @@ implementation
 
 {$R *.dfm}
 
-uses Vcl.themes, Data.DB;
+uses Vcl.themes, Data.DB, Utility, IniFiles;
 
 procedure TDesignCertif.btnCloseClick(Sender: TObject);
 begin
@@ -96,6 +96,10 @@ begin
 end;
 
 procedure TDesignCertif.GoDesignReport(pick: integer);
+var
+  s: string;
+  iniFileName: string;
+  iFile: TIniFile;
 begin
   Hide;
   // set style to default - designer looks better.
@@ -112,6 +116,28 @@ begin
     3:
       RPTS.frxRptBronze.DesignReport(True);
   end;
+
+  // ----------------------------------------------
+  // Update Customization filename
+  // ----------------------------------------------
+  iniFileName := GetSCMPreferenceFileName();
+  if FileExists(iniFileName) then
+  begin
+    iFile := TIniFile.create(iniFileName);
+    case pick of
+      1:
+        iFile.WriteString(IniSectionName, 'CustRptCertifGOLD',
+          RPTS.frxRptGold.FileName);
+      2:
+        iFile.WriteString(IniSectionName, 'CustRptCertifSILVER',
+          RPTS.frxRptSilver.FileName);
+      3:
+        iFile.WriteString(IniSectionName, 'CustRptMemShip',
+          RPTS.frxRptBronze.FileName);
+    end;
+    iFile.free;
+  end;
+
   // restore theme
   if Assigned(TStyleManager.ActiveStyle) then
     TStyleManager.TrySetStyle(fdefaultStyleName);
@@ -124,7 +150,7 @@ begin
   if (not Assigned(SCM)) or (not Assigned(RPTS)) then
     exit;
   if fDoPodiumDesign then
-     GoDesignReport(3)
+    GoDesignReport(3)
   else
   begin
     if RPTS.qryPodiumBronze.IsEmpty then
@@ -138,7 +164,7 @@ begin
   if (not Assigned(SCM)) OR (not Assigned(RPTS)) then
     exit;
   if fDoPodiumDesign then
-     GoDesignReport(1)
+    GoDesignReport(1)
   else
   begin
     if RPTS.qryPodiumGold.IsEmpty then
@@ -152,7 +178,7 @@ begin
   if (not Assigned(SCM)) or (not Assigned(RPTS)) then
     exit;
   if fDoPodiumDesign then
-     GoDesignReport(2)
+    GoDesignReport(2)
   else
   begin
     if RPTS.qryPodiumSilver.IsEmpty then

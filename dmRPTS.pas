@@ -50,48 +50,10 @@ var
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
+
+uses Utility, IniFiles;
+
 {$R *.dfm}
-// procedure TRPTS.AssignParams(Place: integer);
-// var
-// page: TfrxReportPage;
-// sl: TfrxMemoView;
-// begin
-// sl := frxRptPodium.FindComponent('MemoPodiumPlace') As TfrxMemoView;
-// page := frxRptPodium.FindComponent('Page1') AS TfrxReportPage;
-//
-// if Assigned(sl) then
-// begin
-// sl.Memo.Clear;
-// end;
-// case Place of
-// 1:
-// begin
-// if Assigned(sl) then
-// sl.Memo.Add('1st Place');
-// if Assigned(page) then
-// begin
-// page.BackPicture.LoadFromFile
-// ('C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\CertificateGold.png');
-// end;
-// end;
-// 2:
-// begin
-// if Assigned(sl) then
-// sl.Memo.Add('2nd Place');
-// if Assigned(page) then
-// page.BackPicture.LoadFromFile
-// ('C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\CertificateSilver.png');
-// end;
-// 3:
-// begin
-// if Assigned(sl) then
-// sl.Memo.Add('3rd Place');
-// if Assigned(page) then
-// page.BackPicture.LoadFromFile
-// ('C:\Users\Ben\Documents\GitHub\SCM_MoreReports\ASSETS\CertificateBronze.png');
-// end;
-// end;
-// end;
 
 procedure TRPTS.DataModuleCreate(Sender: TObject);
 begin
