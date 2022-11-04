@@ -3,7 +3,7 @@
         <ProjectGuid>{6B7FCE8D-E36D-4A48-BD4B-C05C13938E18}</ProjectGuid>
         <MainSource>SCM_MoreReports.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
