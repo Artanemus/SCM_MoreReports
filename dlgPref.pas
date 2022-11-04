@@ -7,7 +7,8 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls,
   Vcl.ExtCtrls,
-  Vcl.Samples.Spin;
+  Vcl.Samples.Spin, System.ImageList, Vcl.ImgList, Vcl.VirtualImageList,
+  Vcl.BaseImageCollection, Vcl.ImageCollection;
 
 type
   TPref = class(TForm)
@@ -16,26 +17,28 @@ type
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
-    edtCustRptMemShip: TEdit;
+    edtMembership: TEdit;
     Label2: TLabel;
-    btnBrowseCustRptMemShip: TButton;
     FileOpenDialog: TFileOpenDialog;
     btnClose: TButton;
     Label1: TLabel;
-    edtCustRptCertifGOLD: TEdit;
-    btnBrowseCertifGOLD: TButton;
+    edtGold: TEdit;
+    btnGold: TButton;
     sedtMaxAllowToPick: TSpinEdit;
     Label3: TLabel;
     Label4: TLabel;
-    edtCustRptCertifSILVER: TEdit;
+    edtSilver: TEdit;
     Label5: TLabel;
-    edtCustRptCertifBRONZE: TEdit;
-    btnBrowseCertifSILVER: TButton;
-    btnBrowseCertifBRONZE: TButton;
+    edtBronze: TEdit;
+    ImageCollection1: TImageCollection;
+    VirtualImageList1: TVirtualImageList;
+    btnSilver: TButton;
+    btnBronze: TButton;
+    btnMembership: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure btnBrowseCertifGOLDClick(Sender: TObject);
-    procedure btnBrowseCustRptMemShipClick(Sender: TObject);
+    procedure btnPodiumCertifClick(Sender: TObject);
+    procedure btnMemshipClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
@@ -61,27 +64,44 @@ uses
 
 { TPref }
 
-procedure TPref.btnBrowseCertifGOLDClick(Sender: TObject);
+procedure TPref.btnPodiumCertifClick(Sender: TObject);
 var
   s: string;
+  i: integer;
 begin
-  s := ExtractFilePath(edtCustRptCertifGOLD.Text);
+  i := (Sender as TButton).Tag;
+  case i of
+    1:
+      s := ExtractFilePath(edtGold.Text);
+    2:
+      s := ExtractFilePath(edtSilver.Text);
+    3:
+      s := ExtractFilePath(edtBronze.Text);
+  end;
+  s := ExtractFilePath(edtGold.Text);
   FileOpenDialog.DefaultFolder := s;
   if FileOpenDialog.Execute then
   begin
-    edtCustRptCertifGOLD.Text := FileOpenDialog.FileName;
+    case i of
+      1:
+        edtGold.Text := FileOpenDialog.FileName;
+      2:
+        edtSilver.Text := FileOpenDialog.FileName;
+      3:
+        edtBronze.Text := FileOpenDialog.FileName;
+    end;
   end;
 end;
 
-procedure TPref.btnBrowseCustRptMemShipClick(Sender: TObject);
+procedure TPref.btnMemshipClick(Sender: TObject);
 var
   s: string;
 begin
-  s := ExtractFilePath(edtCustRptMemShip.Text);
+  s := ExtractFilePath(edtMembership.Text);
   FileOpenDialog.DefaultFolder := s;
   if FileOpenDialog.Execute then
   begin
-    edtCustRptMemShip.Text := FileOpenDialog.FileName;
+    edtMembership.Text := FileOpenDialog.FileName;
   end;
 end;
 
@@ -128,14 +148,10 @@ var
   iFile: TIniFile;
 begin
   iFile := TIniFile.create(iniFileName);
-  edtCustRptCertifGOLD.Text := iFile.ReadString(IniSectionName,
-    'CustRptCertifGOLD', '');
-  edtCustRptCertifSILVER.Text := iFile.ReadString(IniSectionName,
-    'CustRptCertifSILVER', '');
-  edtCustRptCertifBRONZE.Text := iFile.ReadString(IniSectionName,
-    'CustRptCertifBRONZE', '');
-  edtCustRptMemShip.Text := iFile.ReadString(IniSectionName,
-    'CustRptMemShip', '');
+  edtGold.Text := iFile.ReadString(IniSectionName, 'CustRptCertifGOLD', '');
+  edtSilver.Text := iFile.ReadString(IniSectionName, 'CustRptCertifSILVER', '');
+  edtBronze.Text := iFile.ReadString(IniSectionName, 'CustRptCertifBRONZE', '');
+  edtMembership.Text := iFile.ReadString(IniSectionName, 'CustRptMemShip', '');
   sedtMaxAllowToPick.Value := iFile.ReadInteger(IniSectionName,
     'MaxAllowToPick', 20);
   iFile.Free;
@@ -148,13 +164,10 @@ begin
   iFile := TIniFile.create(iniFileName);
   iFile.WriteInteger(IniSectionName, 'MaxAllowToPick',
     sedtMaxAllowToPick.Value);
-  iFile.WriteString(IniSectionName, 'CustRptCertifGOLD',
-    edtCustRptCertifGOLD.Text);
-  iFile.WriteString(IniSectionName, 'CustRptCertifSILVER',
-    edtCustRptCertifSILVER.Text);
-  iFile.WriteString(IniSectionName, 'CustRptCertifBRONZE',
-    edtCustRptCertifBRONZE.Text);
-  iFile.WriteString(IniSectionName, 'CustRptMemShip', edtCustRptMemShip.Text);
+  iFile.WriteString(IniSectionName, 'CustRptCertifGOLD', edtGold.Text);
+  iFile.WriteString(IniSectionName, 'CustRptCertifSILVER', edtSilver.Text);
+  iFile.WriteString(IniSectionName, 'CustRptCertifBRONZE', edtBronze.Text);
+  iFile.WriteString(IniSectionName, 'CustRptMemShip', edtMembership.Text);
   iFile.Free;
 end;
 
