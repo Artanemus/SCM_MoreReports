@@ -97,7 +97,6 @@ end;
 
 procedure TDesignCertif.GoDesignReport(pick: integer);
 var
-  s: string;
   iniFileName: string;
   iFile: TIniFile;
 begin

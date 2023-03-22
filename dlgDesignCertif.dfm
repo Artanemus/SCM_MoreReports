@@ -3,8 +3,8 @@ object DesignCertif: TDesignCertif
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Podium Certificates - Preview, print and export.'
-  ClientHeight = 283
-  ClientWidth = 602
+  ClientHeight = 282
+  ClientWidth = 598
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,12 +12,10 @@ object DesignCertif: TDesignCertif
   Font.Name = 'Segoe UI'
   Font.Style = []
   KeyPreview = True
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 21
   object vimgGold: TVirtualImage
     Left = 24

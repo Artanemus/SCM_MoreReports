@@ -1,5 +1,4 @@
 object SCM: TSCM
-  OldCreateOrder = False
   OnCreate = DataModuleCreate
   Height = 394
   Width = 607

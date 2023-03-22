@@ -39,10 +39,10 @@ type
     function GetSampleSessionID(): integer;
 
     procedure ActivateTable();
-    procedure SimpleLoadSettingString(Section, Name: string; var Value: string);
-    procedure SimpleMakeTemporyFDConnection(Server, User, Password: string;
-      OsAuthent: boolean);
-    procedure SimpleSaveSettingString(Section, Name, Value: string);
+//    procedure SimpleLoadSettingString(Section, Name: string; var Value: string);
+//    procedure SimpleMakeTemporyFDConnection(Server, User, Password: string;
+//      OsAuthent: boolean);
+//    procedure SimpleSaveSettingString(Section, Name, Value: string);
     procedure GenerateMembershipNums(SwimClubID: integer);
 
     property IsActive: boolean read FIsActive write FIsActive;
@@ -62,7 +62,7 @@ implementation
 uses
   System.IOUtils, IniFiles;
 
-{$REGION  SIMPLE TEMPORY CONNECTION AND INIFILES CONFIGURATION}
+
 
 procedure TSCM.ActivateTable;
 begin
@@ -201,6 +201,9 @@ begin
   end;
 end;
 
+{$REGION  SIMPLE TEMPORY CONNECTION AND INIFILES CONFIGURATION}
+
+{
 procedure TSCM.SimpleLoadSettingString(Section, Name: string;
   var Value: string);
 var
@@ -269,6 +272,7 @@ begin
   end;
 
 end;
+}
 
 {$REGION end}
 
