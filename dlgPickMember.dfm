@@ -3,8 +3,8 @@ object PickMember: TPickMember
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Pick club members for report.'
-  ClientHeight = 587
-  ClientWidth = 661
+  ClientHeight = 586
+  ClientWidth = 657
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,13 +12,11 @@ object PickMember: TPickMember
   Font.Name = 'Segoe UI'
   Font.Style = []
   KeyPreview = True
-  OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 21
   object lbllboxR: TLabel
     Left = 384
@@ -288,37 +286,30 @@ object PickMember: TPickMember
     Top = 504
   end
   object VirtualImageList1: TVirtualImageList
-    DisabledGrayscale = False
-    DisabledSuffix = '_Disabled'
     Images = <
       item
         CollectionIndex = 0
         CollectionName = 'Arrow01'
-        Disabled = False
         Name = 'Arrow01'
       end
       item
         CollectionIndex = 1
         CollectionName = 'Arrow02'
-        Disabled = False
         Name = 'Arrow02'
       end
       item
         CollectionIndex = 2
         CollectionName = 'Arrow03'
-        Disabled = False
         Name = 'Arrow03'
       end
       item
         CollectionIndex = 3
         CollectionName = 'Arrow04'
-        Disabled = False
         Name = 'Arrow04'
       end
       item
         CollectionIndex = 4
         CollectionName = 'outline_search_black_48dp'
-        Disabled = False
         Name = 'outline_search_black_48dp'
       end>
     ImageCollection = ImageCollection1
@@ -328,13 +319,10 @@ object PickMember: TPickMember
     Top = 504
   end
   object VirtualImageList2: TVirtualImageList
-    DisabledGrayscale = False
-    DisabledSuffix = '_Disabled'
     Images = <
       item
         CollectionIndex = 4
         CollectionName = 'outline_search_black_48dp'
-        Disabled = False
         Name = 'outline_search_black_48dp'
       end>
     ImageCollection = ImageCollection1

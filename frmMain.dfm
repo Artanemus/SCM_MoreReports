@@ -10,11 +10,9 @@ object Main: TMain
   Font.Height = -16
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
   TextHeight = 21
   object Panel1: TPanel
     Left = 0
@@ -24,6 +22,7 @@ object Main: TMain
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 1121
     DesignSize = (
       1125
       113)
@@ -113,6 +112,7 @@ object Main: TMain
     Align = alLeft
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitHeight = 598
     object Panel4: TPanel
       AlignWithMargins = True
       Left = 20
@@ -259,6 +259,8 @@ object Main: TMain
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitWidth = 568
+    ExplicitHeight = 598
   end
   object ProgressBar1: TProgressBar
     Left = 0
@@ -268,6 +270,8 @@ object Main: TMain
     Align = alBottom
     TabOrder = 3
     Visible = False
+    ExplicitTop = 711
+    ExplicitWidth = 1121
   end
   object ImageCollection1: TImageCollection
     Images = <
@@ -1248,37 +1252,30 @@ object Main: TMain
     Top = 16
   end
   object VirtualImageList1: TVirtualImageList
-    DisabledGrayscale = False
-    DisabledSuffix = '_Disabled'
     Images = <
       item
         CollectionIndex = 1
         CollectionName = 'outline_refresh_black_48dp'
-        Disabled = False
         Name = 'outline_refresh_black_48dp'
       end
       item
         CollectionIndex = 6
         CollectionName = 'Info'
-        Disabled = False
         Name = 'Info'
       end
       item
         CollectionIndex = 4
         CollectionName = 'outline_play_circle_black_48dp'
-        Disabled = False
         Name = 'outline_play_circle_black_48dp'
       end
       item
         CollectionIndex = 5
         CollectionName = 'outline_draw_black_48dp'
-        Disabled = False
         Name = 'outline_draw_black_48dp'
       end
       item
         CollectionIndex = 2
         CollectionName = 'outline_menu_black_48dp'
-        Disabled = False
         Name = 'outline_menu_black_48dp'
       end>
     ImageCollection = ImageCollection1

@@ -28,8 +28,9 @@ type
     btnToday: TButton;
     btnThisWeek: TButton;
     btnThisSeason: TButton;
-    GroupBox: TGroupBox;
+    grpbSelect: TGroupBox;
     VirtualImageList1: TVirtualImageList;
+    btnCancel: TButton;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnOkClick(Sender: TObject);
     procedure RadioBtnGenericClick(Sender: TObject);
@@ -40,6 +41,8 @@ type
     procedure imgDateFromClick(Sender: TObject);
     procedure imgDateToClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     { Private declarations }
     fTagNum: Integer;
@@ -60,9 +63,14 @@ var
 implementation
 
 uses
-  System.DateUtils, dmSCM, System.IniFiles, Utility, system.UITypes;
+  System.DateUtils, dmSCM, System.IniFiles, SCMUtility, System.UITypes;
 
 {$R *.dfm}
+
+procedure TMembership.btnCancelClick(Sender: TObject);
+begin
+  ModalResult := mrCancel;
+end;
 
 procedure TMembership.btnOkClick(Sender: TObject);
 begin
@@ -103,11 +111,24 @@ begin
   calDateTo.Date := Date;
 end;
 
+procedure TMembership.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  // validate dates
+  if (RadioButton1.Checked) and IsPositiveResult(ModalResult) then
+  begin
+    if calDateFrom.IsEmpty or calDateTo.IsEmpty then
+    begin
+      MessageDlg('A valid date range wasn''t given!', mtError, [mbOk], 0);
+      CanClose := false;
+    end;
+  end;
+end;
+
 procedure TMembership.FormCreate(Sender: TObject);
 var
   iniFileName: string;
   cntrl: TControl;
-  doDefault: boolean;
+  doDefault: Boolean;
 begin
   // initialise params.
   fTagNum := -1;
@@ -167,9 +188,9 @@ var
   cntrl: TControl;
 begin
   result := nil;
-  for i := 0 to GroupBox.ControlCount - 1 do
+  for i := 0 to grpbSelect.ControlCount - 1 do
   begin
-    cntrl := GroupBox.Controls[i];
+    cntrl := grpbSelect.Controls[i];
     if (cntrl is TRadioButton) then
     begin
       if (cntrl as TRadioButton).Tag = TagNum then
@@ -187,9 +208,9 @@ var
   cntrl: TControl;
 begin
   result := -1;
-  for i := 0 to GroupBox.ControlCount - 1 do
+  for i := 0 to grpbSelect.ControlCount - 1 do
   begin
-    cntrl := GroupBox.Controls[i];
+    cntrl := grpbSelect.Controls[i];
     if (cntrl is TRadioButton) then
     begin
       if (cntrl as TRadioButton).Checked then
@@ -220,9 +241,9 @@ var
 begin
   rbtn := TRadioButton(Sender);
   rbtn.Checked := true;
-  for i := 0 to GroupBox.ControlCount - 1 do
+  for i := 0 to grpbSelect.ControlCount - 1 do
   begin
-    cntrl := GroupBox.Controls[i];
+    cntrl := grpbSelect.Controls[i];
     if (cntrl.Name <> rbtn.Name) and cntrl.ClassNameIs('TRadioButton') then
     begin
       TRadioButton(cntrl).Checked := false;

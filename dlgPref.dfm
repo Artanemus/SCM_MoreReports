@@ -4,8 +4,8 @@ object Pref: TPref
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'SCM_MoreReports Preferences'
-  ClientHeight = 548
-  ClientWidth = 667
+  ClientHeight = 547
+  ClientWidth = 663
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,34 +13,35 @@ object Pref: TPref
   Font.Name = 'Segoe UI'
   Font.Style = []
   KeyPreview = True
-  OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
-  PixelsPerInch = 96
   TextHeight = 21
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 667
+    Width = 663
     Height = 57
     Align = alTop
     BevelEdges = [beBottom]
     BevelKind = bkFlat
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 667
   end
   object Panel2: TPanel
     Left = 0
-    Top = 490
-    Width = 667
+    Top = 489
+    Width = 663
     Height = 58
     Align = alBottom
     BevelEdges = [beTop]
     BevelKind = bkFlat
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitTop = 490
+    ExplicitWidth = 667
     object btnClose: TButton
       Left = 296
       Top = 12
@@ -54,11 +55,13 @@ object Pref: TPref
   object PageControl1: TPageControl
     Left = 0
     Top = 57
-    Width = 667
-    Height = 433
+    Width = 663
+    Height = 432
     ActivePage = TabSheet2
     Align = alClient
     TabOrder = 2
+    ExplicitWidth = 667
+    ExplicitHeight = 433
     object TabSheet1: TTabSheet
       Caption = 'Membership'
       object Label2: TLabel
@@ -233,13 +236,10 @@ object Pref: TPref
     Top = 408
   end
   object VirtualImageList1: TVirtualImageList
-    DisabledGrayscale = False
-    DisabledSuffix = '_Disabled'
     Images = <
       item
         CollectionIndex = 0
         CollectionName = 'outline_folder_black_48dp'
-        Disabled = False
         Name = 'outline_folder_black_48dp'
       end>
     ImageCollection = ImageCollection1

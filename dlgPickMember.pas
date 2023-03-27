@@ -83,7 +83,7 @@ implementation
 
 {$R *.dfm}
 
-uses System.StrUtils, System.IniFiles, Utility;
+uses System.StrUtils, System.IniFiles, SCMUtility;
 
 { TLboxMember }
 

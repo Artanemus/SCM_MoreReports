@@ -42,7 +42,7 @@ implementation
 
 {$R *.dfm}
 
-uses Vcl.themes, Data.DB, Utility, IniFiles;
+uses Vcl.themes, Data.DB, SCMUtility; // , IniFiles;
 
 procedure TDesignCertif.btnCloseClick(Sender: TObject);
 begin
@@ -97,8 +97,9 @@ end;
 
 procedure TDesignCertif.GoDesignReport(pick: integer);
 var
-  iniFileName: string;
-  iFile: TIniFile;
+//  iniFileName: string;
+//  iFile: TIniFile;
+  ASection: string;
 begin
   Hide;
   // set style to default - designer looks better.
@@ -107,6 +108,7 @@ begin
   begin
     TStyleManager.TrySetStyle('Windows');
   end;
+
   case pick of
     1:
       RPTS.frxRptGold.DesignReport(True);
@@ -119,23 +121,33 @@ begin
   // ----------------------------------------------
   // Update Customization filename
   // ----------------------------------------------
-  iniFileName := GetSCMPreferenceFileName();
-  if FileExists(iniFileName) then
-  begin
-    iFile := TIniFile.create(iniFileName);
-    case pick of
-      1:
-        iFile.WriteString(IniSectionName, 'CustRptCertifGOLD',
-          RPTS.frxRptGold.FileName);
-      2:
-        iFile.WriteString(IniSectionName, 'CustRptCertifSILVER',
-          RPTS.frxRptSilver.FileName);
-      3:
-        iFile.WriteString(IniSectionName, 'CustRptMemShip',
-          RPTS.frxRptBronze.FileName);
-    end;
-    iFile.free;
+  ASection := 'MoreReports';
+  case pick of
+  1:
+    SaveSharedIniFileSetting(ASection, 'CustRptCertifGOLD', RPTS.frxRptGold.FileName);
+  2:
+    SaveSharedIniFileSetting(ASection, 'CustRptCertifSILVER', RPTS.frxRptSilver.FileName);
+  3:
+    SaveSharedIniFileSetting(ASection, 'CustRptMemShip', RPTS.frxRptBronze.FileName);
   end;
+
+//  iniFileName := GetSCMPreferenceFileName();
+//  if FileExists(iniFileName) then
+//  begin
+//    iFile := TIniFile.create(iniFileName);
+//    case pick of
+//      1:
+//        iFile.WriteString(IniSectionName, 'CustRptCertifGOLD',
+//          RPTS.frxRptGold.FileName);
+//      2:
+//        iFile.WriteString(IniSectionName, 'CustRptCertifSILVER',
+//          RPTS.frxRptSilver.FileName);
+//      3:
+//        iFile.WriteString(IniSectionName, 'CustRptMemShip',
+//          RPTS.frxRptBronze.FileName);
+//    end;
+//    iFile.free;
+//  end;
 
   // restore theme
   if Assigned(TStyleManager.ActiveStyle) then

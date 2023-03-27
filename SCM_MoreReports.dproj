@@ -137,8 +137,8 @@
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <Icon_MainIcon>SCM_MoreReports_Icon.ico</Icon_MainIcon>
-        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
+        <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
@@ -155,11 +155,10 @@
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=Artanemus;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=SCM MoreReports;LegalCopyright=© 2019-2022;LegalTrademarks=Artanemus;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0;Comments=Extra reporting for the SwimClubMeet eco system;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Artanemus;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=SCM MoreReports;LegalCopyright=© 2019-2023;LegalTrademarks=Artanemus;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0;Comments=Extra reporting for the SwimClubMeet eco system;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -196,9 +195,6 @@
         <DCCReference Include="frmMain.pas">
             <Form>Main</Form>
         </DCCReference>
-        <DCCReference Include="dlgAbout.pas">
-            <Form>About</Form>
-        </DCCReference>
         <DCCReference Include="dmSCM.pas">
             <Form>SCM</Form>
             <DesignClass>TDataModule</DesignClass>
@@ -233,6 +229,10 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\SCM_SHARED\SCMSimpleConnect.pas"/>
+        <DCCReference Include="..\SCM_SHARED\dlgAbout.pas">
+            <Form>About</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

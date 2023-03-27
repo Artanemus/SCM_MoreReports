@@ -3,7 +3,6 @@ program SCM_MoreReports;
 uses
   Vcl.Forms,
   frmMain in 'frmMain.pas' {Main},
-  dlgAbout in 'dlgAbout.pas' {About},
   dmSCM in 'dmSCM.pas' {SCM: TDataModule},
   Vcl.Themes,
   Vcl.Styles,
@@ -16,7 +15,8 @@ uses
   SCMUtility in '..\SCM_SHARED\SCMUtility.pas',
   exeinfo in '..\SCM_SHARED\exeinfo.pas',
   dlgBasicLogin in '..\SCM_SHARED\dlgBasicLogin.pas' {BasicLogin},
-  SCMSimpleConnect in '..\SCM_SHARED\SCMSimpleConnect.pas';
+  SCMSimpleConnect in '..\SCM_SHARED\SCMSimpleConnect.pas',
+  dlgAbout in '..\SCM_SHARED\dlgAbout.pas' {About};
 
 {$R *.res}
 

@@ -51,7 +51,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses Utility, IniFiles;
+uses SCMUtility, IniFiles;
 
 {$R *.dfm}
 

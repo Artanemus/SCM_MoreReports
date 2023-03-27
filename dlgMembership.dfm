@@ -4,31 +4,33 @@ object Membership: TMembership
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Membership Cards'
-  ClientHeight = 475
-  ClientWidth = 478
+  ClientHeight = 474
+  ClientWidth = 474
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -16
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OldCreateOrder = False
+  KeyPreview = True
   Position = poMainFormCenter
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
-  PixelsPerInch = 96
   TextHeight = 21
   object Panel2: TPanel
     Left = 0
-    Top = 421
-    Width = 478
+    Top = 420
+    Width = 474
     Height = 54
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitTop = 419
+    ExplicitWidth = 470
     object btnOk: TButton
-      Left = 202
+      Left = 240
       Top = 11
       Width = 75
       Height = 32
@@ -36,15 +38,26 @@ object Membership: TMembership
       TabOrder = 0
       OnClick = btnOkClick
     end
+    object btnCancel: TButton
+      Left = 159
+      Top = 11
+      Width = 75
+      Height = 32
+      Caption = 'Cancel'
+      TabOrder = 1
+      OnClick = btnCancelClick
+    end
   end
   object Panel3: TPanel
     Left = 0
     Top = 0
-    Width = 478
-    Height = 328
+    Width = 474
+    Height = 327
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitWidth = 470
+    ExplicitHeight = 326
     object Label8: TLabel
       Left = 68
       Top = 79
@@ -61,7 +74,7 @@ object Membership: TMembership
       Alignment = taRightJustify
       Caption = 'Date to...'
     end
-    object GroupBox: TGroupBox
+    object grpbSelect: TGroupBox
       Left = 16
       Top = 16
       Width = 417
@@ -186,14 +199,16 @@ object Membership: TMembership
   end
   object Panel1: TPanel
     Left = 0
-    Top = 328
-    Width = 478
+    Top = 327
+    Width = 474
     Height = 93
     Align = alBottom
     BevelEdges = [beTop]
     BevelKind = bkFlat
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitTop = 326
+    ExplicitWidth = 470
     object chkboxGenerateNum: TCheckBox
       Left = 16
       Top = 25
@@ -252,13 +267,10 @@ object Membership: TMembership
     Top = 352
   end
   object VirtualImageList1: TVirtualImageList
-    DisabledGrayscale = False
-    DisabledSuffix = '_Disabled'
     Images = <
       item
         CollectionIndex = 1
         CollectionName = 'ic_action_keyboard_arrow_left'
-        Disabled = False
         Name = 'ic_action_keyboard_arrow_left'
       end>
     ImageCollection = ImageCollection1

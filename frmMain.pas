@@ -49,6 +49,9 @@ type
     fdefaultStyleName, fCustRptMemShip: string;
     fCustRptCertifGOLD, fCustRptCertifSILVER, fCustRptCertifBRONZE: string;
 
+    // inifiles section name
+    fSectionName: string;
+
     // P R E F E R E N C E   F I L E   A C C E S S .
     procedure ReadPreferences(iniFileName: string);
 
@@ -63,14 +66,14 @@ implementation
 
 {$R *.dfm}
 
-uses dlgBasicLogin, exeinfo, Utility, dlgAbout, System.IniFiles, System.UITypes,
+uses dlgBasicLogin, exeinfo, SCMUtility, dlgAbout, System.IniFiles, System.UITypes,
   System.DateUtils, FireDAC.Stan.Param, dlgMembership, dlgPickMember,
   dlgPickCertif, System.Contnrs, dlgDesignCertif, dlgPref;
 
 procedure TMain.btnDesignMembershipCardClick(Sender: TObject);
-var
-  iniFileName: string;
-  iFile: TIniFile;
+//var
+//  iniFileName: string;
+//  iFile: TIniFile;
 begin
   if Assigned(RPTS) then
   begin
@@ -84,14 +87,18 @@ begin
     // restore application
     if Assigned(TStyleManager.ActiveStyle) then
       TStyleManager.TrySetStyle(fdefaultStyleName);
+
     // update customisation filename...
-    iniFileName := GetSCMPreferenceFileName;
-    if FileExists(iniFileName) then
-    begin
-      iFile := TIniFile.create(iniFileName);
-      fCustRptMemShip := iFile.ReadString(IniSectionName, 'CustRptMemShip', '');
-      iFile.free;
-    end;
+    fCustRptMemShip := LoadSharedIniFileSetting(fSectionName, 'CustRptMemShip');
+
+//    iniFileName := GetSCMPreferenceFileName;
+//    if FileExists(iniFileName) then
+//    begin
+//      iFile := TIniFile.create(iniFileName);
+//      fCustRptMemShip := iFile.ReadString(IniSectionName, 'CustRptMemShip', '');
+//      iFile.free;
+//    end;
+
   end;
 end;
 
@@ -116,12 +123,15 @@ begin
       Application.Terminate;
     end;
   end;
+
   if not Assigned(SCM) then
     Exit;
   // ----------------------------------------------------
   // C O N N E C T   T O   S E R V E R .
   // ----------------------------------------------------
   aBasicLogin := TBasicLogin.create(Self);
+  aBasicLogin.DBName := 'SwimClubMeet';
+  aBasicLogin.DBConnection := SCM.scmConnection;
   result := aBasicLogin.ShowModal;
   aBasicLogin.free;
 
@@ -130,16 +140,31 @@ begin
     Application.Terminate;
     Exit;
   end;
+
   // ----------------------------------------------------
   // C R E A T E   D A T A M O D U L E   R P T S .
   // ----------------------------------------------------
-  RPTS := TRPTS.create(Self);
-  RPTS.qrySharedHeader.Connection := SCM.scmConnection;
-  RPTS.qryMember.Connection := SCM.scmConnection;
+  try
+    RPTS := TRPTS.create(Self);
+  finally
+    // with SCM created and the essential tables are open then
+    // asserting the connection should be true
+    if not Assigned(RPTS) then
+    begin
+      MessageDlg('The report module couldn''t be created!', mtError,
+        [mbOk], 0);
+      Application.Terminate;
+    end;
+  end;
+
+  if not Assigned(RPTS) then
+    Exit;
+
   // ----------------------------------------------------
   // A C T I V A T E   S C M  .
   // ----------------------------------------------------
   SCM.ActivateTable();
+
   // A S S E R T .
   if not SCM.IsActive then
   begin
@@ -149,6 +174,15 @@ begin
     // note: cleans and destroys SCM
     Application.Terminate;
   end;
+
+
+  // ----------------------------------------------------
+  // A C T I V A T E   R P T S .
+  // ----------------------------------------------------
+  {TODO -oBSA -cGeneral : Create RPTS activation routine}
+  RPTS.qrySharedHeader.Connection := SCM.scmConnection;
+  RPTS.qryMember.Connection := SCM.scmConnection;
+
   // ----------------------------------------------------
   // I N I T I A L I Z E   P A R A M S .
   // ----------------------------------------------------
@@ -159,6 +193,7 @@ begin
   fCustRptCertifGOLD := '';
   fCustRptCertifSILVER := '';
   fCustRptCertifBRONZE := '';
+  fSectionName := 'MoreReports';
 
   // ----------------------------------------------------
   // R E A D   P R E F E R E N C E S .
@@ -212,14 +247,14 @@ var
   iFile: TIniFile;
 begin
   iFile := TIniFile.create(iniFileName);
-  fMaxAllowToPick := iFile.ReadInteger(IniSectionName, 'MaxAllowToPick', 20);
-  fCustRptCertifGOLD := iFile.ReadString(IniSectionName,
+  fMaxAllowToPick := iFile.ReadInteger(fSectionName, 'MaxAllowToPick', 20);
+  fCustRptCertifGOLD := iFile.ReadString(fSectionName,
     'CustRptCertifGOLD', '');
-  fCustRptCertifSILVER := iFile.ReadString(IniSectionName,
+  fCustRptCertifSILVER := iFile.ReadString(fSectionName,
     'CustRptCertifSILVER', '');
-  fCustRptCertifBRONZE := iFile.ReadString(IniSectionName,
+  fCustRptCertifBRONZE := iFile.ReadString(fSectionName,
     'CustRptCertifBRONZE', '');
-  fCustRptMemShip := iFile.ReadString(IniSectionName, 'CustRptMemShip', '');
+  fCustRptMemShip := iFile.ReadString(fSectionName, 'CustRptMemShip', '');
   iFile.free;
   // ----------------------------------------------------
   // Load customized report

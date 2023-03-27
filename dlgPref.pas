@@ -43,6 +43,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
+    fSectionName: string;
 
     // P R E F E R E N C E   F I L E   A C C E S S .
     procedure ReadPreferences(iniFileName: string);
@@ -60,7 +61,7 @@ implementation
 {$R *.dfm}
 
 uses
-  IniFiles, Utility, System.UITypes;
+  IniFiles, SCMUtility, System.UITypes;
 
 { TPref }
 
@@ -115,6 +116,8 @@ var
   iniFileName: string;
 
 begin
+  fSectionName := 'MoreReports';
+
   // read from preference file
   iniFileName := GetSCMPreferenceFileName();
   if FileExists(iniFileName) then
@@ -148,11 +151,11 @@ var
   iFile: TIniFile;
 begin
   iFile := TIniFile.create(iniFileName);
-  edtGold.Text := iFile.ReadString(IniSectionName, 'CustRptCertifGOLD', '');
-  edtSilver.Text := iFile.ReadString(IniSectionName, 'CustRptCertifSILVER', '');
-  edtBronze.Text := iFile.ReadString(IniSectionName, 'CustRptCertifBRONZE', '');
-  edtMembership.Text := iFile.ReadString(IniSectionName, 'CustRptMemShip', '');
-  sedtMaxAllowToPick.Value := iFile.ReadInteger(IniSectionName,
+  edtGold.Text := iFile.ReadString(fSectionName, 'CustRptCertifGOLD', '');
+  edtSilver.Text := iFile.ReadString(fSectionName, 'CustRptCertifSILVER', '');
+  edtBronze.Text := iFile.ReadString(fSectionName, 'CustRptCertifBRONZE', '');
+  edtMembership.Text := iFile.ReadString(fSectionName, 'CustRptMemShip', '');
+  sedtMaxAllowToPick.Value := iFile.ReadInteger(fSectionName,
     'MaxAllowToPick', 20);
   iFile.Free;
 end;
@@ -162,12 +165,12 @@ var
   iFile: TIniFile;
 begin
   iFile := TIniFile.create(iniFileName);
-  iFile.WriteInteger(IniSectionName, 'MaxAllowToPick',
+  iFile.WriteInteger(fSectionName, 'MaxAllowToPick',
     sedtMaxAllowToPick.Value);
-  iFile.WriteString(IniSectionName, 'CustRptCertifGOLD', edtGold.Text);
-  iFile.WriteString(IniSectionName, 'CustRptCertifSILVER', edtSilver.Text);
-  iFile.WriteString(IniSectionName, 'CustRptCertifBRONZE', edtBronze.Text);
-  iFile.WriteString(IniSectionName, 'CustRptMemShip', edtMembership.Text);
+  iFile.WriteString(fSectionName, 'CustRptCertifGOLD', edtGold.Text);
+  iFile.WriteString(fSectionName, 'CustRptCertifSILVER', edtSilver.Text);
+  iFile.WriteString(fSectionName, 'CustRptCertifBRONZE', edtBronze.Text);
+  iFile.WriteString(fSectionName, 'CustRptMemShip', edtMembership.Text);
   iFile.Free;
 end;
 
