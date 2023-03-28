@@ -3,7 +3,7 @@
         <ProjectGuid>{6B7FCE8D-E36D-4A48-BD4B-C05C13938E18}</ProjectGuid>
         <MainSource>SCM_MoreReports.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
@@ -158,7 +158,8 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=Artanemus;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=SCM MoreReports;LegalCopyright=© 2019-2023;LegalTrademarks=Artanemus;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0;Comments=Extra reporting for the SwimClubMeet eco system;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Artanemus;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=SCM MoreReports;LegalCopyright=© 2019-2023;LegalTrademarks=Artanemus;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0;Comments=Extra reporting for the SwimClubMeet eco system of awimming apps.;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Release>1</VerInfo_Release>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>

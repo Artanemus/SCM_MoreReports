@@ -291,6 +291,9 @@ var
   dlg: TAbout;
 begin
   dlg := TAbout.create(Self);
+  dlg.DBName := 'SwimClubMeet';
+  if Assigned(SCM) then
+    dlg.DBConnection := SCM.scmConnection;
   dlg.ShowModal;
   dlg.free;
 end;
